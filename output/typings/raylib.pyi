@@ -1444,6 +1444,246 @@ def GetTime() -> float:
     Wraps: `double GetTime()`
     """
 
+def GetRandomValue(min: int, max: int) -> int:
+    """Get a random value between min and max (both included)
+
+    Wraps: `int GetRandomValue(int min, int max)`
+    """
+
+def SetRandomSeed(seed: int) -> None:
+    """Set the seed for the random number generator
+
+    Wraps: `void SetRandomSeed(unsigned int seed)`
+    """
+
+def TakeScreenshot(fileName: str) -> None:
+    """Takes a screenshot of current screen (filename extension defines format)
+
+    Wraps: `void TakeScreenshot(const char * fileName)`
+    """
+
+def SetConfigFlags(flags: int) -> None:
+    """Setup init configuration flags (view FLAGS)
+
+    Wraps: `void SetConfigFlags(unsigned int flags)`
+    """
+
+def SetTraceLogLevel(logLevel: int) -> None:
+    """Set the current threshold (minimum) log level
+
+    Wraps: `void SetTraceLogLevel(int logLevel)`
+    """
+
+def MemAlloc(size: int) -> void_p:
+    """Internal memory allocator
+
+    Wraps: `void * MemAlloc(unsigned int size)`
+    """
+
+def MemRealloc(ptr: void_p, size: int) -> void_p:
+    """Internal memory reallocator
+
+    Wraps: `void * MemRealloc(void * ptr, unsigned int size)`
+    """
+
+def MemFree(ptr: void_p) -> None:
+    """Internal memory free
+
+    Wraps: `void MemFree(void * ptr)`
+    """
+
+def OpenURL(url: str) -> None:
+    """Open URL with default system browser (if available)
+
+    Wraps: `void OpenURL(const char * url)`
+    """
+
+def LoadFileData(fileName: str, bytesRead: uint_p) -> uchar_p:
+    """Load file data as byte array (read)
+
+    Wraps: `unsigned char * LoadFileData(const char * fileName, unsigned int * bytesRead)`
+    """
+
+def UnloadFileData(data: uchar_p) -> None:
+    """Unload file data allocated by LoadFileData()
+
+    Wraps: `void UnloadFileData(unsigned char * data)`
+    """
+
+def SaveFileData(fileName: str, data: void_p, bytesToWrite: int) -> bool:
+    """Save data to file from byte array (write), returns true on success
+
+    Wraps: `bool SaveFileData(const char * fileName, void * data, unsigned int bytesToWrite)`
+    """
+
+def ExportDataAsCode(data: uchar_p, size: int, fileName: str) -> bool:
+    """Export data to code (.h), returns true on success
+
+    Wraps: `bool ExportDataAsCode(const unsigned char * data, unsigned int size, const char * fileName)`
+    """
+
+def LoadFileText(fileName: str) -> char_p:
+    """Load text data from file (read), returns a '\0' terminated string
+
+    Wraps: `char * LoadFileText(const char * fileName)`
+    """
+
+def UnloadFileText(text: char_p) -> None:
+    """Unload file text data allocated by LoadFileText()
+
+    Wraps: `void UnloadFileText(char * text)`
+    """
+
+def SaveFileText(fileName: str, text: char_p) -> bool:
+    """Save text data to file (write), string must be '\0' terminated, returns true on success
+
+    Wraps: `bool SaveFileText(const char * fileName, char * text)`
+    """
+
+def FileExists(fileName: str) -> bool:
+    """Check if file exists
+
+    Wraps: `bool FileExists(const char * fileName)`
+    """
+
+def DirectoryExists(dirPath: str) -> bool:
+    """Check if a directory path exists
+
+    Wraps: `bool DirectoryExists(const char * dirPath)`
+    """
+
+def IsFileExtension(fileName: str, ext: str) -> bool:
+    """Check file extension (including point: .png, .wav)
+
+    Wraps: `bool IsFileExtension(const char * fileName, const char * ext)`
+    """
+
+def GetFileLength(fileName: str) -> int:
+    """Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h)
+
+    Wraps: `int GetFileLength(const char * fileName)`
+    """
+
+def GetFileExtension(fileName: str) -> str:
+    """Get pointer to extension for a filename string (includes dot: '.png')
+
+    Wraps: `const char * GetFileExtension(const char * fileName)`
+    """
+
+def GetFileName(filePath: str) -> str:
+    """Get pointer to filename for a path string
+
+    Wraps: `const char * GetFileName(const char * filePath)`
+    """
+
+def GetFileNameWithoutExt(filePath: str) -> str:
+    """Get filename string without extension (uses static string)
+
+    Wraps: `const char * GetFileNameWithoutExt(const char * filePath)`
+    """
+
+def GetDirectoryPath(filePath: str) -> str:
+    """Get full path for a given fileName with path (uses static string)
+
+    Wraps: `const char * GetDirectoryPath(const char * filePath)`
+    """
+
+def GetPrevDirectoryPath(dirPath: str) -> str:
+    """Get previous directory path for a given path (uses static string)
+
+    Wraps: `const char * GetPrevDirectoryPath(const char * dirPath)`
+    """
+
+def GetWorkingDirectory() -> str:
+    """Get current working directory (uses static string)
+
+    Wraps: `const char * GetWorkingDirectory()`
+    """
+
+def GetApplicationDirectory() -> str:
+    """Get the directory if the running application (uses static string)
+
+    Wraps: `const char * GetApplicationDirectory()`
+    """
+
+def ChangeDirectory(dir: str) -> bool:
+    """Change working directory, return true on success
+
+    Wraps: `bool ChangeDirectory(const char * dir)`
+    """
+
+def IsPathFile(path: str) -> bool:
+    """Check if a given path is a file or a directory
+
+    Wraps: `bool IsPathFile(const char * path)`
+    """
+
+def LoadDirectoryFiles(dirPath: str) -> FilePathList:
+    """Load directory filepaths
+
+    Wraps: `FilePathList LoadDirectoryFiles(const char * dirPath)`
+    """
+
+def LoadDirectoryFilesEx(basePath: str, filter: str, scanSubdirs: bool) -> FilePathList:
+    """Load directory filepaths with extension filtering and recursive directory scan
+
+    Wraps: `FilePathList LoadDirectoryFilesEx(const char * basePath, const char * filter, bool scanSubdirs)`
+    """
+
+def UnloadDirectoryFiles(files: FilePathList) -> None:
+    """Unload filepaths
+
+    Wraps: `void UnloadDirectoryFiles(FilePathList files)`
+    """
+
+def IsFileDropped() -> bool:
+    """Check if a file has been dropped into window
+
+    Wraps: `bool IsFileDropped()`
+    """
+
+def LoadDroppedFiles() -> FilePathList:
+    """Load dropped filepaths
+
+    Wraps: `FilePathList LoadDroppedFiles()`
+    """
+
+def UnloadDroppedFiles(files: FilePathList) -> None:
+    """Unload dropped filepaths
+
+    Wraps: `void UnloadDroppedFiles(FilePathList files)`
+    """
+
+def GetFileModTime(fileName: str) -> int:
+    """Get file modification time (last write time)
+
+    Wraps: `long GetFileModTime(const char * fileName)`
+    """
+
+def CompressData(data: uchar_p, dataSize: int, compDataSize: int_p) -> uchar_p:
+    """Compress data (DEFLATE algorithm), memory must be MemFree()
+
+    Wraps: `unsigned char * CompressData(const unsigned char * data, int dataSize, int * compDataSize)`
+    """
+
+def DecompressData(compData: uchar_p, compDataSize: int, dataSize: int_p) -> uchar_p:
+    """Decompress data (DEFLATE algorithm), memory must be MemFree()
+
+    Wraps: `unsigned char * DecompressData(const unsigned char * compData, int compDataSize, int * dataSize)`
+    """
+
+def EncodeDataBase64(data: uchar_p, dataSize: int, outputSize: int_p) -> char_p:
+    """Encode data to Base64 string, memory must be MemFree()
+
+    Wraps: `char * EncodeDataBase64(const unsigned char * data, int dataSize, int * outputSize)`
+    """
+
+def DecodeDataBase64(data: uchar_p, outputSize: int_p) -> uchar_p:
+    """Decode Base64 string data, memory must be MemFree()
+
+    Wraps: `unsigned char * DecodeDataBase64(const unsigned char * data, int * outputSize)`
+    """
+
 def IsKeyPressed(key: int) -> bool:
     """Check if a key has been pressed once
 

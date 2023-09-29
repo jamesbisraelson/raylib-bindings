@@ -1,78 +1,19 @@
-_FILE_MANAGEMENT_FUNCTIONS = {
-    "LoadFileData",
-    "UnloadFileData",
-    "SaveFileData",
-    "ExportDataAsCode",
-    "LoadFileText",
-    "UnloadFileText",
-    "SaveFileText",
-    "FileExists",
-    "DirectoryExists",
-    "IsFileExtension",
-    "GetFileLength",
-    "GetFileExtension",
-    "GetFileName",
-    "GetFileNameWithoutExt",
-    "GetDirectoryPath",
-    "GetPrevDirectoryPath",
-    "GetWorkingDirectory",
-    "GetApplicationDirectory",
-    "ChangeDirectory",
-    "IsPathFile",
-    "LoadDirectoryFiles",
-    "LoadDirectoryFilesEx",
-    "UnloadDirectoryFiles",
-    "IsFileDropped",
-    "LoadDroppedFiles",
-    "UnloadDroppedFiles",
-    "GetFileModTime"
-}
-
-_MISC_FUNCTIONS = {
-    "GetRandomValue",
-    "SetRandomSeed",
-    "TakeScreenshot",
-    "SetConfigFlags",
-
-    "TraceLog",
-    "SetTraceLogLevel",
-    "MemAlloc",
-    "MemRealloc",
-    "MemFree",
-
-    "OpenURL"
-}
-
-_CUSTOM_CALLBACK_FUNCTIONS = {
+IGNORED_FUNCTIONS = {
+    # callback functions
     "SetTraceLogCallback",
     "SetLoadFileDataCallback",
     "SetSaveFileDataCallback",
     "SetLoadFileTextCallback",
-    "SetSaveFileTextCallback"
-}
-
-_COMPRESSION_FUNCTIONS = {
-    "CompressData",
-    "DecompressData",
-    "EncodeDataBase64",
-    "DecodeDataBase64"
-}
-
-IGNORED_FUNCTIONS = {
-    *_FILE_MANAGEMENT_FUNCTIONS,
-    *_MISC_FUNCTIONS,
-    *_CUSTOM_CALLBACK_FUNCTIONS,
-    *_COMPRESSION_FUNCTIONS,
-    # variadic functions
-    'TextFormat',
-    # with callback functions
+    "SetSaveFileTextCallback",
     'SetAudioStreamCallback',
     'AttachAudioStreamProcessor',
     'DetachAudioStreamProcessor',
     'AttachAudioMixedProcessor',
-    'DetachAudioMixedProcessor'
+    'DetachAudioMixedProcessor',
+    # variadic functions
+    'TextFormat',
+    'TraceLog',
 }
-
 
 from pkpy_bindings import generate
 
