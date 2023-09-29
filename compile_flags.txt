@@ -1,0 +1,7 @@
+-xc++
+-Wall
+-W*
+-std=c++17
+-stdlib=libc++
+-Iraylib/src/
+-Ipocketpy/include
