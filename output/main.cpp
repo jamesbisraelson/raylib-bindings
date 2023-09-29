@@ -9,8 +9,11 @@ namespace pkpy{
 int main(){
     VM* vm = new VM();
     add_module_raylib(vm);
-
-    const char* filepath = "main.py";
+#ifdef _WIN32
+    const char* filepath = "../../main.py";
+#else
+    const char* filepath = "../main.py";
+#endif
     Str source = vm->_import_handler(filepath).str();
     vm->exec(source);
 
