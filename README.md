@@ -1,7 +1,5 @@
 # pkpy-bindings
 
-**Automatically Generate PkPy<=>C Bindings (cpp+pyi)**
-
 This repo contains a python package `pkpy_bindings` that can be used to generate bindings for C libraries.
 It uses [raylib's JSON format](https://github.com/raysan5/raylib/blob/master/parser/output/raylib_api.json) for describing the API.
 
