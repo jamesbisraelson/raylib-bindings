@@ -226,6 +226,10 @@ def generate(json_file: str, /,
             cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, {int(define.value)}));')
         elif define.type == "STRING":
             cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, "{define.value}"));')
+        elif define.type == "FLOAT":
+            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, {define.value}));')
+        else:
+            pass        # unrecognized type
 
     cpp.append('}')
 

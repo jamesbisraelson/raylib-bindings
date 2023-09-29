@@ -2403,5 +2403,6 @@ void add_module_raylib(VM* vm){
     mod->attr().set("RAYLIB_VERSION_MINOR", py_var(vm, 6));
     mod->attr().set("RAYLIB_VERSION_PATCH", py_var(vm, 0));
     mod->attr().set("RAYLIB_VERSION", py_var(vm, "4.6-dev"));
+    mod->attr().set("PI", py_var(vm, 3.141592653589793));
 }
 }  // namespace pkpy
