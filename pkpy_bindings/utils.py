@@ -1,5 +1,5 @@
 import re
-from typing import Set
+from typing import Set, Optional
 
 _ptypes = {
     'char': 'int',
@@ -56,8 +56,9 @@ def _convert_pointer(t: str, opaque_structs: Set[str]):
             return 'void_p'
     return t_backup
 
-def ptype_ex(t: str, vector_pattern: str, opaque_structs: Set[str]):
-    t = re.sub(vector_pattern, r'vec\1', t)
+def ptype_ex(t: str, vector_pattern: Optional[str], opaque_structs: Set[str]):
+    if vector_pattern:
+        t = re.sub(vector_pattern, r'vec\1', t)
     if t == 'const char *':
         return 'str'
     if 'const' in t:

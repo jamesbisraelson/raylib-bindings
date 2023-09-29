@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional, Iterable
 import json
 import re
 from .schema import *
@@ -21,9 +21,9 @@ class Output:
 def generate(json_file: str, /, 
              module_name: str,
              headers: List[str],
-             ignored_functions: List[str]=None,
-             vector_pattern: str=None,
-             opaque_structs: List[str]=None,
+             ignored_functions: Optional[Iterable[str]]=None,
+             vector_pattern: Optional[str]=None,
+             opaque_structs: Optional[Iterable[str]]=None
              ) -> Output:
     ignored_functions = set(ignored_functions or [])
     opaque_structs = set(opaque_structs or [])
@@ -59,7 +59,7 @@ def generate(json_file: str, /,
     pyi.append('')
 
     for struct in api.structs:
-        if re.match(vector_pattern, struct.name):
+        if vector_pattern and re.match(vector_pattern, struct.name):
             template = r'''
     PyObject* py_var(VM* vm, %T0 v){
         return py_var(vm, _struct_cast<%T0, %T1>(v));
@@ -187,7 +187,7 @@ def generate(json_file: str, /,
     cpp.append('')
 
     for struct in api.structs:
-        if re.match(vector_pattern, struct.name):
+        if vector_pattern and re.match(vector_pattern, struct.name):
             continue
         cpp.append(f'    wrapped__{struct.name}::register_class(vm, mod);')
         # generate its corresponding pointer type
