@@ -18,7 +18,13 @@ class Output:
         with open(cpp_path, 'w') as f:
             f.write(cpp)
     
-def generate(json_file: str, /, module_name: str, headers: List[str], ignored_functions=None, vector_pattern=None, opaque_structs=None) -> Output:
+def generate(json_file: str, /, 
+             module_name: str,
+             headers: List[str],
+             ignored_functions: List[str]=None,
+             vector_pattern: str=None,
+             opaque_structs: List[str]=None,
+             ) -> Output:
     ignored_functions = set(ignored_functions or [])
     opaque_structs = set(opaque_structs or [])
 
@@ -201,14 +207,25 @@ def generate(json_file: str, /, module_name: str, headers: List[str], ignored_fu
         if func.name in ignored_functions:
             continue
         sigc = f'{func.return_type} {func.name}({", ".join([p.type+" "+p.name for p in (func.params or [])])})'
+        has_vargs = func.params and func.params[-1].type == '...'
         parameters = ', '.join([f'{p.name}: {ptype(p.type)}' for p in (func.params or [])])
         sigpy = f'{func.name}({parameters}) -> {ptype(func.return_type)}'
         tmp = f'def {sigpy}:\n'
         tmp += f'    """{func.description}\n\n'
         tmp += f'    Wraps: `{sigc}`\n'
         tmp += f'    """\n'
+        if has_vargs:
+            print(f'WARNING: {sigc} is a variadic function, skipped')
+            continue
         pyi.append(tmp)
         cpp.append(f'    _bind(vm, mod, "{sigpy}", &{func.name});')
+
+    cpp.append('    // defines')
+    for define in api.defines:
+        if define.type == "INT":
+            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, {int(define.value)}));')
+        elif define.type == "STRING":
+            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, "{define.value}"));')
 
     cpp.append('}')
 

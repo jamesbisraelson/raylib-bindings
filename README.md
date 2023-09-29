@@ -72,6 +72,11 @@ raylibw_test.exe
 
 ![raylibw_test.png](raylibw_test.png)
 
+## Limitations
+
++ variadic functions are not supported
++ callbacks are not supported
+
 ## References
 
 + [pocketpy](https://github.com/blueloveth/pocketpy)

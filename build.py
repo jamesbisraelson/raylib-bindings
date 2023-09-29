@@ -10,9 +10,6 @@ IGNORED_FUNCTIONS = {
     'DetachAudioStreamProcessor',
     'AttachAudioMixedProcessor',
     'DetachAudioMixedProcessor',
-    # variadic functions
-    'TextFormat',
-    'TraceLog',
 }
 
 from pkpy_bindings import generate

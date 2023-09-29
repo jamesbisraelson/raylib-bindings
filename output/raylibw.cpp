@@ -2398,5 +2398,10 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "SetAudioStreamPitch(stream: AudioStream, pitch: float) -> None", &SetAudioStreamPitch);
     _bind(vm, mod, "SetAudioStreamPan(stream: AudioStream, pan: float) -> None", &SetAudioStreamPan);
     _bind(vm, mod, "SetAudioStreamBufferSizeDefault(size: int) -> None", &SetAudioStreamBufferSizeDefault);
+    // defines
+    mod->attr().set("RAYLIB_VERSION_MAJOR", py_var(vm, 4));
+    mod->attr().set("RAYLIB_VERSION_MINOR", py_var(vm, 6));
+    mod->attr().set("RAYLIB_VERSION_PATCH", py_var(vm, 0));
+    mod->attr().set("RAYLIB_VERSION", py_var(vm, "4.6-dev"));
 }
 }  // namespace pkpy
