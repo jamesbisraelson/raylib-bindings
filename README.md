@@ -1,6 +1,6 @@
 # pkpy-bindings
 
-This repo contains a python package `pkpy_bindings` that can be used to generate bindings for C libraries.
+This repo contains a python package `pkpy_bindings` that can be used to generate bindings for C libraries for [pocketpy](https://github.com/blueloveth/pocketpy).
 It uses [raylib's JSON format](https://github.com/raysan5/raylib/blob/master/parser/output/raylib_api.json) for describing the API.
 
 You can use [raylib's parser](https://github.com/raysan5/raylib/tree/master/parser) to generate one for your own project.
