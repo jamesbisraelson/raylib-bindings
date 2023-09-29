@@ -74,5 +74,9 @@ raylibw_test.exe
 
 ## References
 
-+ [pocketpy](https://github.com/blueloveth)
++ [pocketpy](https://github.com/blueloveth/pocketpy)
 + [raylib](https://github.com/raysan5/raylib)
+
+## License
+
+MIT License
