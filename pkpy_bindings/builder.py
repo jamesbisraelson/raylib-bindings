@@ -174,8 +174,9 @@ def generate(json_file: str, /, module_name: str, headers: List[str], ignored_fu
 
     for enum in api.enums:
         cpp.append(f'    // {enum.name}')
-        for val in enum.values:
-            cpp.append(f'    mod->attr().set("{val.name}", py_var(vm, {val.value}));')
+        _enum_values = ', '.join([f'{{"{v.name}", {v.value}}}' for v in enum.values])
+        _enum_values = '{' + _enum_values + '}'
+        cpp.append(f'    _bind_enums(vm, mod, {_enum_values});')
 
     cpp.append('')
 

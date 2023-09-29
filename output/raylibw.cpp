@@ -11,6 +11,13 @@ T1 _struct_cast(T0& v){
     return (T1&)v;
 }
 
+template<size_t N>
+void _bind_enums(VM* vm, PyObject* obj, const std::pair<const char*, i64> (&enums)[N]){
+    for(auto [k, v]: enums){
+        obj->attr().set(k, py_var(vm, v));
+    }
+}
+
 
     PyObject* py_var(VM* vm, Vector2 v){
         return py_var(vm, _struct_cast<Vector2, Vec2>(v));
@@ -1546,320 +1553,47 @@ void add_module_raylib(VM* vm){
     PyObject* mod = vm->new_module("raylib");
 
     // ConfigFlags
-    mod->attr().set("FLAG_VSYNC_HINT", py_var(vm, 64));
-    mod->attr().set("FLAG_FULLSCREEN_MODE", py_var(vm, 2));
-    mod->attr().set("FLAG_WINDOW_RESIZABLE", py_var(vm, 4));
-    mod->attr().set("FLAG_WINDOW_UNDECORATED", py_var(vm, 8));
-    mod->attr().set("FLAG_WINDOW_HIDDEN", py_var(vm, 128));
-    mod->attr().set("FLAG_WINDOW_MINIMIZED", py_var(vm, 512));
-    mod->attr().set("FLAG_WINDOW_MAXIMIZED", py_var(vm, 1024));
-    mod->attr().set("FLAG_WINDOW_UNFOCUSED", py_var(vm, 2048));
-    mod->attr().set("FLAG_WINDOW_TOPMOST", py_var(vm, 4096));
-    mod->attr().set("FLAG_WINDOW_ALWAYS_RUN", py_var(vm, 256));
-    mod->attr().set("FLAG_WINDOW_TRANSPARENT", py_var(vm, 16));
-    mod->attr().set("FLAG_WINDOW_HIGHDPI", py_var(vm, 8192));
-    mod->attr().set("FLAG_WINDOW_MOUSE_PASSTHROUGH", py_var(vm, 16384));
-    mod->attr().set("FLAG_MSAA_4X_HINT", py_var(vm, 32));
-    mod->attr().set("FLAG_INTERLACED_HINT", py_var(vm, 65536));
+    _bind_enums(vm, mod, {{"FLAG_VSYNC_HINT", 64}, {"FLAG_FULLSCREEN_MODE", 2}, {"FLAG_WINDOW_RESIZABLE", 4}, {"FLAG_WINDOW_UNDECORATED", 8}, {"FLAG_WINDOW_HIDDEN", 128}, {"FLAG_WINDOW_MINIMIZED", 512}, {"FLAG_WINDOW_MAXIMIZED", 1024}, {"FLAG_WINDOW_UNFOCUSED", 2048}, {"FLAG_WINDOW_TOPMOST", 4096}, {"FLAG_WINDOW_ALWAYS_RUN", 256}, {"FLAG_WINDOW_TRANSPARENT", 16}, {"FLAG_WINDOW_HIGHDPI", 8192}, {"FLAG_WINDOW_MOUSE_PASSTHROUGH", 16384}, {"FLAG_MSAA_4X_HINT", 32}, {"FLAG_INTERLACED_HINT", 65536}});
     // TraceLogLevel
-    mod->attr().set("LOG_ALL", py_var(vm, 0));
-    mod->attr().set("LOG_TRACE", py_var(vm, 1));
-    mod->attr().set("LOG_DEBUG", py_var(vm, 2));
-    mod->attr().set("LOG_INFO", py_var(vm, 3));
-    mod->attr().set("LOG_WARNING", py_var(vm, 4));
-    mod->attr().set("LOG_ERROR", py_var(vm, 5));
-    mod->attr().set("LOG_FATAL", py_var(vm, 6));
-    mod->attr().set("LOG_NONE", py_var(vm, 7));
+    _bind_enums(vm, mod, {{"LOG_ALL", 0}, {"LOG_TRACE", 1}, {"LOG_DEBUG", 2}, {"LOG_INFO", 3}, {"LOG_WARNING", 4}, {"LOG_ERROR", 5}, {"LOG_FATAL", 6}, {"LOG_NONE", 7}});
     // KeyboardKey
-    mod->attr().set("KEY_NULL", py_var(vm, 0));
-    mod->attr().set("KEY_APOSTROPHE", py_var(vm, 39));
-    mod->attr().set("KEY_COMMA", py_var(vm, 44));
-    mod->attr().set("KEY_MINUS", py_var(vm, 45));
-    mod->attr().set("KEY_PERIOD", py_var(vm, 46));
-    mod->attr().set("KEY_SLASH", py_var(vm, 47));
-    mod->attr().set("KEY_ZERO", py_var(vm, 48));
-    mod->attr().set("KEY_ONE", py_var(vm, 49));
-    mod->attr().set("KEY_TWO", py_var(vm, 50));
-    mod->attr().set("KEY_THREE", py_var(vm, 51));
-    mod->attr().set("KEY_FOUR", py_var(vm, 52));
-    mod->attr().set("KEY_FIVE", py_var(vm, 53));
-    mod->attr().set("KEY_SIX", py_var(vm, 54));
-    mod->attr().set("KEY_SEVEN", py_var(vm, 55));
-    mod->attr().set("KEY_EIGHT", py_var(vm, 56));
-    mod->attr().set("KEY_NINE", py_var(vm, 57));
-    mod->attr().set("KEY_SEMICOLON", py_var(vm, 59));
-    mod->attr().set("KEY_EQUAL", py_var(vm, 61));
-    mod->attr().set("KEY_A", py_var(vm, 65));
-    mod->attr().set("KEY_B", py_var(vm, 66));
-    mod->attr().set("KEY_C", py_var(vm, 67));
-    mod->attr().set("KEY_D", py_var(vm, 68));
-    mod->attr().set("KEY_E", py_var(vm, 69));
-    mod->attr().set("KEY_F", py_var(vm, 70));
-    mod->attr().set("KEY_G", py_var(vm, 71));
-    mod->attr().set("KEY_H", py_var(vm, 72));
-    mod->attr().set("KEY_I", py_var(vm, 73));
-    mod->attr().set("KEY_J", py_var(vm, 74));
-    mod->attr().set("KEY_K", py_var(vm, 75));
-    mod->attr().set("KEY_L", py_var(vm, 76));
-    mod->attr().set("KEY_M", py_var(vm, 77));
-    mod->attr().set("KEY_N", py_var(vm, 78));
-    mod->attr().set("KEY_O", py_var(vm, 79));
-    mod->attr().set("KEY_P", py_var(vm, 80));
-    mod->attr().set("KEY_Q", py_var(vm, 81));
-    mod->attr().set("KEY_R", py_var(vm, 82));
-    mod->attr().set("KEY_S", py_var(vm, 83));
-    mod->attr().set("KEY_T", py_var(vm, 84));
-    mod->attr().set("KEY_U", py_var(vm, 85));
-    mod->attr().set("KEY_V", py_var(vm, 86));
-    mod->attr().set("KEY_W", py_var(vm, 87));
-    mod->attr().set("KEY_X", py_var(vm, 88));
-    mod->attr().set("KEY_Y", py_var(vm, 89));
-    mod->attr().set("KEY_Z", py_var(vm, 90));
-    mod->attr().set("KEY_LEFT_BRACKET", py_var(vm, 91));
-    mod->attr().set("KEY_BACKSLASH", py_var(vm, 92));
-    mod->attr().set("KEY_RIGHT_BRACKET", py_var(vm, 93));
-    mod->attr().set("KEY_GRAVE", py_var(vm, 96));
-    mod->attr().set("KEY_SPACE", py_var(vm, 32));
-    mod->attr().set("KEY_ESCAPE", py_var(vm, 256));
-    mod->attr().set("KEY_ENTER", py_var(vm, 257));
-    mod->attr().set("KEY_TAB", py_var(vm, 258));
-    mod->attr().set("KEY_BACKSPACE", py_var(vm, 259));
-    mod->attr().set("KEY_INSERT", py_var(vm, 260));
-    mod->attr().set("KEY_DELETE", py_var(vm, 261));
-    mod->attr().set("KEY_RIGHT", py_var(vm, 262));
-    mod->attr().set("KEY_LEFT", py_var(vm, 263));
-    mod->attr().set("KEY_DOWN", py_var(vm, 264));
-    mod->attr().set("KEY_UP", py_var(vm, 265));
-    mod->attr().set("KEY_PAGE_UP", py_var(vm, 266));
-    mod->attr().set("KEY_PAGE_DOWN", py_var(vm, 267));
-    mod->attr().set("KEY_HOME", py_var(vm, 268));
-    mod->attr().set("KEY_END", py_var(vm, 269));
-    mod->attr().set("KEY_CAPS_LOCK", py_var(vm, 280));
-    mod->attr().set("KEY_SCROLL_LOCK", py_var(vm, 281));
-    mod->attr().set("KEY_NUM_LOCK", py_var(vm, 282));
-    mod->attr().set("KEY_PRINT_SCREEN", py_var(vm, 283));
-    mod->attr().set("KEY_PAUSE", py_var(vm, 284));
-    mod->attr().set("KEY_F1", py_var(vm, 290));
-    mod->attr().set("KEY_F2", py_var(vm, 291));
-    mod->attr().set("KEY_F3", py_var(vm, 292));
-    mod->attr().set("KEY_F4", py_var(vm, 293));
-    mod->attr().set("KEY_F5", py_var(vm, 294));
-    mod->attr().set("KEY_F6", py_var(vm, 295));
-    mod->attr().set("KEY_F7", py_var(vm, 296));
-    mod->attr().set("KEY_F8", py_var(vm, 297));
-    mod->attr().set("KEY_F9", py_var(vm, 298));
-    mod->attr().set("KEY_F10", py_var(vm, 299));
-    mod->attr().set("KEY_F11", py_var(vm, 300));
-    mod->attr().set("KEY_F12", py_var(vm, 301));
-    mod->attr().set("KEY_LEFT_SHIFT", py_var(vm, 340));
-    mod->attr().set("KEY_LEFT_CONTROL", py_var(vm, 341));
-    mod->attr().set("KEY_LEFT_ALT", py_var(vm, 342));
-    mod->attr().set("KEY_LEFT_SUPER", py_var(vm, 343));
-    mod->attr().set("KEY_RIGHT_SHIFT", py_var(vm, 344));
-    mod->attr().set("KEY_RIGHT_CONTROL", py_var(vm, 345));
-    mod->attr().set("KEY_RIGHT_ALT", py_var(vm, 346));
-    mod->attr().set("KEY_RIGHT_SUPER", py_var(vm, 347));
-    mod->attr().set("KEY_KB_MENU", py_var(vm, 348));
-    mod->attr().set("KEY_KP_0", py_var(vm, 320));
-    mod->attr().set("KEY_KP_1", py_var(vm, 321));
-    mod->attr().set("KEY_KP_2", py_var(vm, 322));
-    mod->attr().set("KEY_KP_3", py_var(vm, 323));
-    mod->attr().set("KEY_KP_4", py_var(vm, 324));
-    mod->attr().set("KEY_KP_5", py_var(vm, 325));
-    mod->attr().set("KEY_KP_6", py_var(vm, 326));
-    mod->attr().set("KEY_KP_7", py_var(vm, 327));
-    mod->attr().set("KEY_KP_8", py_var(vm, 328));
-    mod->attr().set("KEY_KP_9", py_var(vm, 329));
-    mod->attr().set("KEY_KP_DECIMAL", py_var(vm, 330));
-    mod->attr().set("KEY_KP_DIVIDE", py_var(vm, 331));
-    mod->attr().set("KEY_KP_MULTIPLY", py_var(vm, 332));
-    mod->attr().set("KEY_KP_SUBTRACT", py_var(vm, 333));
-    mod->attr().set("KEY_KP_ADD", py_var(vm, 334));
-    mod->attr().set("KEY_KP_ENTER", py_var(vm, 335));
-    mod->attr().set("KEY_KP_EQUAL", py_var(vm, 336));
-    mod->attr().set("KEY_BACK", py_var(vm, 4));
-    mod->attr().set("KEY_MENU", py_var(vm, 82));
-    mod->attr().set("KEY_VOLUME_UP", py_var(vm, 24));
-    mod->attr().set("KEY_VOLUME_DOWN", py_var(vm, 25));
+    _bind_enums(vm, mod, {{"KEY_NULL", 0}, {"KEY_APOSTROPHE", 39}, {"KEY_COMMA", 44}, {"KEY_MINUS", 45}, {"KEY_PERIOD", 46}, {"KEY_SLASH", 47}, {"KEY_ZERO", 48}, {"KEY_ONE", 49}, {"KEY_TWO", 50}, {"KEY_THREE", 51}, {"KEY_FOUR", 52}, {"KEY_FIVE", 53}, {"KEY_SIX", 54}, {"KEY_SEVEN", 55}, {"KEY_EIGHT", 56}, {"KEY_NINE", 57}, {"KEY_SEMICOLON", 59}, {"KEY_EQUAL", 61}, {"KEY_A", 65}, {"KEY_B", 66}, {"KEY_C", 67}, {"KEY_D", 68}, {"KEY_E", 69}, {"KEY_F", 70}, {"KEY_G", 71}, {"KEY_H", 72}, {"KEY_I", 73}, {"KEY_J", 74}, {"KEY_K", 75}, {"KEY_L", 76}, {"KEY_M", 77}, {"KEY_N", 78}, {"KEY_O", 79}, {"KEY_P", 80}, {"KEY_Q", 81}, {"KEY_R", 82}, {"KEY_S", 83}, {"KEY_T", 84}, {"KEY_U", 85}, {"KEY_V", 86}, {"KEY_W", 87}, {"KEY_X", 88}, {"KEY_Y", 89}, {"KEY_Z", 90}, {"KEY_LEFT_BRACKET", 91}, {"KEY_BACKSLASH", 92}, {"KEY_RIGHT_BRACKET", 93}, {"KEY_GRAVE", 96}, {"KEY_SPACE", 32}, {"KEY_ESCAPE", 256}, {"KEY_ENTER", 257}, {"KEY_TAB", 258}, {"KEY_BACKSPACE", 259}, {"KEY_INSERT", 260}, {"KEY_DELETE", 261}, {"KEY_RIGHT", 262}, {"KEY_LEFT", 263}, {"KEY_DOWN", 264}, {"KEY_UP", 265}, {"KEY_PAGE_UP", 266}, {"KEY_PAGE_DOWN", 267}, {"KEY_HOME", 268}, {"KEY_END", 269}, {"KEY_CAPS_LOCK", 280}, {"KEY_SCROLL_LOCK", 281}, {"KEY_NUM_LOCK", 282}, {"KEY_PRINT_SCREEN", 283}, {"KEY_PAUSE", 284}, {"KEY_F1", 290}, {"KEY_F2", 291}, {"KEY_F3", 292}, {"KEY_F4", 293}, {"KEY_F5", 294}, {"KEY_F6", 295}, {"KEY_F7", 296}, {"KEY_F8", 297}, {"KEY_F9", 298}, {"KEY_F10", 299}, {"KEY_F11", 300}, {"KEY_F12", 301}, {"KEY_LEFT_SHIFT", 340}, {"KEY_LEFT_CONTROL", 341}, {"KEY_LEFT_ALT", 342}, {"KEY_LEFT_SUPER", 343}, {"KEY_RIGHT_SHIFT", 344}, {"KEY_RIGHT_CONTROL", 345}, {"KEY_RIGHT_ALT", 346}, {"KEY_RIGHT_SUPER", 347}, {"KEY_KB_MENU", 348}, {"KEY_KP_0", 320}, {"KEY_KP_1", 321}, {"KEY_KP_2", 322}, {"KEY_KP_3", 323}, {"KEY_KP_4", 324}, {"KEY_KP_5", 325}, {"KEY_KP_6", 326}, {"KEY_KP_7", 327}, {"KEY_KP_8", 328}, {"KEY_KP_9", 329}, {"KEY_KP_DECIMAL", 330}, {"KEY_KP_DIVIDE", 331}, {"KEY_KP_MULTIPLY", 332}, {"KEY_KP_SUBTRACT", 333}, {"KEY_KP_ADD", 334}, {"KEY_KP_ENTER", 335}, {"KEY_KP_EQUAL", 336}, {"KEY_BACK", 4}, {"KEY_MENU", 82}, {"KEY_VOLUME_UP", 24}, {"KEY_VOLUME_DOWN", 25}});
     // MouseButton
-    mod->attr().set("MOUSE_BUTTON_LEFT", py_var(vm, 0));
-    mod->attr().set("MOUSE_BUTTON_RIGHT", py_var(vm, 1));
-    mod->attr().set("MOUSE_BUTTON_MIDDLE", py_var(vm, 2));
-    mod->attr().set("MOUSE_BUTTON_SIDE", py_var(vm, 3));
-    mod->attr().set("MOUSE_BUTTON_EXTRA", py_var(vm, 4));
-    mod->attr().set("MOUSE_BUTTON_FORWARD", py_var(vm, 5));
-    mod->attr().set("MOUSE_BUTTON_BACK", py_var(vm, 6));
+    _bind_enums(vm, mod, {{"MOUSE_BUTTON_LEFT", 0}, {"MOUSE_BUTTON_RIGHT", 1}, {"MOUSE_BUTTON_MIDDLE", 2}, {"MOUSE_BUTTON_SIDE", 3}, {"MOUSE_BUTTON_EXTRA", 4}, {"MOUSE_BUTTON_FORWARD", 5}, {"MOUSE_BUTTON_BACK", 6}});
     // MouseCursor
-    mod->attr().set("MOUSE_CURSOR_DEFAULT", py_var(vm, 0));
-    mod->attr().set("MOUSE_CURSOR_ARROW", py_var(vm, 1));
-    mod->attr().set("MOUSE_CURSOR_IBEAM", py_var(vm, 2));
-    mod->attr().set("MOUSE_CURSOR_CROSSHAIR", py_var(vm, 3));
-    mod->attr().set("MOUSE_CURSOR_POINTING_HAND", py_var(vm, 4));
-    mod->attr().set("MOUSE_CURSOR_RESIZE_EW", py_var(vm, 5));
-    mod->attr().set("MOUSE_CURSOR_RESIZE_NS", py_var(vm, 6));
-    mod->attr().set("MOUSE_CURSOR_RESIZE_NWSE", py_var(vm, 7));
-    mod->attr().set("MOUSE_CURSOR_RESIZE_NESW", py_var(vm, 8));
-    mod->attr().set("MOUSE_CURSOR_RESIZE_ALL", py_var(vm, 9));
-    mod->attr().set("MOUSE_CURSOR_NOT_ALLOWED", py_var(vm, 10));
+    _bind_enums(vm, mod, {{"MOUSE_CURSOR_DEFAULT", 0}, {"MOUSE_CURSOR_ARROW", 1}, {"MOUSE_CURSOR_IBEAM", 2}, {"MOUSE_CURSOR_CROSSHAIR", 3}, {"MOUSE_CURSOR_POINTING_HAND", 4}, {"MOUSE_CURSOR_RESIZE_EW", 5}, {"MOUSE_CURSOR_RESIZE_NS", 6}, {"MOUSE_CURSOR_RESIZE_NWSE", 7}, {"MOUSE_CURSOR_RESIZE_NESW", 8}, {"MOUSE_CURSOR_RESIZE_ALL", 9}, {"MOUSE_CURSOR_NOT_ALLOWED", 10}});
     // GamepadButton
-    mod->attr().set("GAMEPAD_BUTTON_UNKNOWN", py_var(vm, 0));
-    mod->attr().set("GAMEPAD_BUTTON_LEFT_FACE_UP", py_var(vm, 1));
-    mod->attr().set("GAMEPAD_BUTTON_LEFT_FACE_RIGHT", py_var(vm, 2));
-    mod->attr().set("GAMEPAD_BUTTON_LEFT_FACE_DOWN", py_var(vm, 3));
-    mod->attr().set("GAMEPAD_BUTTON_LEFT_FACE_LEFT", py_var(vm, 4));
-    mod->attr().set("GAMEPAD_BUTTON_RIGHT_FACE_UP", py_var(vm, 5));
-    mod->attr().set("GAMEPAD_BUTTON_RIGHT_FACE_RIGHT", py_var(vm, 6));
-    mod->attr().set("GAMEPAD_BUTTON_RIGHT_FACE_DOWN", py_var(vm, 7));
-    mod->attr().set("GAMEPAD_BUTTON_RIGHT_FACE_LEFT", py_var(vm, 8));
-    mod->attr().set("GAMEPAD_BUTTON_LEFT_TRIGGER_1", py_var(vm, 9));
-    mod->attr().set("GAMEPAD_BUTTON_LEFT_TRIGGER_2", py_var(vm, 10));
-    mod->attr().set("GAMEPAD_BUTTON_RIGHT_TRIGGER_1", py_var(vm, 11));
-    mod->attr().set("GAMEPAD_BUTTON_RIGHT_TRIGGER_2", py_var(vm, 12));
-    mod->attr().set("GAMEPAD_BUTTON_MIDDLE_LEFT", py_var(vm, 13));
-    mod->attr().set("GAMEPAD_BUTTON_MIDDLE", py_var(vm, 14));
-    mod->attr().set("GAMEPAD_BUTTON_MIDDLE_RIGHT", py_var(vm, 15));
-    mod->attr().set("GAMEPAD_BUTTON_LEFT_THUMB", py_var(vm, 16));
-    mod->attr().set("GAMEPAD_BUTTON_RIGHT_THUMB", py_var(vm, 17));
+    _bind_enums(vm, mod, {{"GAMEPAD_BUTTON_UNKNOWN", 0}, {"GAMEPAD_BUTTON_LEFT_FACE_UP", 1}, {"GAMEPAD_BUTTON_LEFT_FACE_RIGHT", 2}, {"GAMEPAD_BUTTON_LEFT_FACE_DOWN", 3}, {"GAMEPAD_BUTTON_LEFT_FACE_LEFT", 4}, {"GAMEPAD_BUTTON_RIGHT_FACE_UP", 5}, {"GAMEPAD_BUTTON_RIGHT_FACE_RIGHT", 6}, {"GAMEPAD_BUTTON_RIGHT_FACE_DOWN", 7}, {"GAMEPAD_BUTTON_RIGHT_FACE_LEFT", 8}, {"GAMEPAD_BUTTON_LEFT_TRIGGER_1", 9}, {"GAMEPAD_BUTTON_LEFT_TRIGGER_2", 10}, {"GAMEPAD_BUTTON_RIGHT_TRIGGER_1", 11}, {"GAMEPAD_BUTTON_RIGHT_TRIGGER_2", 12}, {"GAMEPAD_BUTTON_MIDDLE_LEFT", 13}, {"GAMEPAD_BUTTON_MIDDLE", 14}, {"GAMEPAD_BUTTON_MIDDLE_RIGHT", 15}, {"GAMEPAD_BUTTON_LEFT_THUMB", 16}, {"GAMEPAD_BUTTON_RIGHT_THUMB", 17}});
     // GamepadAxis
-    mod->attr().set("GAMEPAD_AXIS_LEFT_X", py_var(vm, 0));
-    mod->attr().set("GAMEPAD_AXIS_LEFT_Y", py_var(vm, 1));
-    mod->attr().set("GAMEPAD_AXIS_RIGHT_X", py_var(vm, 2));
-    mod->attr().set("GAMEPAD_AXIS_RIGHT_Y", py_var(vm, 3));
-    mod->attr().set("GAMEPAD_AXIS_LEFT_TRIGGER", py_var(vm, 4));
-    mod->attr().set("GAMEPAD_AXIS_RIGHT_TRIGGER", py_var(vm, 5));
+    _bind_enums(vm, mod, {{"GAMEPAD_AXIS_LEFT_X", 0}, {"GAMEPAD_AXIS_LEFT_Y", 1}, {"GAMEPAD_AXIS_RIGHT_X", 2}, {"GAMEPAD_AXIS_RIGHT_Y", 3}, {"GAMEPAD_AXIS_LEFT_TRIGGER", 4}, {"GAMEPAD_AXIS_RIGHT_TRIGGER", 5}});
     // MaterialMapIndex
-    mod->attr().set("MATERIAL_MAP_ALBEDO", py_var(vm, 0));
-    mod->attr().set("MATERIAL_MAP_METALNESS", py_var(vm, 1));
-    mod->attr().set("MATERIAL_MAP_NORMAL", py_var(vm, 2));
-    mod->attr().set("MATERIAL_MAP_ROUGHNESS", py_var(vm, 3));
-    mod->attr().set("MATERIAL_MAP_OCCLUSION", py_var(vm, 4));
-    mod->attr().set("MATERIAL_MAP_EMISSION", py_var(vm, 5));
-    mod->attr().set("MATERIAL_MAP_HEIGHT", py_var(vm, 6));
-    mod->attr().set("MATERIAL_MAP_CUBEMAP", py_var(vm, 7));
-    mod->attr().set("MATERIAL_MAP_IRRADIANCE", py_var(vm, 8));
-    mod->attr().set("MATERIAL_MAP_PREFILTER", py_var(vm, 9));
-    mod->attr().set("MATERIAL_MAP_BRDF", py_var(vm, 10));
+    _bind_enums(vm, mod, {{"MATERIAL_MAP_ALBEDO", 0}, {"MATERIAL_MAP_METALNESS", 1}, {"MATERIAL_MAP_NORMAL", 2}, {"MATERIAL_MAP_ROUGHNESS", 3}, {"MATERIAL_MAP_OCCLUSION", 4}, {"MATERIAL_MAP_EMISSION", 5}, {"MATERIAL_MAP_HEIGHT", 6}, {"MATERIAL_MAP_CUBEMAP", 7}, {"MATERIAL_MAP_IRRADIANCE", 8}, {"MATERIAL_MAP_PREFILTER", 9}, {"MATERIAL_MAP_BRDF", 10}});
     // ShaderLocationIndex
-    mod->attr().set("SHADER_LOC_VERTEX_POSITION", py_var(vm, 0));
-    mod->attr().set("SHADER_LOC_VERTEX_TEXCOORD01", py_var(vm, 1));
-    mod->attr().set("SHADER_LOC_VERTEX_TEXCOORD02", py_var(vm, 2));
-    mod->attr().set("SHADER_LOC_VERTEX_NORMAL", py_var(vm, 3));
-    mod->attr().set("SHADER_LOC_VERTEX_TANGENT", py_var(vm, 4));
-    mod->attr().set("SHADER_LOC_VERTEX_COLOR", py_var(vm, 5));
-    mod->attr().set("SHADER_LOC_MATRIX_MVP", py_var(vm, 6));
-    mod->attr().set("SHADER_LOC_MATRIX_VIEW", py_var(vm, 7));
-    mod->attr().set("SHADER_LOC_MATRIX_PROJECTION", py_var(vm, 8));
-    mod->attr().set("SHADER_LOC_MATRIX_MODEL", py_var(vm, 9));
-    mod->attr().set("SHADER_LOC_MATRIX_NORMAL", py_var(vm, 10));
-    mod->attr().set("SHADER_LOC_VECTOR_VIEW", py_var(vm, 11));
-    mod->attr().set("SHADER_LOC_COLOR_DIFFUSE", py_var(vm, 12));
-    mod->attr().set("SHADER_LOC_COLOR_SPECULAR", py_var(vm, 13));
-    mod->attr().set("SHADER_LOC_COLOR_AMBIENT", py_var(vm, 14));
-    mod->attr().set("SHADER_LOC_MAP_ALBEDO", py_var(vm, 15));
-    mod->attr().set("SHADER_LOC_MAP_METALNESS", py_var(vm, 16));
-    mod->attr().set("SHADER_LOC_MAP_NORMAL", py_var(vm, 17));
-    mod->attr().set("SHADER_LOC_MAP_ROUGHNESS", py_var(vm, 18));
-    mod->attr().set("SHADER_LOC_MAP_OCCLUSION", py_var(vm, 19));
-    mod->attr().set("SHADER_LOC_MAP_EMISSION", py_var(vm, 20));
-    mod->attr().set("SHADER_LOC_MAP_HEIGHT", py_var(vm, 21));
-    mod->attr().set("SHADER_LOC_MAP_CUBEMAP", py_var(vm, 22));
-    mod->attr().set("SHADER_LOC_MAP_IRRADIANCE", py_var(vm, 23));
-    mod->attr().set("SHADER_LOC_MAP_PREFILTER", py_var(vm, 24));
-    mod->attr().set("SHADER_LOC_MAP_BRDF", py_var(vm, 25));
+    _bind_enums(vm, mod, {{"SHADER_LOC_VERTEX_POSITION", 0}, {"SHADER_LOC_VERTEX_TEXCOORD01", 1}, {"SHADER_LOC_VERTEX_TEXCOORD02", 2}, {"SHADER_LOC_VERTEX_NORMAL", 3}, {"SHADER_LOC_VERTEX_TANGENT", 4}, {"SHADER_LOC_VERTEX_COLOR", 5}, {"SHADER_LOC_MATRIX_MVP", 6}, {"SHADER_LOC_MATRIX_VIEW", 7}, {"SHADER_LOC_MATRIX_PROJECTION", 8}, {"SHADER_LOC_MATRIX_MODEL", 9}, {"SHADER_LOC_MATRIX_NORMAL", 10}, {"SHADER_LOC_VECTOR_VIEW", 11}, {"SHADER_LOC_COLOR_DIFFUSE", 12}, {"SHADER_LOC_COLOR_SPECULAR", 13}, {"SHADER_LOC_COLOR_AMBIENT", 14}, {"SHADER_LOC_MAP_ALBEDO", 15}, {"SHADER_LOC_MAP_METALNESS", 16}, {"SHADER_LOC_MAP_NORMAL", 17}, {"SHADER_LOC_MAP_ROUGHNESS", 18}, {"SHADER_LOC_MAP_OCCLUSION", 19}, {"SHADER_LOC_MAP_EMISSION", 20}, {"SHADER_LOC_MAP_HEIGHT", 21}, {"SHADER_LOC_MAP_CUBEMAP", 22}, {"SHADER_LOC_MAP_IRRADIANCE", 23}, {"SHADER_LOC_MAP_PREFILTER", 24}, {"SHADER_LOC_MAP_BRDF", 25}});
     // ShaderUniformDataType
-    mod->attr().set("SHADER_UNIFORM_FLOAT", py_var(vm, 0));
-    mod->attr().set("SHADER_UNIFORM_VEC2", py_var(vm, 1));
-    mod->attr().set("SHADER_UNIFORM_VEC3", py_var(vm, 2));
-    mod->attr().set("SHADER_UNIFORM_VEC4", py_var(vm, 3));
-    mod->attr().set("SHADER_UNIFORM_INT", py_var(vm, 4));
-    mod->attr().set("SHADER_UNIFORM_IVEC2", py_var(vm, 5));
-    mod->attr().set("SHADER_UNIFORM_IVEC3", py_var(vm, 6));
-    mod->attr().set("SHADER_UNIFORM_IVEC4", py_var(vm, 7));
-    mod->attr().set("SHADER_UNIFORM_SAMPLER2D", py_var(vm, 8));
+    _bind_enums(vm, mod, {{"SHADER_UNIFORM_FLOAT", 0}, {"SHADER_UNIFORM_VEC2", 1}, {"SHADER_UNIFORM_VEC3", 2}, {"SHADER_UNIFORM_VEC4", 3}, {"SHADER_UNIFORM_INT", 4}, {"SHADER_UNIFORM_IVEC2", 5}, {"SHADER_UNIFORM_IVEC3", 6}, {"SHADER_UNIFORM_IVEC4", 7}, {"SHADER_UNIFORM_SAMPLER2D", 8}});
     // ShaderAttributeDataType
-    mod->attr().set("SHADER_ATTRIB_FLOAT", py_var(vm, 0));
-    mod->attr().set("SHADER_ATTRIB_VEC2", py_var(vm, 1));
-    mod->attr().set("SHADER_ATTRIB_VEC3", py_var(vm, 2));
-    mod->attr().set("SHADER_ATTRIB_VEC4", py_var(vm, 3));
+    _bind_enums(vm, mod, {{"SHADER_ATTRIB_FLOAT", 0}, {"SHADER_ATTRIB_VEC2", 1}, {"SHADER_ATTRIB_VEC3", 2}, {"SHADER_ATTRIB_VEC4", 3}});
     // PixelFormat
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_GRAYSCALE", py_var(vm, 1));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA", py_var(vm, 2));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_R5G6B5", py_var(vm, 3));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_R8G8B8", py_var(vm, 4));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_R5G5B5A1", py_var(vm, 5));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_R4G4B4A4", py_var(vm, 6));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_R8G8B8A8", py_var(vm, 7));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_R32", py_var(vm, 8));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_R32G32B32", py_var(vm, 9));
-    mod->attr().set("PIXELFORMAT_UNCOMPRESSED_R32G32B32A32", py_var(vm, 10));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_DXT1_RGB", py_var(vm, 11));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_DXT1_RGBA", py_var(vm, 12));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_DXT3_RGBA", py_var(vm, 13));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_DXT5_RGBA", py_var(vm, 14));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_ETC1_RGB", py_var(vm, 15));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_ETC2_RGB", py_var(vm, 16));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA", py_var(vm, 17));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_PVRT_RGB", py_var(vm, 18));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_PVRT_RGBA", py_var(vm, 19));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA", py_var(vm, 20));
-    mod->attr().set("PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA", py_var(vm, 21));
+    _bind_enums(vm, mod, {{"PIXELFORMAT_UNCOMPRESSED_GRAYSCALE", 1}, {"PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA", 2}, {"PIXELFORMAT_UNCOMPRESSED_R5G6B5", 3}, {"PIXELFORMAT_UNCOMPRESSED_R8G8B8", 4}, {"PIXELFORMAT_UNCOMPRESSED_R5G5B5A1", 5}, {"PIXELFORMAT_UNCOMPRESSED_R4G4B4A4", 6}, {"PIXELFORMAT_UNCOMPRESSED_R8G8B8A8", 7}, {"PIXELFORMAT_UNCOMPRESSED_R32", 8}, {"PIXELFORMAT_UNCOMPRESSED_R32G32B32", 9}, {"PIXELFORMAT_UNCOMPRESSED_R32G32B32A32", 10}, {"PIXELFORMAT_COMPRESSED_DXT1_RGB", 11}, {"PIXELFORMAT_COMPRESSED_DXT1_RGBA", 12}, {"PIXELFORMAT_COMPRESSED_DXT3_RGBA", 13}, {"PIXELFORMAT_COMPRESSED_DXT5_RGBA", 14}, {"PIXELFORMAT_COMPRESSED_ETC1_RGB", 15}, {"PIXELFORMAT_COMPRESSED_ETC2_RGB", 16}, {"PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA", 17}, {"PIXELFORMAT_COMPRESSED_PVRT_RGB", 18}, {"PIXELFORMAT_COMPRESSED_PVRT_RGBA", 19}, {"PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA", 20}, {"PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA", 21}});
     // TextureFilter
-    mod->attr().set("TEXTURE_FILTER_POINT", py_var(vm, 0));
-    mod->attr().set("TEXTURE_FILTER_BILINEAR", py_var(vm, 1));
-    mod->attr().set("TEXTURE_FILTER_TRILINEAR", py_var(vm, 2));
-    mod->attr().set("TEXTURE_FILTER_ANISOTROPIC_4X", py_var(vm, 3));
-    mod->attr().set("TEXTURE_FILTER_ANISOTROPIC_8X", py_var(vm, 4));
-    mod->attr().set("TEXTURE_FILTER_ANISOTROPIC_16X", py_var(vm, 5));
+    _bind_enums(vm, mod, {{"TEXTURE_FILTER_POINT", 0}, {"TEXTURE_FILTER_BILINEAR", 1}, {"TEXTURE_FILTER_TRILINEAR", 2}, {"TEXTURE_FILTER_ANISOTROPIC_4X", 3}, {"TEXTURE_FILTER_ANISOTROPIC_8X", 4}, {"TEXTURE_FILTER_ANISOTROPIC_16X", 5}});
     // TextureWrap
-    mod->attr().set("TEXTURE_WRAP_REPEAT", py_var(vm, 0));
-    mod->attr().set("TEXTURE_WRAP_CLAMP", py_var(vm, 1));
-    mod->attr().set("TEXTURE_WRAP_MIRROR_REPEAT", py_var(vm, 2));
-    mod->attr().set("TEXTURE_WRAP_MIRROR_CLAMP", py_var(vm, 3));
+    _bind_enums(vm, mod, {{"TEXTURE_WRAP_REPEAT", 0}, {"TEXTURE_WRAP_CLAMP", 1}, {"TEXTURE_WRAP_MIRROR_REPEAT", 2}, {"TEXTURE_WRAP_MIRROR_CLAMP", 3}});
     // CubemapLayout
-    mod->attr().set("CUBEMAP_LAYOUT_AUTO_DETECT", py_var(vm, 0));
-    mod->attr().set("CUBEMAP_LAYOUT_LINE_VERTICAL", py_var(vm, 1));
-    mod->attr().set("CUBEMAP_LAYOUT_LINE_HORIZONTAL", py_var(vm, 2));
-    mod->attr().set("CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR", py_var(vm, 3));
-    mod->attr().set("CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE", py_var(vm, 4));
-    mod->attr().set("CUBEMAP_LAYOUT_PANORAMA", py_var(vm, 5));
+    _bind_enums(vm, mod, {{"CUBEMAP_LAYOUT_AUTO_DETECT", 0}, {"CUBEMAP_LAYOUT_LINE_VERTICAL", 1}, {"CUBEMAP_LAYOUT_LINE_HORIZONTAL", 2}, {"CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR", 3}, {"CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE", 4}, {"CUBEMAP_LAYOUT_PANORAMA", 5}});
     // FontType
-    mod->attr().set("FONT_DEFAULT", py_var(vm, 0));
-    mod->attr().set("FONT_BITMAP", py_var(vm, 1));
-    mod->attr().set("FONT_SDF", py_var(vm, 2));
+    _bind_enums(vm, mod, {{"FONT_DEFAULT", 0}, {"FONT_BITMAP", 1}, {"FONT_SDF", 2}});
     // BlendMode
-    mod->attr().set("BLEND_ALPHA", py_var(vm, 0));
-    mod->attr().set("BLEND_ADDITIVE", py_var(vm, 1));
-    mod->attr().set("BLEND_MULTIPLIED", py_var(vm, 2));
-    mod->attr().set("BLEND_ADD_COLORS", py_var(vm, 3));
-    mod->attr().set("BLEND_SUBTRACT_COLORS", py_var(vm, 4));
-    mod->attr().set("BLEND_ALPHA_PREMULTIPLY", py_var(vm, 5));
-    mod->attr().set("BLEND_CUSTOM", py_var(vm, 6));
-    mod->attr().set("BLEND_CUSTOM_SEPARATE", py_var(vm, 7));
+    _bind_enums(vm, mod, {{"BLEND_ALPHA", 0}, {"BLEND_ADDITIVE", 1}, {"BLEND_MULTIPLIED", 2}, {"BLEND_ADD_COLORS", 3}, {"BLEND_SUBTRACT_COLORS", 4}, {"BLEND_ALPHA_PREMULTIPLY", 5}, {"BLEND_CUSTOM", 6}, {"BLEND_CUSTOM_SEPARATE", 7}});
     // Gesture
-    mod->attr().set("GESTURE_NONE", py_var(vm, 0));
-    mod->attr().set("GESTURE_TAP", py_var(vm, 1));
-    mod->attr().set("GESTURE_DOUBLETAP", py_var(vm, 2));
-    mod->attr().set("GESTURE_HOLD", py_var(vm, 4));
-    mod->attr().set("GESTURE_DRAG", py_var(vm, 8));
-    mod->attr().set("GESTURE_SWIPE_RIGHT", py_var(vm, 16));
-    mod->attr().set("GESTURE_SWIPE_LEFT", py_var(vm, 32));
-    mod->attr().set("GESTURE_SWIPE_UP", py_var(vm, 64));
-    mod->attr().set("GESTURE_SWIPE_DOWN", py_var(vm, 128));
-    mod->attr().set("GESTURE_PINCH_IN", py_var(vm, 256));
-    mod->attr().set("GESTURE_PINCH_OUT", py_var(vm, 512));
+    _bind_enums(vm, mod, {{"GESTURE_NONE", 0}, {"GESTURE_TAP", 1}, {"GESTURE_DOUBLETAP", 2}, {"GESTURE_HOLD", 4}, {"GESTURE_DRAG", 8}, {"GESTURE_SWIPE_RIGHT", 16}, {"GESTURE_SWIPE_LEFT", 32}, {"GESTURE_SWIPE_UP", 64}, {"GESTURE_SWIPE_DOWN", 128}, {"GESTURE_PINCH_IN", 256}, {"GESTURE_PINCH_OUT", 512}});
     // CameraMode
-    mod->attr().set("CAMERA_CUSTOM", py_var(vm, 0));
-    mod->attr().set("CAMERA_FREE", py_var(vm, 1));
-    mod->attr().set("CAMERA_ORBITAL", py_var(vm, 2));
-    mod->attr().set("CAMERA_FIRST_PERSON", py_var(vm, 3));
-    mod->attr().set("CAMERA_THIRD_PERSON", py_var(vm, 4));
+    _bind_enums(vm, mod, {{"CAMERA_CUSTOM", 0}, {"CAMERA_FREE", 1}, {"CAMERA_ORBITAL", 2}, {"CAMERA_FIRST_PERSON", 3}, {"CAMERA_THIRD_PERSON", 4}});
     // CameraProjection
-    mod->attr().set("CAMERA_PERSPECTIVE", py_var(vm, 0));
-    mod->attr().set("CAMERA_ORTHOGRAPHIC", py_var(vm, 1));
+    _bind_enums(vm, mod, {{"CAMERA_PERSPECTIVE", 0}, {"CAMERA_ORTHOGRAPHIC", 1}});
     // NPatchLayout
-    mod->attr().set("NPATCH_NINE_PATCH", py_var(vm, 0));
-    mod->attr().set("NPATCH_THREE_PATCH_VERTICAL", py_var(vm, 1));
-    mod->attr().set("NPATCH_THREE_PATCH_HORIZONTAL", py_var(vm, 2));
+    _bind_enums(vm, mod, {{"NPATCH_NINE_PATCH", 0}, {"NPATCH_THREE_PATCH_VERTICAL", 1}, {"NPATCH_THREE_PATCH_HORIZONTAL", 2}});
 
     wrapped__Matrix::register_class(vm, mod);
     {

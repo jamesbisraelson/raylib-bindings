@@ -20,5 +20,12 @@ T1 _struct_cast(T0& v){
     static_assert(std::is_trivially_copyable_v<T1>);
     return (T1&)v;
 }
+
+template<size_t N>
+void _bind_enums(VM* vm, PyObject* obj, const std::pair<const char*, i64> (&enums)[N]){
+    for(auto [k, v]: enums){
+        obj->attr().set(k, py_var(vm, v));
+    }
+}
 ''',
     ]
