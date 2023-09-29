@@ -17,8 +17,8 @@ python build.py
 
 This generates two files:
 
-+ https://github.com/blueloveTH/pkpy-bindings/blob/main/output/raylibw.cpp
-+ https://github.com/blueloveTH/pkpy-bindings/blob/main/output/typings/raylib.pyi
++ [output/raylibw.cpp](https://github.com/blueloveTH/pkpy-bindings/blob/main/output/raylibw.cpp)
++ [output/typings/raylib.pyi](https://github.com/blueloveTH/pkpy-bindings/blob/main/output/typings/raylib.pyi)
 
 ## What `build.py` looks like
 
