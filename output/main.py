@@ -2,7 +2,7 @@ import raylib
 
 raylib.InitWindow(800, 450, "raylib [core] example - basic window")
 
-RAYWHITE = raylib.Color(245, 245, 245, 255)
+RAYWHITE = raylib.Color(34, 34, 34, 255)
 LIGHTGRAY = raylib.Color(200, 200, 200, 255)
 
 while not raylib.WindowShouldClose():
