@@ -1552,6 +1552,12 @@ PyObject* py_var(VM* vm, const FilePathList* v){
 void add_module_raylib(VM* vm){
     PyObject* mod = vm->new_module("raylib");
 
+    // defines
+    mod->attr().set("RAYLIB_VERSION_MAJOR", py_var(vm, 4));
+    mod->attr().set("RAYLIB_VERSION_MINOR", py_var(vm, 6));
+    mod->attr().set("RAYLIB_VERSION_PATCH", py_var(vm, 0));
+    mod->attr().set("RAYLIB_VERSION", py_var(vm, "4.6-dev"));
+    mod->attr().set("PI", py_var(vm, 3.141592653589793));
     // ConfigFlags
     _bind_enums(vm, mod, {{"FLAG_VSYNC_HINT", 64}, {"FLAG_FULLSCREEN_MODE", 2}, {"FLAG_WINDOW_RESIZABLE", 4}, {"FLAG_WINDOW_UNDECORATED", 8}, {"FLAG_WINDOW_HIDDEN", 128}, {"FLAG_WINDOW_MINIMIZED", 512}, {"FLAG_WINDOW_MAXIMIZED", 1024}, {"FLAG_WINDOW_UNFOCUSED", 2048}, {"FLAG_WINDOW_TOPMOST", 4096}, {"FLAG_WINDOW_ALWAYS_RUN", 256}, {"FLAG_WINDOW_TRANSPARENT", 16}, {"FLAG_WINDOW_HIGHDPI", 8192}, {"FLAG_WINDOW_MOUSE_PASSTHROUGH", 16384}, {"FLAG_MSAA_4X_HINT", 32}, {"FLAG_INTERLACED_HINT", 65536}});
     // TraceLogLevel
@@ -2398,11 +2404,5 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "SetAudioStreamPitch(stream: AudioStream, pitch: float) -> None", &SetAudioStreamPitch);
     _bind(vm, mod, "SetAudioStreamPan(stream: AudioStream, pan: float) -> None", &SetAudioStreamPan);
     _bind(vm, mod, "SetAudioStreamBufferSizeDefault(size: int) -> None", &SetAudioStreamBufferSizeDefault);
-    // defines
-    mod->attr().set("RAYLIB_VERSION_MAJOR", py_var(vm, 4));
-    mod->attr().set("RAYLIB_VERSION_MINOR", py_var(vm, 6));
-    mod->attr().set("RAYLIB_VERSION_PATCH", py_var(vm, 0));
-    mod->attr().set("RAYLIB_VERSION", py_var(vm, "4.6-dev"));
-    mod->attr().set("PI", py_var(vm, 3.141592653589793));
 }
 }  // namespace pkpy

@@ -1,4 +1,4 @@
-from typing import List, Optional, Iterable
+from typing import List, Optional, Iterable, Union
 import json
 import re
 from .schema import *
@@ -18,7 +18,7 @@ class Output:
         with open(cpp_path, 'w') as f:
             f.write(cpp)
     
-def generate(json_file: str, /, 
+def generate(json_file: Union[str, dict, Header], /, 
              module_name: str,
              headers: List[str],
              ignored_functions: Optional[Iterable[str]]=None,
@@ -45,19 +45,7 @@ def generate(json_file: str, /,
     cpp = get_cpp_header(headers)
 
     # %%
-    # gen enums
-    for enum in api.enums:
-        pyi.append(f'########## {enum.name} ##########')
-        pyi.append(f'# {enum.description}')
-        for v in enum.values:
-            kv = f'{v.name} = {v.value}'
-            pyi.append(f'{kv:48}# {v.description}')
-        pyi.append('')
-
-    # %%
     # gen struct
-    pyi.append('')
-
     for struct in api.structs:
         if vector_pattern and re.match(vector_pattern, struct.name):
             template = r'''
@@ -178,11 +166,34 @@ def generate(json_file: str, /,
         ''
     ])
 
+    cpp.append('    // defines')
+    for define in api.defines:
+        if define.type == "INT":
+            pyi.append(f'{define.name}: int = {int(define.value)}')
+            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, {int(define.value)}));')
+        elif define.type == "STRING":
+            pyi.append(f'{define.name}: str = "{define.value}"')
+            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, "{define.value}"));')
+        elif define.type == "FLOAT":
+            pyi.append(f'{define.name}: float = {float(define.value)}')
+            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, {define.value}));')
+        else:
+            pass        # unrecognized type
+    
+    pyi.append('')
+
     for enum in api.enums:
         cpp.append(f'    // {enum.name}')
         _enum_values = ', '.join([f'{{"{v.name}", {v.value}}}' for v in enum.values])
         _enum_values = '{' + _enum_values + '}'
         cpp.append(f'    _bind_enums(vm, mod, {_enum_values});')
+
+        pyi.append(f'########## {enum.name} ##########')
+        pyi.append(f'# {enum.description}')
+        for v in enum.values:
+            kv = f'{v.name} = {v.value}'
+            pyi.append(f'{kv:48}# {v.description}')
+        pyi.append('')
 
     cpp.append('')
 
@@ -219,17 +230,6 @@ def generate(json_file: str, /,
             continue
         pyi.append(tmp)
         cpp.append(f'    _bind(vm, mod, "{sigpy}", &{func.name});')
-
-    cpp.append('    // defines')
-    for define in api.defines:
-        if define.type == "INT":
-            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, {int(define.value)}));')
-        elif define.type == "STRING":
-            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, "{define.value}"));')
-        elif define.type == "FLOAT":
-            cpp.append(f'    mod->attr().set("{define.name}", py_var(vm, {define.value}));')
-        else:
-            pass        # unrecognized type
 
     cpp.append('}')
 
