@@ -9,7 +9,7 @@ class Output:
     def __init__(self, pyi: List[str], cpp: List[str], messages: List[str]):
         self.pyi = pyi
         self.cpp = cpp
-        self.messages = []
+        self.messages = messages
 
     def save(self, pyi_path: str, cpp_path: str):
         pyi = '\n'.join(self.pyi)
