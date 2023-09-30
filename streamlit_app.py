@@ -14,7 +14,7 @@ if not os.path.exists("tmp"):
     os.mkdir("tmp")
 
 if not os.path.exists("raylib_parser"):
-    ok = os.system('gcc -o raylib_parser -O1 raylib/parser/raylib_parser.c')
+    ok = os.system('gcc -o raylib_parser -O1 raylib_parser.c')
     if ok != 0:
         st.error("Failed to compile `raylib_parser`")
         st.stop()
