@@ -1,3 +1,5 @@
+from typing import List
+
 def get_pyi_header():
     return [
         'from typing import overload',
@@ -7,7 +9,7 @@ def get_pyi_header():
         '',
     ]
 
-def get_cpp_header(headers: list[str]):
+def get_cpp_header(headers: List[str]):
     return [f'#include "{h}"' for h in headers] + [
         '#include "pocketpy.h"',
         '',
