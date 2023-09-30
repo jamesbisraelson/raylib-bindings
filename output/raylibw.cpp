@@ -18,51 +18,48 @@ void _bind_enums(VM* vm, PyObject* obj, const std::pair<const char*, i64> (&enum
     }
 }
 
+PyObject* py_var(VM* vm, Vector2 v){
+    return py_var(vm, _struct_cast<Vector2, Vec2>(v));
+}
+template<>
+Vector2 py_cast<Vector2>(VM* vm, PyObject* obj){
+    Vec2 v = py_cast<Vec2>(vm, obj);
+    return _struct_cast<Vec2, Vector2>(v);
+}
+template<>
+Vector2 _py_cast<Vector2>(VM* vm, PyObject* obj){
+    Vec2 v = _py_cast<Vec2>(vm, obj);
+    return _struct_cast<Vec2, Vector2>(v);
+}
 
-    PyObject* py_var(VM* vm, Vector2 v){
-        return py_var(vm, _struct_cast<Vector2, Vec2>(v));
-    }
-    template<>
-    Vector2 py_cast<Vector2>(VM* vm, PyObject* obj){
-        Vec2 v = py_cast<Vec2>(vm, obj);
-        return _struct_cast<Vec2, Vector2>(v);
-    }
-    template<>
-    Vector2 _py_cast<Vector2>(VM* vm, PyObject* obj){
-        Vec2 v = _py_cast<Vec2>(vm, obj);
-        return _struct_cast<Vec2, Vector2>(v);
-    }
-    
+PyObject* py_var(VM* vm, Vector3 v){
+    return py_var(vm, _struct_cast<Vector3, Vec3>(v));
+}
+template<>
+Vector3 py_cast<Vector3>(VM* vm, PyObject* obj){
+    Vec3 v = py_cast<Vec3>(vm, obj);
+    return _struct_cast<Vec3, Vector3>(v);
+}
+template<>
+Vector3 _py_cast<Vector3>(VM* vm, PyObject* obj){
+    Vec3 v = _py_cast<Vec3>(vm, obj);
+    return _struct_cast<Vec3, Vector3>(v);
+}
 
-    PyObject* py_var(VM* vm, Vector3 v){
-        return py_var(vm, _struct_cast<Vector3, Vec3>(v));
-    }
-    template<>
-    Vector3 py_cast<Vector3>(VM* vm, PyObject* obj){
-        Vec3 v = py_cast<Vec3>(vm, obj);
-        return _struct_cast<Vec3, Vector3>(v);
-    }
-    template<>
-    Vector3 _py_cast<Vector3>(VM* vm, PyObject* obj){
-        Vec3 v = _py_cast<Vec3>(vm, obj);
-        return _struct_cast<Vec3, Vector3>(v);
-    }
-    
+PyObject* py_var(VM* vm, Vector4 v){
+    return py_var(vm, _struct_cast<Vector4, Vec4>(v));
+}
+template<>
+Vector4 py_cast<Vector4>(VM* vm, PyObject* obj){
+    Vec4 v = py_cast<Vec4>(vm, obj);
+    return _struct_cast<Vec4, Vector4>(v);
+}
+template<>
+Vector4 _py_cast<Vector4>(VM* vm, PyObject* obj){
+    Vec4 v = _py_cast<Vec4>(vm, obj);
+    return _struct_cast<Vec4, Vector4>(v);
+}
 
-    PyObject* py_var(VM* vm, Vector4 v){
-        return py_var(vm, _struct_cast<Vector4, Vec4>(v));
-    }
-    template<>
-    Vector4 py_cast<Vector4>(VM* vm, PyObject* obj){
-        Vec4 v = py_cast<Vec4>(vm, obj);
-        return _struct_cast<Vec4, Vector4>(v);
-    }
-    template<>
-    Vector4 _py_cast<Vector4>(VM* vm, PyObject* obj){
-        Vec4 v = _py_cast<Vec4>(vm, obj);
-        return _struct_cast<Vec4, Vector4>(v);
-    }
-    
 /*************** Matrix ***************/
 struct wrapped__Matrix{
     PY_CLASS(wrapped__Matrix, raylib, Matrix)

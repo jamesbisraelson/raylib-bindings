@@ -1,0 +1,17 @@
+name: build
+on: [push, pull_request]
+jobs:
+  build_win:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ilammy/msvc-dev-cmd@v1
+    - name: Compile
+      shell: bash
+      run: |
+        python build.py
+        cd output
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build . --config Release

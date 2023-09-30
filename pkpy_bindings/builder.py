@@ -49,20 +49,20 @@ def generate(json_file: Union[str, dict, Header], /,
     for struct in api.structs:
         if vector_pattern and re.match(vector_pattern, struct.name):
             template = r'''
-    PyObject* py_var(VM* vm, %T0 v){
-        return py_var(vm, _struct_cast<%T0, %T1>(v));
-    }
-    template<>
-    %T0 py_cast<%T0>(VM* vm, PyObject* obj){
-        %T1 v = py_cast<%T1>(vm, obj);
-        return _struct_cast<%T1, %T0>(v);
-    }
-    template<>
-    %T0 _py_cast<%T0>(VM* vm, PyObject* obj){
-        %T1 v = _py_cast<%T1>(vm, obj);
-        return _struct_cast<%T1, %T0>(v);
-    }
-    '''
+PyObject* py_var(VM* vm, %T0 v){
+    return py_var(vm, _struct_cast<%T0, %T1>(v));
+}
+template<>
+%T0 py_cast<%T0>(VM* vm, PyObject* obj){
+    %T1 v = py_cast<%T1>(vm, obj);
+    return _struct_cast<%T1, %T0>(v);
+}
+template<>
+%T0 _py_cast<%T0>(VM* vm, PyObject* obj){
+    %T1 v = _py_cast<%T1>(vm, obj);
+    return _struct_cast<%T1, %T0>(v);
+}
+'''.lstrip()
             builtin_name = struct.name.replace('Vector', 'Vec')
             cpp.append(template.replace('%T0', struct.name).replace('%T1', builtin_name))
             continue
