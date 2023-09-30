@@ -8,10 +8,12 @@ jobs:
       with:
         submodules: true
     - uses: ilammy/msvc-dev-cmd@v1
-    - name: Compile
+    - name: Generate the bindings
+      shell: bash
+      run: python build.py
+    - name: Build the example
       shell: bash
       run: |
-        python build.py
         cd output
         mkdir build
         cd build
