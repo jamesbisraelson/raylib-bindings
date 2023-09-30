@@ -6,9 +6,10 @@ from .utils import *
 from .templates import *
 
 class Output:
-    def __init__(self, pyi: List[str], cpp: List[str]):
+    def __init__(self, pyi: List[str], cpp: List[str], messages: List[str]):
         self.pyi = pyi
         self.cpp = cpp
+        self.messages = []
 
     def save(self, pyi_path: str, cpp_path: str):
         pyi = '\n'.join(self.pyi)
@@ -17,6 +18,8 @@ class Output:
             f.write(pyi)
         with open(cpp_path, 'w') as f:
             f.write(cpp)
+        for msg in self.messages:
+            print(msg)
     
 def generate(json_file: Union[str, dict, Header], /, 
              module_name: str,
@@ -43,6 +46,7 @@ def generate(json_file: Union[str, dict, Header], /,
 
     pyi = get_pyi_header()
     cpp = get_cpp_header(headers)
+    messages: List[str] = []
 
     # %%
     # gen struct
@@ -226,7 +230,7 @@ template<>
         tmp += f'    Wraps: `{sigc}`\n'
         tmp += f'    """\n'
         if has_vargs:
-            print(f'WARNING: {sigc} is a variadic function, skipped')
+            messages.append(f'WARNING: {sigc} is a variadic function, skipped')
             continue
         pyi.append(tmp)
         cpp.append(f'    _bind(vm, mod, "{sigpy}", &{func.name});')
@@ -235,4 +239,4 @@ template<>
 
     cpp.append('}  // namespace pkpy')
 
-    return Output(pyi, cpp)
+    return Output(pyi, cpp, messages)

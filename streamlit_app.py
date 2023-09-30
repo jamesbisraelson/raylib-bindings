@@ -79,6 +79,7 @@ if st.button("Generate"):
     )
 
 if config.output is not None:
+    st.success('\n'.join(config.output.messages))
     col_L, col_R = st.columns(2)
     pyi = '\n'.join(config.output.pyi)
     cpp = '\n'.join(config.output.cpp)
