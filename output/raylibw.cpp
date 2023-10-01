@@ -2401,5 +2401,16 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "SetAudioStreamPitch(stream: AudioStream, pitch: float) -> None", &SetAudioStreamPitch);
     _bind(vm, mod, "SetAudioStreamPan(stream: AudioStream, pan: float) -> None", &SetAudioStreamPan);
     _bind(vm, mod, "SetAudioStreamBufferSizeDefault(size: int) -> None", &SetAudioStreamBufferSizeDefault);
+
+    mod->attr().set("Quaternion", mod->attr("vec4"));
+    mod->attr().set("Quaternion_p", mod->attr("vec4_p"));
+    mod->attr().set("Texture2D", mod->attr("Texture"));
+    mod->attr().set("Texture2D_p", mod->attr("Texture_p"));
+    mod->attr().set("TextureCubemap", mod->attr("Texture"));
+    mod->attr().set("TextureCubemap_p", mod->attr("Texture_p"));
+    mod->attr().set("RenderTexture2D", mod->attr("RenderTexture"));
+    mod->attr().set("RenderTexture2D_p", mod->attr("RenderTexture_p"));
+    mod->attr().set("Camera", mod->attr("Camera3D"));
+    mod->attr().set("Camera_p", mod->attr("Camera3D_p"));
 }
 }  // namespace pkpy

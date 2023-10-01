@@ -502,26 +502,6 @@ class FilePathList(_StructLike[FilePathList], _wrapped__FilePathList):
 class FilePathList_p(Pointer[FilePathList], _wrapped__FilePathList):
     """Wraps `FilePathList *`"""
 
-# Quaternion, 4 components (Vector4 alias)
-Quaternion = vec4
-Quaternion_p = vec4_p
-
-# Texture2D, same as Texture
-Texture2D = Texture
-Texture2D_p = Texture_p
-
-# TextureCubemap, same as Texture
-TextureCubemap = Texture
-TextureCubemap_p = Texture_p
-
-# RenderTexture2D, same as RenderTexture
-RenderTexture2D = RenderTexture
-RenderTexture2D_p = RenderTexture_p
-
-# Camera type fallback, defaults to Camera3D
-Camera = Camera3D
-Camera_p = Camera3D_p
-
 RAYLIB_VERSION_MAJOR: int = 4
 RAYLIB_VERSION_MINOR: int = 6
 RAYLIB_VERSION_PATCH: int = 0
@@ -3920,3 +3900,23 @@ def SetAudioStreamBufferSizeDefault(size: int) -> None:
 
     Wraps: `void SetAudioStreamBufferSizeDefault(int size)`
     """
+
+# Quaternion, 4 components (Vector4 alias)
+Quaternion = vec4
+Quaternion_p = vec4_p
+
+# Texture2D, same as Texture
+Texture2D = Texture
+Texture2D_p = Texture_p
+
+# TextureCubemap, same as Texture
+TextureCubemap = Texture
+TextureCubemap_p = Texture_p
+
+# RenderTexture2D, same as RenderTexture
+RenderTexture2D = RenderTexture
+RenderTexture2D_p = RenderTexture_p
+
+# Camera type fallback, defaults to Camera3D
+Camera = Camera3D
+Camera_p = Camera3D_p

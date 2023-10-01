@@ -153,13 +153,6 @@ template<>
         cpp.append(f'    PyObject* type = vm->_modules[P.first]->attr(P.second);')
         cpp.append(f'    return vm->heap.gcnew<VoidP>(PK_OBJ_GET(Type, type), v);')
         cpp.append( '}')
-
-    # gen alias
-    for alias in api.aliases:
-        pyi.append(f'# {alias.description}')
-        pyi.append(f'{alias.name} = {ptype(alias.type)}')
-        pyi.append(f'{alias.name}_p = {ptype(alias.type)}_p')
-        pyi.append('')
     # %%
     # gen functions
     cpp.extend([
@@ -234,6 +227,17 @@ template<>
             continue
         pyi.append(tmp)
         cpp.append(f'    _bind(vm, mod, "{sigpy}", &{func.name});')
+
+    cpp.append('')
+    # gen alias
+    for alias in api.aliases:
+        pyi.append(f'# {alias.description}')
+        k, v = alias.name, ptype(alias.type)
+        pyi.append(f'{k} = {v}')
+        pyi.append(f'{k}_p = {v}_p')
+        pyi.append('')
+        cpp.append(f'    mod->attr().set("{k}", mod->attr("{v}"));')
+        cpp.append(f'    mod->attr().set("{k}_p", mod->attr("{v}_p"));')
 
     cpp.append('}')
 
