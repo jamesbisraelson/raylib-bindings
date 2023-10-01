@@ -2402,6 +2402,8 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "SetAudioStreamPan(stream: AudioStream, pan: float) -> None", &SetAudioStreamPan);
     _bind(vm, mod, "SetAudioStreamBufferSizeDefault(size: int) -> None", &SetAudioStreamBufferSizeDefault);
 
+    CodeObject_ co = vm->compile("from linalg import *", "raylib.py", EXEC_MODE);
+    vm->_exec(co, mod);
     mod->attr().set("Quaternion", mod->attr("vec4"));
     mod->attr().set("Quaternion_p", mod->attr("vec4_p"));
     mod->attr().set("Texture2D", mod->attr("Texture"));

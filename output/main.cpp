@@ -9,13 +9,13 @@ namespace pkpy{
 int main(){
     VM* vm = new VM();
     add_module_raylib(vm);
-#ifdef _WIN32
-    const char* filepath = "../../main.py";
-#else
     const char* filepath = "../main.py";
-#endif
-    Str source = vm->_import_handler(filepath).str();
-    vm->exec(source);
+    Bytes b = vm->_import_handler(filepath);
+    if(!b){
+        std::cerr << "Error: " << filepath << " not found" << std::endl;
+        return 1;
+    }
+    vm->exec(b.str());
 
     delete vm;
     return 0;

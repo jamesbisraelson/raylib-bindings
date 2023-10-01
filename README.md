@@ -66,8 +66,7 @@ cd build
 
 cmake ..
 cmake --build .
-cd Debug
-raylibw_test.exe
+Debug\raylibw_test.exe
 ```
 
 ![raylibw_test.png](raylibw_test.png)

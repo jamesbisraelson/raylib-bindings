@@ -229,6 +229,8 @@ template<>
         cpp.append(f'    _bind(vm, mod, "{sigpy}", &{func.name});')
 
     cpp.append('')
+    cpp.append('    CodeObject_ co = vm->compile("from linalg import *", "raylib.py", EXEC_MODE);')
+    cpp.append('    vm->_exec(co, mod);')
     # gen alias
     for alias in api.aliases:
         pyi.append(f'# {alias.description}')
