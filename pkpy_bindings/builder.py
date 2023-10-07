@@ -1,4 +1,4 @@
-from typing import List, Optional, Iterable, Union
+from typing import List, Optional, Iterable, Union, Dict
 import json
 import re
 from .schema import *
@@ -6,9 +6,10 @@ from .utils import *
 from .templates import *
 
 class Output:
-    def __init__(self, pyi: List[str], cpp: List[str], messages: List[str]):
+    def __init__(self, pyi: List[str], cpp: List[str], metadata: Dict, messages: List[str]):
         self.pyi = pyi
         self.cpp = cpp
+        self.metadata = metadata
         self.messages = messages
 
     def save(self, pyi_path: str, cpp_path: str):
@@ -31,10 +32,13 @@ def generate(json_file: Union[str, dict, Header], /,
     ignored_functions = set(ignored_functions or [])
     opaque_structs = set(opaque_structs or [])
 
+    metadata: dict = None
     if isinstance(json_file, str):
         with open(json_file) as f:
-            api = header_from_dict(json.load(f))
+            metadata = json.load(f)
+            api = header_from_dict(metadata)
     elif isinstance(json_file, dict):
+        metadata = json_file
         api = header_from_dict(json_file)
     elif isinstance(json_file, Header):
         api = json_file
@@ -245,4 +249,4 @@ template<>
 
     cpp.append('}  // namespace pkpy')
 
-    return Output(pyi, cpp, messages)
+    return Output(pyi, cpp, metadata, messages)
