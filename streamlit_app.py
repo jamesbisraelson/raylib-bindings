@@ -95,6 +95,6 @@ if config.output is not None:
     col_L.download_button(f"Download {col_L_name}", pyi, col_L_name)
     col_L.code(pyi, language="py")
 
-    col_R_name = f"{module_name}.cpp"
+    col_R_name = f"{module_name}w.cpp"
     col_R.download_button(f"Download {col_R_name}", cpp, col_R_name)
     col_R.code(cpp, language="cpp")
