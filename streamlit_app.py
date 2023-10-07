@@ -88,22 +88,24 @@ if st.button("Generate"):
 if config.output is not None:
     if len(config.output.messages) > 0:
         st.success('\n\n'.join(config.output.messages))
-    col_L, col_C, col_R = st.columns(3)
+    col_0, col_1, col_2 = st.columns(3)
     pyi = '\n'.join(config.output.pyi)
     cpp = '\n'.join(config.output.cpp)
 
-    col_L_name = f"{module_name}.pyi"
-    col_L.download_button(f"Download {col_L_name}", pyi, col_L_name)
-    col_L.code(pyi, language="py")
-
-    col_R_name = f"{module_name}w.cpp"
-    col_R.download_button(f"Download {col_R_name}", cpp, col_R_name)
-    col_R.code(cpp, language="cpp")
-
-    col_C_name = f"{module_name}.json"
-    col_C.download_button(
-        f"Download {col_C_name}",
+    col_0_name = f"{module_name}.pyi"
+    col_0.download_button(f"Download {col_0_name}", pyi, col_0_name)
+    
+    col_1_name = f"{module_name}.json"
+    col_1.download_button(
+        f"Download {col_1_name}",
         json.dumps(config.output.metadata, indent=4, ensure_ascii=False),
-        col_C_name
+        col_1_name
     )
+
+    col_2_name = f"{module_name}w.cpp"
+    col_2.download_button(f"Download {col_2_name}", cpp, col_2_name)
+
+    col_L, col_R = st.columns(2)
+    col_L.code(pyi, language="py")
+    col_R.code(cpp, language="cpp")
 
