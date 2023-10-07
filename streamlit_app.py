@@ -50,6 +50,11 @@ raylib_parser_truncate = st.text_input(
     value="RLGL IMPLEMENTATION",
 )
 
+vector_pattern = st.text_input(
+    "Vector pattern",
+    value=r'\bVector(\d)\b',
+)
+
 if st.button("Generate"):
     if uploaded_file is None:
         st.error("Please upload a file")
@@ -76,6 +81,7 @@ if st.button("Generate"):
         output_path,
         module_name=module_name,
         headers=[f'{module_name}.h'],
+        vector_pattern=vector_pattern,
     )
 
 if config.output is not None:
