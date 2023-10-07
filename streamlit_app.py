@@ -56,6 +56,11 @@ vector_pattern = st.text_input(
     value=r'\bVector(\d)\b',
 )
 
+opaque_structs = st.text_input(
+    "Opaque structs",
+    value="[]",
+)
+
 if st.button("Generate"):
     if uploaded_file is None:
         st.error("Please upload a file")
@@ -83,6 +88,7 @@ if st.button("Generate"):
         module_name=module_name,
         headers=[f'{module_name}.h'],
         vector_pattern=vector_pattern,
+        opaque_structs=json.loads(opaque_structs),
     )
 
 if config.output is not None:
