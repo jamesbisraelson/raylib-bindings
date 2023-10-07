@@ -3,6 +3,7 @@ import sys
 import time
 import subprocess
 import json
+from ast import literal_eval
 
 import streamlit as st
 from pkpy_bindings import generate
@@ -58,7 +59,7 @@ vector_pattern = st.text_input(
 
 opaque_structs = st.text_input(
     "Opaque structs",
-    value="[]",
+    value="['rAudioBuffer', 'rAudioProcessor']",
 )
 
 if st.button("Generate"):
@@ -88,7 +89,7 @@ if st.button("Generate"):
         module_name=module_name,
         headers=[f'{module_name}.h'],
         vector_pattern=vector_pattern,
-        opaque_structs=json.loads(opaque_structs),
+        opaque_structs=literal_eval(opaque_structs),
     )
 
 if config.output is not None:
