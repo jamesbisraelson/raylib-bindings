@@ -523,6 +523,7 @@ FLAG_WINDOW_ALWAYS_RUN = 256                    # Set to allow windows running w
 FLAG_WINDOW_TRANSPARENT = 16                    # Set to allow transparent framebuffer
 FLAG_WINDOW_HIGHDPI = 8192                      # Set to support HighDPI
 FLAG_WINDOW_MOUSE_PASSTHROUGH = 16384           # Set to support mouse passthrough, only supported when FLAG_WINDOW_UNDECORATED
+FLAG_BORDERLESS_WINDOWED_MODE = 32768           # Set to run program in borderless windowed mode
 FLAG_MSAA_4X_HINT = 32                          # Set to try enabling MSAA 4X
 FLAG_INTERLACED_HINT = 65536                    # Set to try enabling interlaced video format (for V3D)
 
@@ -778,17 +779,20 @@ PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 = 7           # 32 bpp
 PIXELFORMAT_UNCOMPRESSED_R32 = 8                # 32 bpp (1 channel - float)
 PIXELFORMAT_UNCOMPRESSED_R32G32B32 = 9          # 32*3 bpp (3 channels - float)
 PIXELFORMAT_UNCOMPRESSED_R32G32B32A32 = 10      # 32*4 bpp (4 channels - float)
-PIXELFORMAT_COMPRESSED_DXT1_RGB = 11            # 4 bpp (no alpha)
-PIXELFORMAT_COMPRESSED_DXT1_RGBA = 12           # 4 bpp (1 bit alpha)
-PIXELFORMAT_COMPRESSED_DXT3_RGBA = 13           # 8 bpp
-PIXELFORMAT_COMPRESSED_DXT5_RGBA = 14           # 8 bpp
-PIXELFORMAT_COMPRESSED_ETC1_RGB = 15            # 4 bpp
-PIXELFORMAT_COMPRESSED_ETC2_RGB = 16            # 4 bpp
-PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA = 17       # 8 bpp
-PIXELFORMAT_COMPRESSED_PVRT_RGB = 18            # 4 bpp
-PIXELFORMAT_COMPRESSED_PVRT_RGBA = 19           # 4 bpp
-PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA = 20       # 8 bpp
-PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA = 21       # 2 bpp
+PIXELFORMAT_UNCOMPRESSED_R16 = 11               # 16 bpp (1 channel - half float)
+PIXELFORMAT_UNCOMPRESSED_R16G16B16 = 12         # 16*3 bpp (3 channels - half float)
+PIXELFORMAT_UNCOMPRESSED_R16G16B16A16 = 13      # 16*4 bpp (4 channels - half float)
+PIXELFORMAT_COMPRESSED_DXT1_RGB = 14            # 4 bpp (no alpha)
+PIXELFORMAT_COMPRESSED_DXT1_RGBA = 15           # 4 bpp (1 bit alpha)
+PIXELFORMAT_COMPRESSED_DXT3_RGBA = 16           # 8 bpp
+PIXELFORMAT_COMPRESSED_DXT5_RGBA = 17           # 8 bpp
+PIXELFORMAT_COMPRESSED_ETC1_RGB = 18            # 4 bpp
+PIXELFORMAT_COMPRESSED_ETC2_RGB = 19            # 4 bpp
+PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA = 20       # 8 bpp
+PIXELFORMAT_COMPRESSED_PVRT_RGB = 21            # 4 bpp
+PIXELFORMAT_COMPRESSED_PVRT_RGBA = 22           # 4 bpp
+PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA = 23       # 8 bpp
+PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA = 24       # 2 bpp
 
 ########## TextureFilter ##########
 # Texture parameters: filter mode
@@ -949,6 +953,12 @@ def ToggleFullscreen() -> None:
     Wraps: `void ToggleFullscreen()`
     """
 
+def ToggleBorderlessWindowed() -> None:
+    """Toggle window state: borderless windowed (only PLATFORM_DESKTOP)
+
+    Wraps: `void ToggleBorderlessWindowed()`
+    """
+
 def MaximizeWindow() -> None:
     """Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
 
@@ -980,7 +990,7 @@ def SetWindowIcons(images: 'Image_p', count: int) -> None:
     """
 
 def SetWindowTitle(title: str) -> None:
-    """Set title for window (only PLATFORM_DESKTOP)
+    """Set title for window (only PLATFORM_DESKTOP and PLATFORM_WEB)
 
     Wraps: `void SetWindowTitle(const char * title)`
     """
@@ -992,7 +1002,7 @@ def SetWindowPosition(x: int, y: int) -> None:
     """
 
 def SetWindowMonitor(monitor: int) -> None:
-    """Set monitor for the current window (fullscreen mode)
+    """Set monitor for the current window
 
     Wraps: `void SetWindowMonitor(int monitor)`
     """
@@ -1001,6 +1011,12 @@ def SetWindowMinSize(width: int, height: int) -> None:
     """Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
 
     Wraps: `void SetWindowMinSize(int width, int height)`
+    """
+
+def SetWindowMaxSize(width: int, height: int) -> None:
+    """Set window maximum dimensions (for FLAG_WINDOW_RESIZABLE)
+
+    Wraps: `void SetWindowMaxSize(int width, int height)`
     """
 
 def SetWindowSize(width: int, height: int) -> None:
@@ -1013,6 +1029,12 @@ def SetWindowOpacity(opacity: float) -> None:
     """Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP)
 
     Wraps: `void SetWindowOpacity(float opacity)`
+    """
+
+def SetWindowFocused() -> None:
+    """Set window focused (only PLATFORM_DESKTOP)
+
+    Wraps: `void SetWindowFocused()`
     """
 
 def GetWindowHandle() -> void_p:
@@ -1106,7 +1128,7 @@ def GetWindowScaleDPI() -> vec2:
     """
 
 def GetMonitorName(monitor: int) -> str:
-    """Get the human-readable, UTF-8 encoded name of the primary monitor
+    """Get the human-readable, UTF-8 encoded name of the specified monitor
 
     Wraps: `const char * GetMonitorName(int monitor)`
     """
@@ -1483,10 +1505,10 @@ def OpenURL(url: str) -> None:
     Wraps: `void OpenURL(const char * url)`
     """
 
-def LoadFileData(fileName: str, bytesRead: uint_p) -> uchar_p:
+def LoadFileData(fileName: str, dataSize: int_p) -> uchar_p:
     """Load file data as byte array (read)
 
-    Wraps: `unsigned char * LoadFileData(const char * fileName, unsigned int * bytesRead)`
+    Wraps: `unsigned char * LoadFileData(const char * fileName, int * dataSize)`
     """
 
 def UnloadFileData(data: uchar_p) -> None:
@@ -1495,16 +1517,16 @@ def UnloadFileData(data: uchar_p) -> None:
     Wraps: `void UnloadFileData(unsigned char * data)`
     """
 
-def SaveFileData(fileName: str, data: void_p, bytesToWrite: int) -> bool:
+def SaveFileData(fileName: str, data: void_p, dataSize: int) -> bool:
     """Save data to file from byte array (write), returns true on success
 
-    Wraps: `bool SaveFileData(const char * fileName, void * data, unsigned int bytesToWrite)`
+    Wraps: `bool SaveFileData(const char * fileName, void * data, int dataSize)`
     """
 
-def ExportDataAsCode(data: uchar_p, size: int, fileName: str) -> bool:
+def ExportDataAsCode(data: uchar_p, dataSize: int, fileName: str) -> bool:
     """Export data to code (.h), returns true on success
 
-    Wraps: `bool ExportDataAsCode(const unsigned char * data, unsigned int size, const char * fileName)`
+    Wraps: `bool ExportDataAsCode(const unsigned char * data, int dataSize, const char * fileName)`
     """
 
 def LoadFileText(fileName: str) -> char_p:
@@ -1586,7 +1608,7 @@ def GetWorkingDirectory() -> str:
     """
 
 def GetApplicationDirectory() -> str:
-    """Get the directory if the running application (uses static string)
+    """Get the directory of the running application (uses static string)
 
     Wraps: `const char * GetApplicationDirectory()`
     """
@@ -1673,6 +1695,12 @@ def IsKeyPressed(key: int) -> bool:
     """Check if a key has been pressed once
 
     Wraps: `bool IsKeyPressed(int key)`
+    """
+
+def IsKeyPressedRepeat(key: int) -> bool:
+    """Check if a key has been pressed again (Only PLATFORM_DESKTOP)
+
+    Wraps: `bool IsKeyPressedRepeat(int key)`
     """
 
 def IsKeyDown(key: int) -> bool:
@@ -1894,7 +1922,7 @@ def SetGesturesEnabled(flags: int) -> None:
 def IsGestureDetected(gesture: int) -> bool:
     """Check if a gesture have been detected
 
-    Wraps: `bool IsGestureDetected(int gesture)`
+    Wraps: `bool IsGestureDetected(unsigned int gesture)`
     """
 
 def GetGestureDetected() -> int:
@@ -1997,6 +2025,18 @@ def DrawLineBezierCubic(startPos: vec2, endPos: vec2, startControlPos: vec2, end
     """Draw line using cubic bezier curves with 2 control points
 
     Wraps: `void DrawLineBezierCubic(Vector2 startPos, Vector2 endPos, Vector2 startControlPos, Vector2 endControlPos, float thick, Color color)`
+    """
+
+def DrawLineBSpline(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
+    """Draw a B-Spline line, minimum 4 points
+
+    Wraps: `void DrawLineBSpline(Vector2 * points, int pointCount, float thick, Color color)`
+    """
+
+def DrawLineCatmullRom(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
+    """Draw a Catmull Rom spline line, minimum 4 points
+
+    Wraps: `void DrawLineCatmullRom(Vector2 * points, int pointCount, float thick, Color color)`
     """
 
 def DrawLineStrip(points: 'vec2_p', pointCount: int, color: Color) -> None:
@@ -2245,6 +2285,12 @@ def LoadImageRaw(fileName: str, width: int, height: int, format: int, headerSize
     Wraps: `Image LoadImageRaw(const char * fileName, int width, int height, int format, int headerSize)`
     """
 
+def LoadImageSvg(fileNameOrString: str, width: int, height: int) -> Image:
+    """Load image from SVG file data or string with specified size
+
+    Wraps: `Image LoadImageSvg(const char * fileNameOrString, int width, int height)`
+    """
+
 def LoadImageAnim(fileName: str, frames: int_p) -> Image:
     """Load image sequence from file (frames appended to image.data)
 
@@ -2285,6 +2331,12 @@ def ExportImage(image: Image, fileName: str) -> bool:
     """Export image data to file, returns true on success
 
     Wraps: `bool ExportImage(Image image, const char * fileName)`
+    """
+
+def ExportImageToMemory(image: Image, fileType: str, fileSize: int_p) -> uchar_p:
+    """Export image to memory buffer
+
+    Wraps: `unsigned char * ExportImageToMemory(Image image, const char * fileType, int * fileSize)`
     """
 
 def ExportImageAsCode(image: Image, fileName: str) -> bool:
@@ -2462,7 +2514,7 @@ def ImageFlipHorizontal(image: 'Image_p') -> None:
     """
 
 def ImageRotate(image: 'Image_p', degrees: int) -> None:
-    """Rotate image by input angle in degrees (-359 to 359) 
+    """Rotate image by input angle in degrees (-359 to 359)
 
     Wraps: `void ImageRotate(Image * image, int degrees)`
     """
@@ -2863,10 +2915,10 @@ def LoadFont(fileName: str) -> Font:
     Wraps: `Font LoadFont(const char * fileName)`
     """
 
-def LoadFontEx(fileName: str, fontSize: int, fontChars: int_p, glyphCount: int) -> Font:
-    """Load font from file with extended parameters, use NULL for fontChars and 0 for glyphCount to load the default character set
+def LoadFontEx(fileName: str, fontSize: int, codepoints: int_p, codepointCount: int) -> Font:
+    """Load font from file with extended parameters, use NULL for codepoints and 0 for codepointCount to load the default character setFont
 
-    Wraps: `Font LoadFontEx(const char * fileName, int fontSize, int * fontChars, int glyphCount)`
+    Wraps: `Font LoadFontEx(const char * fileName, int fontSize, int * codepoints, int codepointCount)`
     """
 
 def LoadFontFromImage(image: Image, key: Color, firstChar: int) -> Font:
@@ -2875,10 +2927,10 @@ def LoadFontFromImage(image: Image, key: Color, firstChar: int) -> Font:
     Wraps: `Font LoadFontFromImage(Image image, Color key, int firstChar)`
     """
 
-def LoadFontFromMemory(fileType: str, fileData: uchar_p, dataSize: int, fontSize: int, fontChars: int_p, glyphCount: int) -> Font:
+def LoadFontFromMemory(fileType: str, fileData: uchar_p, dataSize: int, fontSize: int, codepoints: int_p, codepointCount: int) -> Font:
     """Load font from memory buffer, fileType refers to extension: i.e. '.ttf'
 
-    Wraps: `Font LoadFontFromMemory(const char * fileType, const unsigned char * fileData, int dataSize, int fontSize, int * fontChars, int glyphCount)`
+    Wraps: `Font LoadFontFromMemory(const char * fileType, const unsigned char * fileData, int dataSize, int fontSize, int * codepoints, int codepointCount)`
     """
 
 def IsFontReady(font: Font) -> bool:
@@ -2887,22 +2939,22 @@ def IsFontReady(font: Font) -> bool:
     Wraps: `bool IsFontReady(Font font)`
     """
 
-def LoadFontData(fileData: uchar_p, dataSize: int, fontSize: int, fontChars: int_p, glyphCount: int, type: int) -> 'GlyphInfo_p':
+def LoadFontData(fileData: uchar_p, dataSize: int, fontSize: int, codepoints: int_p, codepointCount: int, type: int) -> 'GlyphInfo_p':
     """Load font data for further use
 
-    Wraps: `GlyphInfo * LoadFontData(const unsigned char * fileData, int dataSize, int fontSize, int * fontChars, int glyphCount, int type)`
+    Wraps: `GlyphInfo * LoadFontData(const unsigned char * fileData, int dataSize, int fontSize, int * codepoints, int codepointCount, int type)`
     """
 
-def GenImageFontAtlas(chars: 'GlyphInfo_p', recs: void_p, glyphCount: int, fontSize: int, padding: int, packMethod: int) -> Image:
+def GenImageFontAtlas(glyphs: 'GlyphInfo_p', glyphRecs: void_p, glyphCount: int, fontSize: int, padding: int, packMethod: int) -> Image:
     """Generate image font atlas using chars info
 
-    Wraps: `Image GenImageFontAtlas(const GlyphInfo * chars, Rectangle ** recs, int glyphCount, int fontSize, int padding, int packMethod)`
+    Wraps: `Image GenImageFontAtlas(const GlyphInfo * glyphs, Rectangle ** glyphRecs, int glyphCount, int fontSize, int padding, int packMethod)`
     """
 
-def UnloadFontData(chars: 'GlyphInfo_p', glyphCount: int) -> None:
+def UnloadFontData(glyphs: 'GlyphInfo_p', glyphCount: int) -> None:
     """Unload font chars info data (RAM)
 
-    Wraps: `void UnloadFontData(GlyphInfo * chars, int glyphCount)`
+    Wraps: `void UnloadFontData(GlyphInfo * glyphs, int glyphCount)`
     """
 
 def UnloadFont(font: Font) -> None:
@@ -2947,10 +2999,16 @@ def DrawTextCodepoint(font: Font, codepoint: int, position: vec2, fontSize: floa
     Wraps: `void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSize, Color tint)`
     """
 
-def DrawTextCodepoints(font: Font, codepoints: int_p, count: int, position: vec2, fontSize: float, spacing: float, tint: Color) -> None:
+def DrawTextCodepoints(font: Font, codepoints: int_p, codepointCount: int, position: vec2, fontSize: float, spacing: float, tint: Color) -> None:
     """Draw multiple character (codepoint)
 
-    Wraps: `void DrawTextCodepoints(Font font, const int * codepoints, int count, Vector2 position, float fontSize, float spacing, Color tint)`
+    Wraps: `void DrawTextCodepoints(Font font, const int * codepoints, int codepointCount, Vector2 position, float fontSize, float spacing, Color tint)`
+    """
+
+def SetTextLineSpacing(spacing: int) -> None:
+    """Set vertical line spacing when drawing with line-breaks
+
+    Wraps: `void SetTextLineSpacing(int spacing)`
     """
 
 def MeasureText(text: str, fontSize: int) -> int:
@@ -3475,10 +3533,10 @@ def SetModelMeshMaterial(model: 'Model_p', meshId: int, materialId: int) -> None
     Wraps: `void SetModelMeshMaterial(Model * model, int meshId, int materialId)`
     """
 
-def LoadModelAnimations(fileName: str, animCount: uint_p) -> 'ModelAnimation_p':
+def LoadModelAnimations(fileName: str, animCount: int_p) -> 'ModelAnimation_p':
     """Load model animations from file
 
-    Wraps: `ModelAnimation * LoadModelAnimations(const char * fileName, unsigned int * animCount)`
+    Wraps: `ModelAnimation * LoadModelAnimations(const char * fileName, int * animCount)`
     """
 
 def UpdateModelAnimation(model: Model, anim: ModelAnimation, frame: int) -> None:
@@ -3493,10 +3551,10 @@ def UnloadModelAnimation(anim: ModelAnimation) -> None:
     Wraps: `void UnloadModelAnimation(ModelAnimation anim)`
     """
 
-def UnloadModelAnimations(animations: 'ModelAnimation_p', count: int) -> None:
+def UnloadModelAnimations(animations: 'ModelAnimation_p', animCount: int) -> None:
     """Unload animation array data
 
-    Wraps: `void UnloadModelAnimations(ModelAnimation * animations, unsigned int count)`
+    Wraps: `void UnloadModelAnimations(ModelAnimation * animations, int animCount)`
     """
 
 def IsModelAnimationValid(model: Model, anim: ModelAnimation) -> bool:
@@ -3607,6 +3665,12 @@ def LoadSoundFromWave(wave: Wave) -> Sound:
     Wraps: `Sound LoadSoundFromWave(Wave wave)`
     """
 
+def LoadSoundAlias(source: Sound) -> Sound:
+    """Create a new sound that shares the same sample data as the source sound, does not own the sound data
+
+    Wraps: `Sound LoadSoundAlias(Sound source)`
+    """
+
 def IsSoundReady(sound: Sound) -> bool:
     """Checks if a sound is ready
 
@@ -3629,6 +3693,12 @@ def UnloadSound(sound: Sound) -> None:
     """Unload sound
 
     Wraps: `void UnloadSound(Sound sound)`
+    """
+
+def UnloadSoundAlias(alias: Sound) -> None:
+    """Unload a sound alias (does not deallocate sample data)
+
+    Wraps: `void UnloadSoundAlias(Sound alias)`
     """
 
 def ExportWave(wave: Wave, fileName: str) -> bool:

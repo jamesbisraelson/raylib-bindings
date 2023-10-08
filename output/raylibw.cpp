@@ -1556,7 +1556,7 @@ void add_module_raylib(VM* vm){
     mod->attr().set("RAYLIB_VERSION", py_var(vm, "4.6-dev"));
     mod->attr().set("PI", py_var(vm, 3.141592653589793));
     // ConfigFlags
-    _bind_enums(vm, mod, {{"FLAG_VSYNC_HINT", 64}, {"FLAG_FULLSCREEN_MODE", 2}, {"FLAG_WINDOW_RESIZABLE", 4}, {"FLAG_WINDOW_UNDECORATED", 8}, {"FLAG_WINDOW_HIDDEN", 128}, {"FLAG_WINDOW_MINIMIZED", 512}, {"FLAG_WINDOW_MAXIMIZED", 1024}, {"FLAG_WINDOW_UNFOCUSED", 2048}, {"FLAG_WINDOW_TOPMOST", 4096}, {"FLAG_WINDOW_ALWAYS_RUN", 256}, {"FLAG_WINDOW_TRANSPARENT", 16}, {"FLAG_WINDOW_HIGHDPI", 8192}, {"FLAG_WINDOW_MOUSE_PASSTHROUGH", 16384}, {"FLAG_MSAA_4X_HINT", 32}, {"FLAG_INTERLACED_HINT", 65536}});
+    _bind_enums(vm, mod, {{"FLAG_VSYNC_HINT", 64}, {"FLAG_FULLSCREEN_MODE", 2}, {"FLAG_WINDOW_RESIZABLE", 4}, {"FLAG_WINDOW_UNDECORATED", 8}, {"FLAG_WINDOW_HIDDEN", 128}, {"FLAG_WINDOW_MINIMIZED", 512}, {"FLAG_WINDOW_MAXIMIZED", 1024}, {"FLAG_WINDOW_UNFOCUSED", 2048}, {"FLAG_WINDOW_TOPMOST", 4096}, {"FLAG_WINDOW_ALWAYS_RUN", 256}, {"FLAG_WINDOW_TRANSPARENT", 16}, {"FLAG_WINDOW_HIGHDPI", 8192}, {"FLAG_WINDOW_MOUSE_PASSTHROUGH", 16384}, {"FLAG_BORDERLESS_WINDOWED_MODE", 32768}, {"FLAG_MSAA_4X_HINT", 32}, {"FLAG_INTERLACED_HINT", 65536}});
     // TraceLogLevel
     _bind_enums(vm, mod, {{"LOG_ALL", 0}, {"LOG_TRACE", 1}, {"LOG_DEBUG", 2}, {"LOG_INFO", 3}, {"LOG_WARNING", 4}, {"LOG_ERROR", 5}, {"LOG_FATAL", 6}, {"LOG_NONE", 7}});
     // KeyboardKey
@@ -1578,7 +1578,7 @@ void add_module_raylib(VM* vm){
     // ShaderAttributeDataType
     _bind_enums(vm, mod, {{"SHADER_ATTRIB_FLOAT", 0}, {"SHADER_ATTRIB_VEC2", 1}, {"SHADER_ATTRIB_VEC3", 2}, {"SHADER_ATTRIB_VEC4", 3}});
     // PixelFormat
-    _bind_enums(vm, mod, {{"PIXELFORMAT_UNCOMPRESSED_GRAYSCALE", 1}, {"PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA", 2}, {"PIXELFORMAT_UNCOMPRESSED_R5G6B5", 3}, {"PIXELFORMAT_UNCOMPRESSED_R8G8B8", 4}, {"PIXELFORMAT_UNCOMPRESSED_R5G5B5A1", 5}, {"PIXELFORMAT_UNCOMPRESSED_R4G4B4A4", 6}, {"PIXELFORMAT_UNCOMPRESSED_R8G8B8A8", 7}, {"PIXELFORMAT_UNCOMPRESSED_R32", 8}, {"PIXELFORMAT_UNCOMPRESSED_R32G32B32", 9}, {"PIXELFORMAT_UNCOMPRESSED_R32G32B32A32", 10}, {"PIXELFORMAT_COMPRESSED_DXT1_RGB", 11}, {"PIXELFORMAT_COMPRESSED_DXT1_RGBA", 12}, {"PIXELFORMAT_COMPRESSED_DXT3_RGBA", 13}, {"PIXELFORMAT_COMPRESSED_DXT5_RGBA", 14}, {"PIXELFORMAT_COMPRESSED_ETC1_RGB", 15}, {"PIXELFORMAT_COMPRESSED_ETC2_RGB", 16}, {"PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA", 17}, {"PIXELFORMAT_COMPRESSED_PVRT_RGB", 18}, {"PIXELFORMAT_COMPRESSED_PVRT_RGBA", 19}, {"PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA", 20}, {"PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA", 21}});
+    _bind_enums(vm, mod, {{"PIXELFORMAT_UNCOMPRESSED_GRAYSCALE", 1}, {"PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA", 2}, {"PIXELFORMAT_UNCOMPRESSED_R5G6B5", 3}, {"PIXELFORMAT_UNCOMPRESSED_R8G8B8", 4}, {"PIXELFORMAT_UNCOMPRESSED_R5G5B5A1", 5}, {"PIXELFORMAT_UNCOMPRESSED_R4G4B4A4", 6}, {"PIXELFORMAT_UNCOMPRESSED_R8G8B8A8", 7}, {"PIXELFORMAT_UNCOMPRESSED_R32", 8}, {"PIXELFORMAT_UNCOMPRESSED_R32G32B32", 9}, {"PIXELFORMAT_UNCOMPRESSED_R32G32B32A32", 10}, {"PIXELFORMAT_UNCOMPRESSED_R16", 11}, {"PIXELFORMAT_UNCOMPRESSED_R16G16B16", 12}, {"PIXELFORMAT_UNCOMPRESSED_R16G16B16A16", 13}, {"PIXELFORMAT_COMPRESSED_DXT1_RGB", 14}, {"PIXELFORMAT_COMPRESSED_DXT1_RGBA", 15}, {"PIXELFORMAT_COMPRESSED_DXT3_RGBA", 16}, {"PIXELFORMAT_COMPRESSED_DXT5_RGBA", 17}, {"PIXELFORMAT_COMPRESSED_ETC1_RGB", 18}, {"PIXELFORMAT_COMPRESSED_ETC2_RGB", 19}, {"PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA", 20}, {"PIXELFORMAT_COMPRESSED_PVRT_RGB", 21}, {"PIXELFORMAT_COMPRESSED_PVRT_RGBA", 22}, {"PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA", 23}, {"PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA", 24}});
     // TextureFilter
     _bind_enums(vm, mod, {{"TEXTURE_FILTER_POINT", 0}, {"TEXTURE_FILTER_BILINEAR", 1}, {"TEXTURE_FILTER_TRILINEAR", 2}, {"TEXTURE_FILTER_ANISOTROPIC_4X", 3}, {"TEXTURE_FILTER_ANISOTROPIC_8X", 4}, {"TEXTURE_FILTER_ANISOTROPIC_16X", 5}});
     // TextureWrap
@@ -1909,6 +1909,7 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "SetWindowState(flags: int) -> None", &SetWindowState);
     _bind(vm, mod, "ClearWindowState(flags: int) -> None", &ClearWindowState);
     _bind(vm, mod, "ToggleFullscreen() -> None", &ToggleFullscreen);
+    _bind(vm, mod, "ToggleBorderlessWindowed() -> None", &ToggleBorderlessWindowed);
     _bind(vm, mod, "MaximizeWindow() -> None", &MaximizeWindow);
     _bind(vm, mod, "MinimizeWindow() -> None", &MinimizeWindow);
     _bind(vm, mod, "RestoreWindow() -> None", &RestoreWindow);
@@ -1918,8 +1919,10 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "SetWindowPosition(x: int, y: int) -> None", &SetWindowPosition);
     _bind(vm, mod, "SetWindowMonitor(monitor: int) -> None", &SetWindowMonitor);
     _bind(vm, mod, "SetWindowMinSize(width: int, height: int) -> None", &SetWindowMinSize);
+    _bind(vm, mod, "SetWindowMaxSize(width: int, height: int) -> None", &SetWindowMaxSize);
     _bind(vm, mod, "SetWindowSize(width: int, height: int) -> None", &SetWindowSize);
     _bind(vm, mod, "SetWindowOpacity(opacity: float) -> None", &SetWindowOpacity);
+    _bind(vm, mod, "SetWindowFocused() -> None", &SetWindowFocused);
     _bind(vm, mod, "GetWindowHandle() -> void_p", &GetWindowHandle);
     _bind(vm, mod, "GetScreenWidth() -> int", &GetScreenWidth);
     _bind(vm, mod, "GetScreenHeight() -> int", &GetScreenHeight);
@@ -1998,10 +2001,10 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "MemRealloc(ptr: void_p, size: int) -> void_p", &MemRealloc);
     _bind(vm, mod, "MemFree(ptr: void_p) -> None", &MemFree);
     _bind(vm, mod, "OpenURL(url: str) -> None", &OpenURL);
-    _bind(vm, mod, "LoadFileData(fileName: str, bytesRead: uint_p) -> uchar_p", &LoadFileData);
+    _bind(vm, mod, "LoadFileData(fileName: str, dataSize: int_p) -> uchar_p", &LoadFileData);
     _bind(vm, mod, "UnloadFileData(data: uchar_p) -> None", &UnloadFileData);
-    _bind(vm, mod, "SaveFileData(fileName: str, data: void_p, bytesToWrite: int) -> bool", &SaveFileData);
-    _bind(vm, mod, "ExportDataAsCode(data: uchar_p, size: int, fileName: str) -> bool", &ExportDataAsCode);
+    _bind(vm, mod, "SaveFileData(fileName: str, data: void_p, dataSize: int) -> bool", &SaveFileData);
+    _bind(vm, mod, "ExportDataAsCode(data: uchar_p, dataSize: int, fileName: str) -> bool", &ExportDataAsCode);
     _bind(vm, mod, "LoadFileText(fileName: str) -> char_p", &LoadFileText);
     _bind(vm, mod, "UnloadFileText(text: char_p) -> None", &UnloadFileText);
     _bind(vm, mod, "SaveFileText(fileName: str, text: char_p) -> bool", &SaveFileText);
@@ -2030,6 +2033,7 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "EncodeDataBase64(data: uchar_p, dataSize: int, outputSize: int_p) -> char_p", &EncodeDataBase64);
     _bind(vm, mod, "DecodeDataBase64(data: uchar_p, outputSize: int_p) -> uchar_p", &DecodeDataBase64);
     _bind(vm, mod, "IsKeyPressed(key: int) -> bool", &IsKeyPressed);
+    _bind(vm, mod, "IsKeyPressedRepeat(key: int) -> bool", &IsKeyPressedRepeat);
     _bind(vm, mod, "IsKeyDown(key: int) -> bool", &IsKeyDown);
     _bind(vm, mod, "IsKeyReleased(key: int) -> bool", &IsKeyReleased);
     _bind(vm, mod, "IsKeyUp(key: int) -> bool", &IsKeyUp);
@@ -2084,6 +2088,8 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "DrawLineBezier(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None", &DrawLineBezier);
     _bind(vm, mod, "DrawLineBezierQuad(startPos: vec2, endPos: vec2, controlPos: vec2, thick: float, color: Color) -> None", &DrawLineBezierQuad);
     _bind(vm, mod, "DrawLineBezierCubic(startPos: vec2, endPos: vec2, startControlPos: vec2, endControlPos: vec2, thick: float, color: Color) -> None", &DrawLineBezierCubic);
+    _bind(vm, mod, "DrawLineBSpline(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawLineBSpline);
+    _bind(vm, mod, "DrawLineCatmullRom(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawLineCatmullRom);
     _bind(vm, mod, "DrawLineStrip(points: 'vec2_p', pointCount: int, color: Color) -> None", &DrawLineStrip);
     _bind(vm, mod, "DrawCircle(centerX: int, centerY: int, radius: float, color: Color) -> None", &DrawCircle);
     _bind(vm, mod, "DrawCircleSector(center: vec2, radius: float, startAngle: float, endAngle: float, segments: int, color: Color) -> None", &DrawCircleSector);
@@ -2125,6 +2131,7 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "GetCollisionRec(rec1: Rectangle, rec2: Rectangle) -> Rectangle", &GetCollisionRec);
     _bind(vm, mod, "LoadImage(fileName: str) -> Image", &LoadImage);
     _bind(vm, mod, "LoadImageRaw(fileName: str, width: int, height: int, format: int, headerSize: int) -> Image", &LoadImageRaw);
+    _bind(vm, mod, "LoadImageSvg(fileNameOrString: str, width: int, height: int) -> Image", &LoadImageSvg);
     _bind(vm, mod, "LoadImageAnim(fileName: str, frames: int_p) -> Image", &LoadImageAnim);
     _bind(vm, mod, "LoadImageFromMemory(fileType: str, fileData: uchar_p, dataSize: int) -> Image", &LoadImageFromMemory);
     _bind(vm, mod, "LoadImageFromTexture(texture: Texture2D) -> Image", &LoadImageFromTexture);
@@ -2132,6 +2139,7 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "IsImageReady(image: Image) -> bool", &IsImageReady);
     _bind(vm, mod, "UnloadImage(image: Image) -> None", &UnloadImage);
     _bind(vm, mod, "ExportImage(image: Image, fileName: str) -> bool", &ExportImage);
+    _bind(vm, mod, "ExportImageToMemory(image: Image, fileType: str, fileSize: int_p) -> uchar_p", &ExportImageToMemory);
     _bind(vm, mod, "ExportImageAsCode(image: Image, fileName: str) -> bool", &ExportImageAsCode);
     _bind(vm, mod, "GenImageColor(width: int, height: int, color: Color) -> Image", &GenImageColor);
     _bind(vm, mod, "GenImageGradientLinear(width: int, height: int, direction: int, start: Color, end: Color) -> Image", &GenImageGradientLinear);
@@ -2228,13 +2236,13 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "GetPixelDataSize(width: int, height: int, format: int) -> int", &GetPixelDataSize);
     _bind(vm, mod, "GetFontDefault() -> Font", &GetFontDefault);
     _bind(vm, mod, "LoadFont(fileName: str) -> Font", &LoadFont);
-    _bind(vm, mod, "LoadFontEx(fileName: str, fontSize: int, fontChars: int_p, glyphCount: int) -> Font", &LoadFontEx);
+    _bind(vm, mod, "LoadFontEx(fileName: str, fontSize: int, codepoints: int_p, codepointCount: int) -> Font", &LoadFontEx);
     _bind(vm, mod, "LoadFontFromImage(image: Image, key: Color, firstChar: int) -> Font", &LoadFontFromImage);
-    _bind(vm, mod, "LoadFontFromMemory(fileType: str, fileData: uchar_p, dataSize: int, fontSize: int, fontChars: int_p, glyphCount: int) -> Font", &LoadFontFromMemory);
+    _bind(vm, mod, "LoadFontFromMemory(fileType: str, fileData: uchar_p, dataSize: int, fontSize: int, codepoints: int_p, codepointCount: int) -> Font", &LoadFontFromMemory);
     _bind(vm, mod, "IsFontReady(font: Font) -> bool", &IsFontReady);
-    _bind(vm, mod, "LoadFontData(fileData: uchar_p, dataSize: int, fontSize: int, fontChars: int_p, glyphCount: int, type: int) -> 'GlyphInfo_p'", &LoadFontData);
-    _bind(vm, mod, "GenImageFontAtlas(chars: 'GlyphInfo_p', recs: void_p, glyphCount: int, fontSize: int, padding: int, packMethod: int) -> Image", &GenImageFontAtlas);
-    _bind(vm, mod, "UnloadFontData(chars: 'GlyphInfo_p', glyphCount: int) -> None", &UnloadFontData);
+    _bind(vm, mod, "LoadFontData(fileData: uchar_p, dataSize: int, fontSize: int, codepoints: int_p, codepointCount: int, type: int) -> 'GlyphInfo_p'", &LoadFontData);
+    _bind(vm, mod, "GenImageFontAtlas(glyphs: 'GlyphInfo_p', glyphRecs: void_p, glyphCount: int, fontSize: int, padding: int, packMethod: int) -> Image", &GenImageFontAtlas);
+    _bind(vm, mod, "UnloadFontData(glyphs: 'GlyphInfo_p', glyphCount: int) -> None", &UnloadFontData);
     _bind(vm, mod, "UnloadFont(font: Font) -> None", &UnloadFont);
     _bind(vm, mod, "ExportFontAsCode(font: Font, fileName: str) -> bool", &ExportFontAsCode);
     _bind(vm, mod, "DrawFPS(posX: int, posY: int) -> None", &DrawFPS);
@@ -2242,7 +2250,8 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "DrawTextEx(font: Font, text: str, position: vec2, fontSize: float, spacing: float, tint: Color) -> None", &DrawTextEx);
     _bind(vm, mod, "DrawTextPro(font: Font, text: str, position: vec2, origin: vec2, rotation: float, fontSize: float, spacing: float, tint: Color) -> None", &DrawTextPro);
     _bind(vm, mod, "DrawTextCodepoint(font: Font, codepoint: int, position: vec2, fontSize: float, tint: Color) -> None", &DrawTextCodepoint);
-    _bind(vm, mod, "DrawTextCodepoints(font: Font, codepoints: int_p, count: int, position: vec2, fontSize: float, spacing: float, tint: Color) -> None", &DrawTextCodepoints);
+    _bind(vm, mod, "DrawTextCodepoints(font: Font, codepoints: int_p, codepointCount: int, position: vec2, fontSize: float, spacing: float, tint: Color) -> None", &DrawTextCodepoints);
+    _bind(vm, mod, "SetTextLineSpacing(spacing: int) -> None", &SetTextLineSpacing);
     _bind(vm, mod, "MeasureText(text: str, fontSize: int) -> int", &MeasureText);
     _bind(vm, mod, "MeasureTextEx(font: Font, text: str, fontSize: float, spacing: float) -> vec2", &MeasureTextEx);
     _bind(vm, mod, "GetGlyphIndex(font: Font, codepoint: int) -> int", &GetGlyphIndex);
@@ -2330,10 +2339,10 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "UnloadMaterial(material: Material) -> None", &UnloadMaterial);
     _bind(vm, mod, "SetMaterialTexture(material: 'Material_p', mapType: int, texture: Texture2D) -> None", &SetMaterialTexture);
     _bind(vm, mod, "SetModelMeshMaterial(model: 'Model_p', meshId: int, materialId: int) -> None", &SetModelMeshMaterial);
-    _bind(vm, mod, "LoadModelAnimations(fileName: str, animCount: uint_p) -> 'ModelAnimation_p'", &LoadModelAnimations);
+    _bind(vm, mod, "LoadModelAnimations(fileName: str, animCount: int_p) -> 'ModelAnimation_p'", &LoadModelAnimations);
     _bind(vm, mod, "UpdateModelAnimation(model: Model, anim: ModelAnimation, frame: int) -> None", &UpdateModelAnimation);
     _bind(vm, mod, "UnloadModelAnimation(anim: ModelAnimation) -> None", &UnloadModelAnimation);
-    _bind(vm, mod, "UnloadModelAnimations(animations: 'ModelAnimation_p', count: int) -> None", &UnloadModelAnimations);
+    _bind(vm, mod, "UnloadModelAnimations(animations: 'ModelAnimation_p', animCount: int) -> None", &UnloadModelAnimations);
     _bind(vm, mod, "IsModelAnimationValid(model: Model, anim: ModelAnimation) -> bool", &IsModelAnimationValid);
     _bind(vm, mod, "CheckCollisionSpheres(center1: vec3, radius1: float, center2: vec3, radius2: float) -> bool", &CheckCollisionSpheres);
     _bind(vm, mod, "CheckCollisionBoxes(box1: BoundingBox, box2: BoundingBox) -> bool", &CheckCollisionBoxes);
@@ -2352,10 +2361,12 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "IsWaveReady(wave: Wave) -> bool", &IsWaveReady);
     _bind(vm, mod, "LoadSound(fileName: str) -> Sound", &LoadSound);
     _bind(vm, mod, "LoadSoundFromWave(wave: Wave) -> Sound", &LoadSoundFromWave);
+    _bind(vm, mod, "LoadSoundAlias(source: Sound) -> Sound", &LoadSoundAlias);
     _bind(vm, mod, "IsSoundReady(sound: Sound) -> bool", &IsSoundReady);
     _bind(vm, mod, "UpdateSound(sound: Sound, data: void_p, sampleCount: int) -> None", &UpdateSound);
     _bind(vm, mod, "UnloadWave(wave: Wave) -> None", &UnloadWave);
     _bind(vm, mod, "UnloadSound(sound: Sound) -> None", &UnloadSound);
+    _bind(vm, mod, "UnloadSoundAlias(alias: Sound) -> None", &UnloadSoundAlias);
     _bind(vm, mod, "ExportWave(wave: Wave, fileName: str) -> bool", &ExportWave);
     _bind(vm, mod, "ExportWaveAsCode(wave: Wave, fileName: str) -> bool", &ExportWaveAsCode);
     _bind(vm, mod, "PlaySound(sound: Sound) -> None", &PlaySound);
