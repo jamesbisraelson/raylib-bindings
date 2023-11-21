@@ -447,11 +447,11 @@ int main(int argc, char* argv[])
             {
                 if (isFloat)
                 {
-                    defines[defineIndex].type = linePtr[j-1] == 'f' ? FLOAT : DOUBLE;
+                    defines[defineIndex].type = (linePtr[j-1] == 'f')? FLOAT : DOUBLE;
                 }
                 else
                 {
-                    defines[defineIndex].type = linePtr[j-1] == 'L' ? LONG : INT;
+                    defines[defineIndex].type = (linePtr[j-1] == 'L')? LONG : INT;
                     defines[defineIndex].isHex = isHex;
                 }
             }
@@ -534,8 +534,8 @@ int main(int argc, char* argv[])
                     {
                         // Found a valid number -> update largestType
                         int numberType;
-                        if (isFloat) numberType = valuePtr[c - 1] == 'f' ? FLOAT_MATH : DOUBLE_MATH;
-                        else numberType = valuePtr[c - 1] == 'L' ? LONG_MATH : INT_MATH;
+                        if (isFloat) numberType = (valuePtr[c - 1] == 'f')? FLOAT_MATH : DOUBLE_MATH;
+                        else numberType = (valuePtr[c - 1] == 'L')? LONG_MATH : INT_MATH;
 
                         if (numberType > largestType) largestType = numberType;
                     }

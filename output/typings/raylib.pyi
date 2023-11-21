@@ -502,10 +502,40 @@ class FilePathList(_StructLike[FilePathList], _wrapped__FilePathList):
 class FilePathList_p(Pointer[FilePathList], _wrapped__FilePathList):
     """Wraps `FilePathList *`"""
 
-RAYLIB_VERSION_MAJOR: int = 4
-RAYLIB_VERSION_MINOR: int = 6
+class _wrapped__AutomationEvent:
+    frame: int                          # `unsigned int`: Event frame
+    type: int                           # `unsigned int`: Event type (AutomationEventType)
+    params: int_p                       # `int[4]`: Event parameters (if required)
+
+class AutomationEvent(_StructLike[AutomationEvent], _wrapped__AutomationEvent):
+    """Automation event"""
+    @overload
+    def __init__(self): ...
+    @overload
+    def __init__(self, frame: int, type: int, params: int_p): ...
+
+class AutomationEvent_p(Pointer[AutomationEvent], _wrapped__AutomationEvent):
+    """Wraps `AutomationEvent *`"""
+
+class _wrapped__AutomationEventList:
+    capacity: int                       # `unsigned int`: Events max entries (MAX_AUTOMATION_EVENTS)
+    count: int                          # `unsigned int`: Events entries count
+    events: 'AutomationEvent_p'         # `AutomationEvent *`: Events entries
+
+class AutomationEventList(_StructLike[AutomationEventList], _wrapped__AutomationEventList):
+    """Automation event list"""
+    @overload
+    def __init__(self): ...
+    @overload
+    def __init__(self, capacity: int, count: int, events: 'AutomationEvent_p'): ...
+
+class AutomationEventList_p(Pointer[AutomationEventList], _wrapped__AutomationEventList):
+    """Wraps `AutomationEventList *`"""
+
+RAYLIB_VERSION_MAJOR: int = 5
+RAYLIB_VERSION_MINOR: int = 1
 RAYLIB_VERSION_PATCH: int = 0
-RAYLIB_VERSION: str = "4.6-dev"
+RAYLIB_VERSION: str = "5.1-dev"
 PI: float = 3.141592653589793
 
 ########## ConfigFlags ##########
@@ -875,16 +905,16 @@ def InitWindow(width: int, height: int, title: str) -> None:
     Wraps: `void InitWindow(int width, int height, const char * title)`
     """
 
-def WindowShouldClose() -> bool:
-    """Check if KEY_ESCAPE pressed or Close icon pressed
-
-    Wraps: `bool WindowShouldClose()`
-    """
-
 def CloseWindow() -> None:
     """Close window and unload OpenGL context
 
     Wraps: `void CloseWindow()`
+    """
+
+def WindowShouldClose() -> bool:
+    """Check if application should close (KEY_ESCAPE pressed or windows close icon clicked)
+
+    Wraps: `bool WindowShouldClose()`
     """
 
 def IsWindowReady() -> bool:
@@ -1157,24 +1187,6 @@ def DisableEventWaiting() -> None:
     Wraps: `void DisableEventWaiting()`
     """
 
-def SwapScreenBuffer() -> None:
-    """Swap back buffer with front buffer (screen drawing)
-
-    Wraps: `void SwapScreenBuffer()`
-    """
-
-def PollInputEvents() -> None:
-    """Register all input events
-
-    Wraps: `void PollInputEvents()`
-    """
-
-def WaitTime(seconds: float) -> None:
-    """Wait for some time (halt program execution)
-
-    Wraps: `void WaitTime(double seconds)`
-    """
-
 def ShowCursor() -> None:
     """Shows cursor
 
@@ -1433,12 +1445,6 @@ def SetTargetFPS(fps: int) -> None:
     Wraps: `void SetTargetFPS(int fps)`
     """
 
-def GetFPS() -> int:
-    """Get current FPS
-
-    Wraps: `int GetFPS()`
-    """
-
 def GetFrameTime() -> float:
     """Get time in seconds for last frame drawn (delta time)
 
@@ -1451,16 +1457,52 @@ def GetTime() -> float:
     Wraps: `double GetTime()`
     """
 
-def GetRandomValue(min: int, max: int) -> int:
-    """Get a random value between min and max (both included)
+def GetFPS() -> int:
+    """Get current FPS
 
-    Wraps: `int GetRandomValue(int min, int max)`
+    Wraps: `int GetFPS()`
+    """
+
+def SwapScreenBuffer() -> None:
+    """Swap back buffer with front buffer (screen drawing)
+
+    Wraps: `void SwapScreenBuffer()`
+    """
+
+def PollInputEvents() -> None:
+    """Register all input events
+
+    Wraps: `void PollInputEvents()`
+    """
+
+def WaitTime(seconds: float) -> None:
+    """Wait for some time (halt program execution)
+
+    Wraps: `void WaitTime(double seconds)`
     """
 
 def SetRandomSeed(seed: int) -> None:
     """Set the seed for the random number generator
 
     Wraps: `void SetRandomSeed(unsigned int seed)`
+    """
+
+def GetRandomValue(min: int, max: int) -> int:
+    """Get a random value between min and max (both included)
+
+    Wraps: `int GetRandomValue(int min, int max)`
+    """
+
+def LoadRandomSequence(count: int, min: int, max: int) -> int_p:
+    """Load random values sequence, no values repeated
+
+    Wraps: `int * LoadRandomSequence(unsigned int count, int min, int max)`
+    """
+
+def UnloadRandomSequence(sequence: int_p) -> None:
+    """Unload random values sequence
+
+    Wraps: `void UnloadRandomSequence(int * sequence)`
     """
 
 def TakeScreenshot(fileName: str) -> None:
@@ -1473,6 +1515,12 @@ def SetConfigFlags(flags: int) -> None:
     """Setup init configuration flags (view FLAGS)
 
     Wraps: `void SetConfigFlags(unsigned int flags)`
+    """
+
+def OpenURL(url: str) -> None:
+    """Open URL with default system browser (if available)
+
+    Wraps: `void OpenURL(const char * url)`
     """
 
 def SetTraceLogLevel(logLevel: int) -> None:
@@ -1497,12 +1545,6 @@ def MemFree(ptr: void_p) -> None:
     """Internal memory free
 
     Wraps: `void MemFree(void * ptr)`
-    """
-
-def OpenURL(url: str) -> None:
-    """Open URL with default system browser (if available)
-
-    Wraps: `void OpenURL(const char * url)`
     """
 
 def LoadFileData(fileName: str, dataSize: int_p) -> uchar_p:
@@ -1691,6 +1733,54 @@ def DecodeDataBase64(data: uchar_p, outputSize: int_p) -> uchar_p:
     Wraps: `unsigned char * DecodeDataBase64(const unsigned char * data, int * outputSize)`
     """
 
+def LoadAutomationEventList(fileName: str) -> AutomationEventList:
+    """Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS
+
+    Wraps: `AutomationEventList LoadAutomationEventList(const char * fileName)`
+    """
+
+def UnloadAutomationEventList(list: 'AutomationEventList_p') -> None:
+    """Unload automation events list from file
+
+    Wraps: `void UnloadAutomationEventList(AutomationEventList * list)`
+    """
+
+def ExportAutomationEventList(list: AutomationEventList, fileName: str) -> bool:
+    """Export automation events list as text file
+
+    Wraps: `bool ExportAutomationEventList(AutomationEventList list, const char * fileName)`
+    """
+
+def SetAutomationEventList(list: 'AutomationEventList_p') -> None:
+    """Set automation event list to record to
+
+    Wraps: `void SetAutomationEventList(AutomationEventList * list)`
+    """
+
+def SetAutomationEventBaseFrame(frame: int) -> None:
+    """Set automation event internal base frame to start recording
+
+    Wraps: `void SetAutomationEventBaseFrame(int frame)`
+    """
+
+def StartAutomationEventRecording() -> None:
+    """Start recording automation events (AutomationEventList must be set)
+
+    Wraps: `void StartAutomationEventRecording()`
+    """
+
+def StopAutomationEventRecording() -> None:
+    """Stop recording automation events
+
+    Wraps: `void StopAutomationEventRecording()`
+    """
+
+def PlayAutomationEvent(event: AutomationEvent) -> None:
+    """Play a recorded automation event
+
+    Wraps: `void PlayAutomationEvent(AutomationEvent event)`
+    """
+
 def IsKeyPressed(key: int) -> bool:
     """Check if a key has been pressed once
 
@@ -1721,12 +1811,6 @@ def IsKeyUp(key: int) -> bool:
     Wraps: `bool IsKeyUp(int key)`
     """
 
-def SetExitKey(key: int) -> None:
-    """Set a custom key to exit program (default is ESC)
-
-    Wraps: `void SetExitKey(int key)`
-    """
-
 def GetKeyPressed() -> int:
     """Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty
 
@@ -1737,6 +1821,12 @@ def GetCharPressed() -> int:
     """Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
 
     Wraps: `int GetCharPressed()`
+    """
+
+def SetExitKey(key: int) -> None:
+    """Set a custom key to exit program (default is ESC)
+
+    Wraps: `void SetExitKey(int key)`
     """
 
 def IsGamepadAvailable(gamepad: int) -> bool:
@@ -1998,51 +2088,27 @@ def DrawLine(startPosX: int, startPosY: int, endPosX: int, endPosY: int, color: 
     """
 
 def DrawLineV(startPos: vec2, endPos: vec2, color: Color) -> None:
-    """Draw a line (Vector version)
+    """Draw a line (using gl lines)
 
     Wraps: `void DrawLineV(Vector2 startPos, Vector2 endPos, Color color)`
     """
 
 def DrawLineEx(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None:
-    """Draw a line defining thickness
+    """Draw a line (using triangles/quads)
 
     Wraps: `void DrawLineEx(Vector2 startPos, Vector2 endPos, float thick, Color color)`
     """
 
-def DrawLineBezier(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None:
-    """Draw a line using cubic-bezier curves in-out
-
-    Wraps: `void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color)`
-    """
-
-def DrawLineBezierQuad(startPos: vec2, endPos: vec2, controlPos: vec2, thick: float, color: Color) -> None:
-    """Draw line using quadratic bezier curves with a control point
-
-    Wraps: `void DrawLineBezierQuad(Vector2 startPos, Vector2 endPos, Vector2 controlPos, float thick, Color color)`
-    """
-
-def DrawLineBezierCubic(startPos: vec2, endPos: vec2, startControlPos: vec2, endControlPos: vec2, thick: float, color: Color) -> None:
-    """Draw line using cubic bezier curves with 2 control points
-
-    Wraps: `void DrawLineBezierCubic(Vector2 startPos, Vector2 endPos, Vector2 startControlPos, Vector2 endControlPos, float thick, Color color)`
-    """
-
-def DrawLineBSpline(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
-    """Draw a B-Spline line, minimum 4 points
-
-    Wraps: `void DrawLineBSpline(Vector2 * points, int pointCount, float thick, Color color)`
-    """
-
-def DrawLineCatmullRom(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
-    """Draw a Catmull Rom spline line, minimum 4 points
-
-    Wraps: `void DrawLineCatmullRom(Vector2 * points, int pointCount, float thick, Color color)`
-    """
-
 def DrawLineStrip(points: 'vec2_p', pointCount: int, color: Color) -> None:
-    """Draw lines sequence
+    """Draw lines sequence (using gl lines)
 
     Wraps: `void DrawLineStrip(Vector2 * points, int pointCount, Color color)`
+    """
+
+def DrawLineBezier(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None:
+    """Draw line segment cubic-bezier in-out interpolation
+
+    Wraps: `void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color)`
     """
 
 def DrawCircle(centerX: int, centerY: int, radius: float, color: Color) -> None:
@@ -2079,6 +2145,12 @@ def DrawCircleLines(centerX: int, centerY: int, radius: float, color: Color) -> 
     """Draw circle outline
 
     Wraps: `void DrawCircleLines(int centerX, int centerY, float radius, Color color)`
+    """
+
+def DrawCircleLinesV(center: vec2, radius: float, color: Color) -> None:
+    """Draw circle outline (Vector version)
+
+    Wraps: `void DrawCircleLinesV(Vector2 center, float radius, Color color)`
     """
 
 def DrawEllipse(centerX: int, centerY: int, radiusH: float, radiusV: float, color: Color) -> None:
@@ -2211,6 +2283,96 @@ def DrawPolyLinesEx(center: vec2, sides: int, radius: float, rotation: float, li
     """Draw a polygon outline of n sides with extended parameters
 
     Wraps: `void DrawPolyLinesEx(Vector2 center, int sides, float radius, float rotation, float lineThick, Color color)`
+    """
+
+def DrawSplineLinear(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
+    """Draw spline: Linear, minimum 2 points
+
+    Wraps: `void DrawSplineLinear(Vector2 * points, int pointCount, float thick, Color color)`
+    """
+
+def DrawSplineBasis(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
+    """Draw spline: B-Spline, minimum 4 points
+
+    Wraps: `void DrawSplineBasis(Vector2 * points, int pointCount, float thick, Color color)`
+    """
+
+def DrawSplineCatmullRom(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
+    """Draw spline: Catmull-Rom, minimum 4 points
+
+    Wraps: `void DrawSplineCatmullRom(Vector2 * points, int pointCount, float thick, Color color)`
+    """
+
+def DrawSplineBezierQuadratic(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
+    """Draw spline: Quadratic Bezier, minimum 3 points (1 control point): [p1, c2, p3, c4...]
+
+    Wraps: `void DrawSplineBezierQuadratic(Vector2 * points, int pointCount, float thick, Color color)`
+    """
+
+def DrawSplineBezierCubic(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
+    """Draw spline: Cubic Bezier, minimum 4 points (2 control points): [p1, c2, c3, p4, c5, c6...]
+
+    Wraps: `void DrawSplineBezierCubic(Vector2 * points, int pointCount, float thick, Color color)`
+    """
+
+def DrawSplineSegmentLinear(p1: vec2, p2: vec2, thick: float, color: Color) -> None:
+    """Draw spline segment: Linear, 2 points
+
+    Wraps: `void DrawSplineSegmentLinear(Vector2 p1, Vector2 p2, float thick, Color color)`
+    """
+
+def DrawSplineSegmentBasis(p1: vec2, p2: vec2, p3: vec2, p4: vec2, thick: float, color: Color) -> None:
+    """Draw spline segment: B-Spline, 4 points
+
+    Wraps: `void DrawSplineSegmentBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float thick, Color color)`
+    """
+
+def DrawSplineSegmentCatmullRom(p1: vec2, p2: vec2, p3: vec2, p4: vec2, thick: float, color: Color) -> None:
+    """Draw spline segment: Catmull-Rom, 4 points
+
+    Wraps: `void DrawSplineSegmentCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float thick, Color color)`
+    """
+
+def DrawSplineSegmentBezierQuadratic(p1: vec2, c2: vec2, p3: vec2, thick: float, color: Color) -> None:
+    """Draw spline segment: Quadratic Bezier, 2 points, 1 control point
+
+    Wraps: `void DrawSplineSegmentBezierQuadratic(Vector2 p1, Vector2 c2, Vector2 p3, float thick, Color color)`
+    """
+
+def DrawSplineSegmentBezierCubic(p1: vec2, c2: vec2, c3: vec2, p4: vec2, thick: float, color: Color) -> None:
+    """Draw spline segment: Cubic Bezier, 2 points, 2 control points
+
+    Wraps: `void DrawSplineSegmentBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4, float thick, Color color)`
+    """
+
+def GetSplinePointLinear(startPos: vec2, endPos: vec2, t: float) -> vec2:
+    """Get (evaluate) spline point: Linear
+
+    Wraps: `Vector2 GetSplinePointLinear(Vector2 startPos, Vector2 endPos, float t)`
+    """
+
+def GetSplinePointBasis(p1: vec2, p2: vec2, p3: vec2, p4: vec2, t: float) -> vec2:
+    """Get (evaluate) spline point: B-Spline
+
+    Wraps: `Vector2 GetSplinePointBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float t)`
+    """
+
+def GetSplinePointCatmullRom(p1: vec2, p2: vec2, p3: vec2, p4: vec2, t: float) -> vec2:
+    """Get (evaluate) spline point: Catmull-Rom
+
+    Wraps: `Vector2 GetSplinePointCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float t)`
+    """
+
+def GetSplinePointBezierQuad(p1: vec2, c2: vec2, p3: vec2, t: float) -> vec2:
+    """Get (evaluate) spline point: Quadratic Bezier
+
+    Wraps: `Vector2 GetSplinePointBezierQuad(Vector2 p1, Vector2 c2, Vector2 p3, float t)`
+    """
+
+def GetSplinePointBezierCubic(p1: vec2, c2: vec2, c3: vec2, p4: vec2, t: float) -> vec2:
+    """Get (evaluate) spline point: Cubic Bezier
+
+    Wraps: `Vector2 GetSplinePointBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4, float t)`
     """
 
 def CheckCollisionRecs(rec1: Rectangle, rec2: Rectangle) -> bool:
@@ -2469,6 +2631,12 @@ def ImageBlurGaussian(image: 'Image_p', blurSize: int) -> None:
     """Apply Gaussian blur using a box blur approximation
 
     Wraps: `void ImageBlurGaussian(Image * image, int blurSize)`
+    """
+
+def ImageKernelConvolution(image: 'Image_p', kernel: float_p, kernelSize: int) -> None:
+    """Apply Custom Square image convolution kernel
+
+    Wraps: `void ImageKernelConvolution(Image * image, float* kernel, int kernelSize)`
     """
 
 def ImageResize(image: 'Image_p', newWidth: int, newHeight: int) -> None:
@@ -3633,6 +3801,12 @@ def SetMasterVolume(volume: float) -> None:
     """Set master volume (listener)
 
     Wraps: `void SetMasterVolume(float volume)`
+    """
+
+def GetMasterVolume() -> float:
+    """Get master volume (listener)
+
+    Wraps: `float GetMasterVolume()`
     """
 
 def LoadWave(fileName: str) -> Wave:

@@ -1545,15 +1545,113 @@ PyObject* py_var(VM* vm, const FilePathList* v){
     PyObject* type = vm->_modules[P.first]->attr(P.second);
     return vm->heap.gcnew<VoidP>(PK_OBJ_GET(Type, type), v);
 }
+/*************** AutomationEvent ***************/
+struct wrapped__AutomationEvent{
+    PY_CLASS(wrapped__AutomationEvent, raylib, AutomationEvent)
+
+    AutomationEvent _value;
+    AutomationEvent* _() { return &_value; }
+    wrapped__AutomationEvent() = default;
+    wrapped__AutomationEvent(const wrapped__AutomationEvent& other) = default;
+
+    wrapped__AutomationEvent(const AutomationEvent& other){
+        memcpy(&_value, &other, sizeof(AutomationEvent));
+    }
+    bool operator==(const wrapped__AutomationEvent& other) const{
+        return memcmp(&_value, &other._value, sizeof(AutomationEvent)) == 0;
+    }
+
+    static void _register(VM* vm, PyObject* mod, PyObject* type){
+        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+            static const StrName _fields_[] = {"frame", "type", "params"};
+            if(args.size()==1) return vm->None;
+            if(args.size()-1 != 3) vm->TypeError(fmt("expected 3 arguments, got ", args.size()-1));
+            for(int i=1; i<args.size(); i++){
+                vm->setattr(args[0], _fields_[i-1], args[i]);
+            }
+            return vm->None;
+        });
+        PY_STRUCT_LIKE(wrapped__AutomationEvent)
+        PY_FIELD(wrapped__AutomationEvent, "frame", _, frame)
+        PY_FIELD(wrapped__AutomationEvent, "type", _, type)
+        PY_READONLY_FIELD(wrapped__AutomationEvent, "params", _, params)
+    }
+};
+
+PyObject* py_var(VM* vm, AutomationEvent v){
+    return VAR_T(wrapped__AutomationEvent, v);
+}
+template<>
+AutomationEvent py_cast<AutomationEvent>(VM* vm, PyObject* obj){
+    return *py_cast<wrapped__AutomationEvent&>(vm, obj)._();
+}
+template<>
+AutomationEvent _py_cast<AutomationEvent>(VM* vm, PyObject* obj){
+    return *_py_cast<wrapped__AutomationEvent&>(vm, obj)._();
+}
+PyObject* py_var(VM* vm, const AutomationEvent* v){
+    const static std::pair<StrName, StrName> P("raylib", "AutomationEvent_p");
+    PyObject* type = vm->_modules[P.first]->attr(P.second);
+    return vm->heap.gcnew<VoidP>(PK_OBJ_GET(Type, type), v);
+}
+/*************** AutomationEventList ***************/
+struct wrapped__AutomationEventList{
+    PY_CLASS(wrapped__AutomationEventList, raylib, AutomationEventList)
+
+    AutomationEventList _value;
+    AutomationEventList* _() { return &_value; }
+    wrapped__AutomationEventList() = default;
+    wrapped__AutomationEventList(const wrapped__AutomationEventList& other) = default;
+
+    wrapped__AutomationEventList(const AutomationEventList& other){
+        memcpy(&_value, &other, sizeof(AutomationEventList));
+    }
+    bool operator==(const wrapped__AutomationEventList& other) const{
+        return memcmp(&_value, &other._value, sizeof(AutomationEventList)) == 0;
+    }
+
+    static void _register(VM* vm, PyObject* mod, PyObject* type){
+        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+            static const StrName _fields_[] = {"capacity", "count", "events"};
+            if(args.size()==1) return vm->None;
+            if(args.size()-1 != 3) vm->TypeError(fmt("expected 3 arguments, got ", args.size()-1));
+            for(int i=1; i<args.size(); i++){
+                vm->setattr(args[0], _fields_[i-1], args[i]);
+            }
+            return vm->None;
+        });
+        PY_STRUCT_LIKE(wrapped__AutomationEventList)
+        PY_FIELD(wrapped__AutomationEventList, "capacity", _, capacity)
+        PY_FIELD(wrapped__AutomationEventList, "count", _, count)
+        PY_FIELD(wrapped__AutomationEventList, "events", _, events)
+    }
+};
+
+PyObject* py_var(VM* vm, AutomationEventList v){
+    return VAR_T(wrapped__AutomationEventList, v);
+}
+template<>
+AutomationEventList py_cast<AutomationEventList>(VM* vm, PyObject* obj){
+    return *py_cast<wrapped__AutomationEventList&>(vm, obj)._();
+}
+template<>
+AutomationEventList _py_cast<AutomationEventList>(VM* vm, PyObject* obj){
+    return *_py_cast<wrapped__AutomationEventList&>(vm, obj)._();
+}
+PyObject* py_var(VM* vm, const AutomationEventList* v){
+    const static std::pair<StrName, StrName> P("raylib", "AutomationEventList_p");
+    PyObject* type = vm->_modules[P.first]->attr(P.second);
+    return vm->heap.gcnew<VoidP>(PK_OBJ_GET(Type, type), v);
+}
 ////////////////////////////////////////
 void add_module_raylib(VM* vm){
     PyObject* mod = vm->new_module("raylib");
 
     // defines
-    mod->attr().set("RAYLIB_VERSION_MAJOR", py_var(vm, 4));
-    mod->attr().set("RAYLIB_VERSION_MINOR", py_var(vm, 6));
+    mod->attr().set("RAYLIB_VERSION_MAJOR", py_var(vm, 5));
+    mod->attr().set("RAYLIB_VERSION_MINOR", py_var(vm, 1));
     mod->attr().set("RAYLIB_VERSION_PATCH", py_var(vm, 0));
-    mod->attr().set("RAYLIB_VERSION", py_var(vm, "4.6-dev"));
+    mod->attr().set("RAYLIB_VERSION", py_var(vm, "5.1-dev"));
     mod->attr().set("PI", py_var(vm, 3.141592653589793));
     // ConfigFlags
     _bind_enums(vm, mod, {{"FLAG_VSYNC_HINT", 64}, {"FLAG_FULLSCREEN_MODE", 2}, {"FLAG_WINDOW_RESIZABLE", 4}, {"FLAG_WINDOW_UNDECORATED", 8}, {"FLAG_WINDOW_HIDDEN", 128}, {"FLAG_WINDOW_MINIMIZED", 512}, {"FLAG_WINDOW_MAXIMIZED", 1024}, {"FLAG_WINDOW_UNFOCUSED", 2048}, {"FLAG_WINDOW_TOPMOST", 4096}, {"FLAG_WINDOW_ALWAYS_RUN", 256}, {"FLAG_WINDOW_TRANSPARENT", 16}, {"FLAG_WINDOW_HIGHDPI", 8192}, {"FLAG_WINDOW_MOUSE_PASSTHROUGH", 16384}, {"FLAG_BORDERLESS_WINDOWED_MODE", 32768}, {"FLAG_MSAA_4X_HINT", 32}, {"FLAG_INTERLACED_HINT", 65536}});
@@ -1894,10 +1992,26 @@ void add_module_raylib(VM* vm){
         PY_FIELD_P(FilePathList, "count", count)
         PY_FIELD_P(FilePathList, "paths", paths)
     }
+    wrapped__AutomationEvent::register_class(vm, mod);
+    {
+        PyObject* type = vm->new_type_object(mod, "AutomationEvent_p", VoidP::_type(vm));
+        PY_POINTER_SETGETITEM(AutomationEvent)
+        PY_FIELD_P(AutomationEvent, "frame", frame)
+        PY_FIELD_P(AutomationEvent, "type", type)
+        PY_READONLY_FIELD_P(AutomationEvent, "params", params)
+    }
+    wrapped__AutomationEventList::register_class(vm, mod);
+    {
+        PyObject* type = vm->new_type_object(mod, "AutomationEventList_p", VoidP::_type(vm));
+        PY_POINTER_SETGETITEM(AutomationEventList)
+        PY_FIELD_P(AutomationEventList, "capacity", capacity)
+        PY_FIELD_P(AutomationEventList, "count", count)
+        PY_FIELD_P(AutomationEventList, "events", events)
+    }
 
     _bind(vm, mod, "InitWindow(width: int, height: int, title: str) -> None", &InitWindow);
-    _bind(vm, mod, "WindowShouldClose() -> bool", &WindowShouldClose);
     _bind(vm, mod, "CloseWindow() -> None", &CloseWindow);
+    _bind(vm, mod, "WindowShouldClose() -> bool", &WindowShouldClose);
     _bind(vm, mod, "IsWindowReady() -> bool", &IsWindowReady);
     _bind(vm, mod, "IsWindowFullscreen() -> bool", &IsWindowFullscreen);
     _bind(vm, mod, "IsWindowHidden() -> bool", &IsWindowHidden);
@@ -1943,9 +2057,6 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "GetClipboardText() -> str", &GetClipboardText);
     _bind(vm, mod, "EnableEventWaiting() -> None", &EnableEventWaiting);
     _bind(vm, mod, "DisableEventWaiting() -> None", &DisableEventWaiting);
-    _bind(vm, mod, "SwapScreenBuffer() -> None", &SwapScreenBuffer);
-    _bind(vm, mod, "PollInputEvents() -> None", &PollInputEvents);
-    _bind(vm, mod, "WaitTime(seconds: float) -> None", &WaitTime);
     _bind(vm, mod, "ShowCursor() -> None", &ShowCursor);
     _bind(vm, mod, "HideCursor() -> None", &HideCursor);
     _bind(vm, mod, "IsCursorHidden() -> bool", &IsCursorHidden);
@@ -1989,18 +2100,23 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "GetWorldToScreenEx(position: vec3, camera: Camera, width: int, height: int) -> vec2", &GetWorldToScreenEx);
     _bind(vm, mod, "GetWorldToScreen2D(position: vec2, camera: Camera2D) -> vec2", &GetWorldToScreen2D);
     _bind(vm, mod, "SetTargetFPS(fps: int) -> None", &SetTargetFPS);
-    _bind(vm, mod, "GetFPS() -> int", &GetFPS);
     _bind(vm, mod, "GetFrameTime() -> float", &GetFrameTime);
     _bind(vm, mod, "GetTime() -> float", &GetTime);
-    _bind(vm, mod, "GetRandomValue(min: int, max: int) -> int", &GetRandomValue);
+    _bind(vm, mod, "GetFPS() -> int", &GetFPS);
+    _bind(vm, mod, "SwapScreenBuffer() -> None", &SwapScreenBuffer);
+    _bind(vm, mod, "PollInputEvents() -> None", &PollInputEvents);
+    _bind(vm, mod, "WaitTime(seconds: float) -> None", &WaitTime);
     _bind(vm, mod, "SetRandomSeed(seed: int) -> None", &SetRandomSeed);
+    _bind(vm, mod, "GetRandomValue(min: int, max: int) -> int", &GetRandomValue);
+    _bind(vm, mod, "LoadRandomSequence(count: int, min: int, max: int) -> int_p", &LoadRandomSequence);
+    _bind(vm, mod, "UnloadRandomSequence(sequence: int_p) -> None", &UnloadRandomSequence);
     _bind(vm, mod, "TakeScreenshot(fileName: str) -> None", &TakeScreenshot);
     _bind(vm, mod, "SetConfigFlags(flags: int) -> None", &SetConfigFlags);
+    _bind(vm, mod, "OpenURL(url: str) -> None", &OpenURL);
     _bind(vm, mod, "SetTraceLogLevel(logLevel: int) -> None", &SetTraceLogLevel);
     _bind(vm, mod, "MemAlloc(size: int) -> void_p", &MemAlloc);
     _bind(vm, mod, "MemRealloc(ptr: void_p, size: int) -> void_p", &MemRealloc);
     _bind(vm, mod, "MemFree(ptr: void_p) -> None", &MemFree);
-    _bind(vm, mod, "OpenURL(url: str) -> None", &OpenURL);
     _bind(vm, mod, "LoadFileData(fileName: str, dataSize: int_p) -> uchar_p", &LoadFileData);
     _bind(vm, mod, "UnloadFileData(data: uchar_p) -> None", &UnloadFileData);
     _bind(vm, mod, "SaveFileData(fileName: str, data: void_p, dataSize: int) -> bool", &SaveFileData);
@@ -2032,14 +2148,22 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "DecompressData(compData: uchar_p, compDataSize: int, dataSize: int_p) -> uchar_p", &DecompressData);
     _bind(vm, mod, "EncodeDataBase64(data: uchar_p, dataSize: int, outputSize: int_p) -> char_p", &EncodeDataBase64);
     _bind(vm, mod, "DecodeDataBase64(data: uchar_p, outputSize: int_p) -> uchar_p", &DecodeDataBase64);
+    _bind(vm, mod, "LoadAutomationEventList(fileName: str) -> AutomationEventList", &LoadAutomationEventList);
+    _bind(vm, mod, "UnloadAutomationEventList(list: 'AutomationEventList_p') -> None", &UnloadAutomationEventList);
+    _bind(vm, mod, "ExportAutomationEventList(list: AutomationEventList, fileName: str) -> bool", &ExportAutomationEventList);
+    _bind(vm, mod, "SetAutomationEventList(list: 'AutomationEventList_p') -> None", &SetAutomationEventList);
+    _bind(vm, mod, "SetAutomationEventBaseFrame(frame: int) -> None", &SetAutomationEventBaseFrame);
+    _bind(vm, mod, "StartAutomationEventRecording() -> None", &StartAutomationEventRecording);
+    _bind(vm, mod, "StopAutomationEventRecording() -> None", &StopAutomationEventRecording);
+    _bind(vm, mod, "PlayAutomationEvent(event: AutomationEvent) -> None", &PlayAutomationEvent);
     _bind(vm, mod, "IsKeyPressed(key: int) -> bool", &IsKeyPressed);
     _bind(vm, mod, "IsKeyPressedRepeat(key: int) -> bool", &IsKeyPressedRepeat);
     _bind(vm, mod, "IsKeyDown(key: int) -> bool", &IsKeyDown);
     _bind(vm, mod, "IsKeyReleased(key: int) -> bool", &IsKeyReleased);
     _bind(vm, mod, "IsKeyUp(key: int) -> bool", &IsKeyUp);
-    _bind(vm, mod, "SetExitKey(key: int) -> None", &SetExitKey);
     _bind(vm, mod, "GetKeyPressed() -> int", &GetKeyPressed);
     _bind(vm, mod, "GetCharPressed() -> int", &GetCharPressed);
+    _bind(vm, mod, "SetExitKey(key: int) -> None", &SetExitKey);
     _bind(vm, mod, "IsGamepadAvailable(gamepad: int) -> bool", &IsGamepadAvailable);
     _bind(vm, mod, "GetGamepadName(gamepad: int) -> str", &GetGamepadName);
     _bind(vm, mod, "IsGamepadButtonPressed(gamepad: int, button: int) -> bool", &IsGamepadButtonPressed);
@@ -2085,18 +2209,15 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "DrawLine(startPosX: int, startPosY: int, endPosX: int, endPosY: int, color: Color) -> None", &DrawLine);
     _bind(vm, mod, "DrawLineV(startPos: vec2, endPos: vec2, color: Color) -> None", &DrawLineV);
     _bind(vm, mod, "DrawLineEx(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None", &DrawLineEx);
-    _bind(vm, mod, "DrawLineBezier(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None", &DrawLineBezier);
-    _bind(vm, mod, "DrawLineBezierQuad(startPos: vec2, endPos: vec2, controlPos: vec2, thick: float, color: Color) -> None", &DrawLineBezierQuad);
-    _bind(vm, mod, "DrawLineBezierCubic(startPos: vec2, endPos: vec2, startControlPos: vec2, endControlPos: vec2, thick: float, color: Color) -> None", &DrawLineBezierCubic);
-    _bind(vm, mod, "DrawLineBSpline(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawLineBSpline);
-    _bind(vm, mod, "DrawLineCatmullRom(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawLineCatmullRom);
     _bind(vm, mod, "DrawLineStrip(points: 'vec2_p', pointCount: int, color: Color) -> None", &DrawLineStrip);
+    _bind(vm, mod, "DrawLineBezier(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None", &DrawLineBezier);
     _bind(vm, mod, "DrawCircle(centerX: int, centerY: int, radius: float, color: Color) -> None", &DrawCircle);
     _bind(vm, mod, "DrawCircleSector(center: vec2, radius: float, startAngle: float, endAngle: float, segments: int, color: Color) -> None", &DrawCircleSector);
     _bind(vm, mod, "DrawCircleSectorLines(center: vec2, radius: float, startAngle: float, endAngle: float, segments: int, color: Color) -> None", &DrawCircleSectorLines);
     _bind(vm, mod, "DrawCircleGradient(centerX: int, centerY: int, radius: float, color1: Color, color2: Color) -> None", &DrawCircleGradient);
     _bind(vm, mod, "DrawCircleV(center: vec2, radius: float, color: Color) -> None", &DrawCircleV);
     _bind(vm, mod, "DrawCircleLines(centerX: int, centerY: int, radius: float, color: Color) -> None", &DrawCircleLines);
+    _bind(vm, mod, "DrawCircleLinesV(center: vec2, radius: float, color: Color) -> None", &DrawCircleLinesV);
     _bind(vm, mod, "DrawEllipse(centerX: int, centerY: int, radiusH: float, radiusV: float, color: Color) -> None", &DrawEllipse);
     _bind(vm, mod, "DrawEllipseLines(centerX: int, centerY: int, radiusH: float, radiusV: float, color: Color) -> None", &DrawEllipseLines);
     _bind(vm, mod, "DrawRing(center: vec2, innerRadius: float, outerRadius: float, startAngle: float, endAngle: float, segments: int, color: Color) -> None", &DrawRing);
@@ -2119,6 +2240,21 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "DrawPoly(center: vec2, sides: int, radius: float, rotation: float, color: Color) -> None", &DrawPoly);
     _bind(vm, mod, "DrawPolyLines(center: vec2, sides: int, radius: float, rotation: float, color: Color) -> None", &DrawPolyLines);
     _bind(vm, mod, "DrawPolyLinesEx(center: vec2, sides: int, radius: float, rotation: float, lineThick: float, color: Color) -> None", &DrawPolyLinesEx);
+    _bind(vm, mod, "DrawSplineLinear(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawSplineLinear);
+    _bind(vm, mod, "DrawSplineBasis(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawSplineBasis);
+    _bind(vm, mod, "DrawSplineCatmullRom(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawSplineCatmullRom);
+    _bind(vm, mod, "DrawSplineBezierQuadratic(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawSplineBezierQuadratic);
+    _bind(vm, mod, "DrawSplineBezierCubic(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None", &DrawSplineBezierCubic);
+    _bind(vm, mod, "DrawSplineSegmentLinear(p1: vec2, p2: vec2, thick: float, color: Color) -> None", &DrawSplineSegmentLinear);
+    _bind(vm, mod, "DrawSplineSegmentBasis(p1: vec2, p2: vec2, p3: vec2, p4: vec2, thick: float, color: Color) -> None", &DrawSplineSegmentBasis);
+    _bind(vm, mod, "DrawSplineSegmentCatmullRom(p1: vec2, p2: vec2, p3: vec2, p4: vec2, thick: float, color: Color) -> None", &DrawSplineSegmentCatmullRom);
+    _bind(vm, mod, "DrawSplineSegmentBezierQuadratic(p1: vec2, c2: vec2, p3: vec2, thick: float, color: Color) -> None", &DrawSplineSegmentBezierQuadratic);
+    _bind(vm, mod, "DrawSplineSegmentBezierCubic(p1: vec2, c2: vec2, c3: vec2, p4: vec2, thick: float, color: Color) -> None", &DrawSplineSegmentBezierCubic);
+    _bind(vm, mod, "GetSplinePointLinear(startPos: vec2, endPos: vec2, t: float) -> vec2", &GetSplinePointLinear);
+    _bind(vm, mod, "GetSplinePointBasis(p1: vec2, p2: vec2, p3: vec2, p4: vec2, t: float) -> vec2", &GetSplinePointBasis);
+    _bind(vm, mod, "GetSplinePointCatmullRom(p1: vec2, p2: vec2, p3: vec2, p4: vec2, t: float) -> vec2", &GetSplinePointCatmullRom);
+    _bind(vm, mod, "GetSplinePointBezierQuad(p1: vec2, c2: vec2, p3: vec2, t: float) -> vec2", &GetSplinePointBezierQuad);
+    _bind(vm, mod, "GetSplinePointBezierCubic(p1: vec2, c2: vec2, c3: vec2, p4: vec2, t: float) -> vec2", &GetSplinePointBezierCubic);
     _bind(vm, mod, "CheckCollisionRecs(rec1: Rectangle, rec2: Rectangle) -> bool", &CheckCollisionRecs);
     _bind(vm, mod, "CheckCollisionCircles(center1: vec2, radius1: float, center2: vec2, radius2: float) -> bool", &CheckCollisionCircles);
     _bind(vm, mod, "CheckCollisionCircleRec(center: vec2, radius: float, rec: Rectangle) -> bool", &CheckCollisionCircleRec);
@@ -2162,6 +2298,7 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "ImageAlphaMask(image: 'Image_p', alphaMask: Image) -> None", &ImageAlphaMask);
     _bind(vm, mod, "ImageAlphaPremultiply(image: 'Image_p') -> None", &ImageAlphaPremultiply);
     _bind(vm, mod, "ImageBlurGaussian(image: 'Image_p', blurSize: int) -> None", &ImageBlurGaussian);
+    _bind(vm, mod, "ImageKernelConvolution(image: 'Image_p', kernel: float_p, kernelSize: int) -> None", &ImageKernelConvolution);
     _bind(vm, mod, "ImageResize(image: 'Image_p', newWidth: int, newHeight: int) -> None", &ImageResize);
     _bind(vm, mod, "ImageResizeNN(image: 'Image_p', newWidth: int, newHeight: int) -> None", &ImageResizeNN);
     _bind(vm, mod, "ImageResizeCanvas(image: 'Image_p', newWidth: int, newHeight: int, offsetX: int, offsetY: int, fill: Color) -> None", &ImageResizeCanvas);
@@ -2356,6 +2493,7 @@ void add_module_raylib(VM* vm){
     _bind(vm, mod, "CloseAudioDevice() -> None", &CloseAudioDevice);
     _bind(vm, mod, "IsAudioDeviceReady() -> bool", &IsAudioDeviceReady);
     _bind(vm, mod, "SetMasterVolume(volume: float) -> None", &SetMasterVolume);
+    _bind(vm, mod, "GetMasterVolume() -> float", &GetMasterVolume);
     _bind(vm, mod, "LoadWave(fileName: str) -> Wave", &LoadWave);
     _bind(vm, mod, "LoadWaveFromMemory(fileType: str, fileData: uchar_p, dataSize: int) -> Wave", &LoadWaveFromMemory);
     _bind(vm, mod, "IsWaveReady(wave: Wave) -> bool", &IsWaveReady);
