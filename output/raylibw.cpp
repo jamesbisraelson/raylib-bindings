@@ -1699,6 +1699,7 @@ void add_module_raylib(VM* vm){
     wrapped__Matrix::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Matrix_p", VoidP::_type(vm));
+        mod->attr().set("Matrix_p", type);
         PY_POINTER_SETGETITEM(Matrix)
         PY_FIELD_P(Matrix, "m0", m0)
         PY_FIELD_P(Matrix, "m4", m4)
@@ -1720,6 +1721,7 @@ void add_module_raylib(VM* vm){
     wrapped__Color::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Color_p", VoidP::_type(vm));
+        mod->attr().set("Color_p", type);
         PY_POINTER_SETGETITEM(Color)
         PY_FIELD_P(Color, "r", r)
         PY_FIELD_P(Color, "g", g)
@@ -1729,6 +1731,7 @@ void add_module_raylib(VM* vm){
     wrapped__Rectangle::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Rectangle_p", VoidP::_type(vm));
+        mod->attr().set("Rectangle_p", type);
         PY_POINTER_SETGETITEM(Rectangle)
         PY_FIELD_P(Rectangle, "x", x)
         PY_FIELD_P(Rectangle, "y", y)
@@ -1738,6 +1741,7 @@ void add_module_raylib(VM* vm){
     wrapped__Image::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Image_p", VoidP::_type(vm));
+        mod->attr().set("Image_p", type);
         PY_POINTER_SETGETITEM(Image)
         PY_FIELD_P(Image, "data", data)
         PY_FIELD_P(Image, "width", width)
@@ -1748,6 +1752,7 @@ void add_module_raylib(VM* vm){
     wrapped__Texture::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Texture_p", VoidP::_type(vm));
+        mod->attr().set("Texture_p", type);
         PY_POINTER_SETGETITEM(Texture)
         PY_FIELD_P(Texture, "id", id)
         PY_FIELD_P(Texture, "width", width)
@@ -1758,6 +1763,7 @@ void add_module_raylib(VM* vm){
     wrapped__RenderTexture::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "RenderTexture_p", VoidP::_type(vm));
+        mod->attr().set("RenderTexture_p", type);
         PY_POINTER_SETGETITEM(RenderTexture)
         PY_FIELD_P(RenderTexture, "id", id)
         PY_FIELD_P(RenderTexture, "texture", texture)
@@ -1766,6 +1772,7 @@ void add_module_raylib(VM* vm){
     wrapped__NPatchInfo::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "NPatchInfo_p", VoidP::_type(vm));
+        mod->attr().set("NPatchInfo_p", type);
         PY_POINTER_SETGETITEM(NPatchInfo)
         PY_FIELD_P(NPatchInfo, "source", source)
         PY_FIELD_P(NPatchInfo, "left", left)
@@ -1777,6 +1784,7 @@ void add_module_raylib(VM* vm){
     wrapped__GlyphInfo::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "GlyphInfo_p", VoidP::_type(vm));
+        mod->attr().set("GlyphInfo_p", type);
         PY_POINTER_SETGETITEM(GlyphInfo)
         PY_FIELD_P(GlyphInfo, "value", value)
         PY_FIELD_P(GlyphInfo, "offsetX", offsetX)
@@ -1787,6 +1795,7 @@ void add_module_raylib(VM* vm){
     wrapped__Font::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Font_p", VoidP::_type(vm));
+        mod->attr().set("Font_p", type);
         PY_POINTER_SETGETITEM(Font)
         PY_FIELD_P(Font, "baseSize", baseSize)
         PY_FIELD_P(Font, "glyphCount", glyphCount)
@@ -1798,6 +1807,7 @@ void add_module_raylib(VM* vm){
     wrapped__Camera3D::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Camera3D_p", VoidP::_type(vm));
+        mod->attr().set("Camera3D_p", type);
         PY_POINTER_SETGETITEM(Camera3D)
         PY_FIELD_P(Camera3D, "position", position)
         PY_FIELD_P(Camera3D, "target", target)
@@ -1808,6 +1818,7 @@ void add_module_raylib(VM* vm){
     wrapped__Camera2D::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Camera2D_p", VoidP::_type(vm));
+        mod->attr().set("Camera2D_p", type);
         PY_POINTER_SETGETITEM(Camera2D)
         PY_FIELD_P(Camera2D, "offset", offset)
         PY_FIELD_P(Camera2D, "target", target)
@@ -1817,6 +1828,7 @@ void add_module_raylib(VM* vm){
     wrapped__Mesh::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Mesh_p", VoidP::_type(vm));
+        mod->attr().set("Mesh_p", type);
         PY_POINTER_SETGETITEM(Mesh)
         PY_FIELD_P(Mesh, "vertexCount", vertexCount)
         PY_FIELD_P(Mesh, "triangleCount", triangleCount)
@@ -1837,6 +1849,7 @@ void add_module_raylib(VM* vm){
     wrapped__Shader::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Shader_p", VoidP::_type(vm));
+        mod->attr().set("Shader_p", type);
         PY_POINTER_SETGETITEM(Shader)
         PY_FIELD_P(Shader, "id", id)
         PY_FIELD_P(Shader, "locs", locs)
@@ -1844,6 +1857,7 @@ void add_module_raylib(VM* vm){
     wrapped__MaterialMap::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "MaterialMap_p", VoidP::_type(vm));
+        mod->attr().set("MaterialMap_p", type);
         PY_POINTER_SETGETITEM(MaterialMap)
         PY_FIELD_P(MaterialMap, "texture", texture)
         PY_FIELD_P(MaterialMap, "color", color)
@@ -1852,6 +1866,7 @@ void add_module_raylib(VM* vm){
     wrapped__Material::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Material_p", VoidP::_type(vm));
+        mod->attr().set("Material_p", type);
         PY_POINTER_SETGETITEM(Material)
         PY_FIELD_P(Material, "shader", shader)
         PY_FIELD_P(Material, "maps", maps)
@@ -1860,6 +1875,7 @@ void add_module_raylib(VM* vm){
     wrapped__Transform::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Transform_p", VoidP::_type(vm));
+        mod->attr().set("Transform_p", type);
         PY_POINTER_SETGETITEM(Transform)
         PY_FIELD_P(Transform, "translation", translation)
         PY_FIELD_P(Transform, "rotation", rotation)
@@ -1868,6 +1884,7 @@ void add_module_raylib(VM* vm){
     wrapped__BoneInfo::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "BoneInfo_p", VoidP::_type(vm));
+        mod->attr().set("BoneInfo_p", type);
         PY_POINTER_SETGETITEM(BoneInfo)
         PY_READONLY_FIELD_P(BoneInfo, "name", name)
         PY_FIELD_P(BoneInfo, "parent", parent)
@@ -1875,6 +1892,7 @@ void add_module_raylib(VM* vm){
     wrapped__Model::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Model_p", VoidP::_type(vm));
+        mod->attr().set("Model_p", type);
         PY_POINTER_SETGETITEM(Model)
         PY_FIELD_P(Model, "transform", transform)
         PY_FIELD_P(Model, "meshCount", meshCount)
@@ -1889,6 +1907,7 @@ void add_module_raylib(VM* vm){
     wrapped__ModelAnimation::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "ModelAnimation_p", VoidP::_type(vm));
+        mod->attr().set("ModelAnimation_p", type);
         PY_POINTER_SETGETITEM(ModelAnimation)
         PY_FIELD_P(ModelAnimation, "boneCount", boneCount)
         PY_FIELD_P(ModelAnimation, "frameCount", frameCount)
@@ -1899,6 +1918,7 @@ void add_module_raylib(VM* vm){
     wrapped__Ray::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Ray_p", VoidP::_type(vm));
+        mod->attr().set("Ray_p", type);
         PY_POINTER_SETGETITEM(Ray)
         PY_FIELD_P(Ray, "position", position)
         PY_FIELD_P(Ray, "direction", direction)
@@ -1906,6 +1926,7 @@ void add_module_raylib(VM* vm){
     wrapped__RayCollision::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "RayCollision_p", VoidP::_type(vm));
+        mod->attr().set("RayCollision_p", type);
         PY_POINTER_SETGETITEM(RayCollision)
         PY_FIELD_P(RayCollision, "hit", hit)
         PY_FIELD_P(RayCollision, "distance", distance)
@@ -1915,6 +1936,7 @@ void add_module_raylib(VM* vm){
     wrapped__BoundingBox::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "BoundingBox_p", VoidP::_type(vm));
+        mod->attr().set("BoundingBox_p", type);
         PY_POINTER_SETGETITEM(BoundingBox)
         PY_FIELD_P(BoundingBox, "min", min)
         PY_FIELD_P(BoundingBox, "max", max)
@@ -1922,6 +1944,7 @@ void add_module_raylib(VM* vm){
     wrapped__Wave::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Wave_p", VoidP::_type(vm));
+        mod->attr().set("Wave_p", type);
         PY_POINTER_SETGETITEM(Wave)
         PY_FIELD_P(Wave, "frameCount", frameCount)
         PY_FIELD_P(Wave, "sampleRate", sampleRate)
@@ -1932,6 +1955,7 @@ void add_module_raylib(VM* vm){
     wrapped__AudioStream::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "AudioStream_p", VoidP::_type(vm));
+        mod->attr().set("AudioStream_p", type);
         PY_POINTER_SETGETITEM(AudioStream)
         PY_FIELD_P(AudioStream, "buffer", buffer)
         PY_FIELD_P(AudioStream, "processor", processor)
@@ -1942,6 +1966,7 @@ void add_module_raylib(VM* vm){
     wrapped__Sound::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Sound_p", VoidP::_type(vm));
+        mod->attr().set("Sound_p", type);
         PY_POINTER_SETGETITEM(Sound)
         PY_FIELD_P(Sound, "stream", stream)
         PY_FIELD_P(Sound, "frameCount", frameCount)
@@ -1949,6 +1974,7 @@ void add_module_raylib(VM* vm){
     wrapped__Music::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Music_p", VoidP::_type(vm));
+        mod->attr().set("Music_p", type);
         PY_POINTER_SETGETITEM(Music)
         PY_FIELD_P(Music, "stream", stream)
         PY_FIELD_P(Music, "frameCount", frameCount)
@@ -1959,6 +1985,7 @@ void add_module_raylib(VM* vm){
     wrapped__VrDeviceInfo::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "VrDeviceInfo_p", VoidP::_type(vm));
+        mod->attr().set("VrDeviceInfo_p", type);
         PY_POINTER_SETGETITEM(VrDeviceInfo)
         PY_FIELD_P(VrDeviceInfo, "hResolution", hResolution)
         PY_FIELD_P(VrDeviceInfo, "vResolution", vResolution)
@@ -1974,6 +2001,7 @@ void add_module_raylib(VM* vm){
     wrapped__VrStereoConfig::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "VrStereoConfig_p", VoidP::_type(vm));
+        mod->attr().set("VrStereoConfig_p", type);
         PY_POINTER_SETGETITEM(VrStereoConfig)
         PY_READONLY_FIELD_P(VrStereoConfig, "projection", projection)
         PY_READONLY_FIELD_P(VrStereoConfig, "viewOffset", viewOffset)
@@ -1987,6 +2015,7 @@ void add_module_raylib(VM* vm){
     wrapped__FilePathList::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "FilePathList_p", VoidP::_type(vm));
+        mod->attr().set("FilePathList_p", type);
         PY_POINTER_SETGETITEM(FilePathList)
         PY_FIELD_P(FilePathList, "capacity", capacity)
         PY_FIELD_P(FilePathList, "count", count)
@@ -1995,6 +2024,7 @@ void add_module_raylib(VM* vm){
     wrapped__AutomationEvent::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "AutomationEvent_p", VoidP::_type(vm));
+        mod->attr().set("AutomationEvent_p", type);
         PY_POINTER_SETGETITEM(AutomationEvent)
         PY_FIELD_P(AutomationEvent, "frame", frame)
         PY_FIELD_P(AutomationEvent, "type", type)
@@ -2003,6 +2033,7 @@ void add_module_raylib(VM* vm){
     wrapped__AutomationEventList::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "AutomationEventList_p", VoidP::_type(vm));
+        mod->attr().set("AutomationEventList_p", type);
         PY_POINTER_SETGETITEM(AutomationEventList)
         PY_FIELD_P(AutomationEventList, "capacity", capacity)
         PY_FIELD_P(AutomationEventList, "count", count)

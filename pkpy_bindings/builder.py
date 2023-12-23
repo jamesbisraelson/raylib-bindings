@@ -205,6 +205,7 @@ template<>
         # generate its corresponding pointer type
         cpp.append( '    {')
         cpp.append(f'        PyObject* type = vm->new_type_object(mod, "{struct.name}_p", VoidP::_type(vm));')
+        cpp.append(f'        mod->attr().set("{struct.name}_p", type);')
         cpp.append(f'        PY_POINTER_SETGETITEM({struct.name})')
         for field in struct.fields:
             if '[' in field.type and ']' in field.type:
