@@ -28,7 +28,7 @@ class Matrix(_StructLike[Matrix], _wrapped__Matrix):
     @overload
     def __init__(self, m0: float, m4: float, m8: float, m12: float, m1: float, m5: float, m9: float, m13: float, m2: float, m6: float, m10: float, m14: float, m3: float, m7: float, m11: float, m15: float): ...
 
-class Matrix_p(Pointer[Matrix], _wrapped__Matrix):
+class Matrix_p(Pointer[Matrix]):
     """Wraps `Matrix *`"""
 
 class _wrapped__Color:
@@ -44,7 +44,7 @@ class Color(_StructLike[Color], _wrapped__Color):
     @overload
     def __init__(self, r: int, g: int, b: int, a: int): ...
 
-class Color_p(Pointer[Color], _wrapped__Color):
+class Color_p(Pointer[Color]):
     """Wraps `Color *`"""
 
 class _wrapped__Rectangle:
@@ -60,7 +60,7 @@ class Rectangle(_StructLike[Rectangle], _wrapped__Rectangle):
     @overload
     def __init__(self, x: float, y: float, width: float, height: float): ...
 
-class Rectangle_p(Pointer[Rectangle], _wrapped__Rectangle):
+class Rectangle_p(Pointer[Rectangle]):
     """Wraps `Rectangle *`"""
 
 class _wrapped__Image:
@@ -77,7 +77,7 @@ class Image(_StructLike[Image], _wrapped__Image):
     @overload
     def __init__(self, data: void_p, width: int, height: int, mipmaps: int, format: int): ...
 
-class Image_p(Pointer[Image], _wrapped__Image):
+class Image_p(Pointer[Image]):
     """Wraps `Image *`"""
 
 class _wrapped__Texture:
@@ -94,7 +94,7 @@ class Texture(_StructLike[Texture], _wrapped__Texture):
     @overload
     def __init__(self, id: int, width: int, height: int, mipmaps: int, format: int): ...
 
-class Texture_p(Pointer[Texture], _wrapped__Texture):
+class Texture_p(Pointer[Texture]):
     """Wraps `Texture *`"""
 
 class _wrapped__RenderTexture:
@@ -109,7 +109,7 @@ class RenderTexture(_StructLike[RenderTexture], _wrapped__RenderTexture):
     @overload
     def __init__(self, id: int, texture: Texture, depth: Texture): ...
 
-class RenderTexture_p(Pointer[RenderTexture], _wrapped__RenderTexture):
+class RenderTexture_p(Pointer[RenderTexture]):
     """Wraps `RenderTexture *`"""
 
 class _wrapped__NPatchInfo:
@@ -127,7 +127,7 @@ class NPatchInfo(_StructLike[NPatchInfo], _wrapped__NPatchInfo):
     @overload
     def __init__(self, source: Rectangle, left: int, top: int, right: int, bottom: int, layout: int): ...
 
-class NPatchInfo_p(Pointer[NPatchInfo], _wrapped__NPatchInfo):
+class NPatchInfo_p(Pointer[NPatchInfo]):
     """Wraps `NPatchInfo *`"""
 
 class _wrapped__GlyphInfo:
@@ -144,7 +144,7 @@ class GlyphInfo(_StructLike[GlyphInfo], _wrapped__GlyphInfo):
     @overload
     def __init__(self, value: int, offsetX: int, offsetY: int, advanceX: int, image: Image): ...
 
-class GlyphInfo_p(Pointer[GlyphInfo], _wrapped__GlyphInfo):
+class GlyphInfo_p(Pointer[GlyphInfo]):
     """Wraps `GlyphInfo *`"""
 
 class _wrapped__Font:
@@ -162,7 +162,7 @@ class Font(_StructLike[Font], _wrapped__Font):
     @overload
     def __init__(self, baseSize: int, glyphCount: int, glyphPadding: int, texture: Texture2D, recs: 'Rectangle_p', glyphs: 'GlyphInfo_p'): ...
 
-class Font_p(Pointer[Font], _wrapped__Font):
+class Font_p(Pointer[Font]):
     """Wraps `Font *`"""
 
 class _wrapped__Camera3D:
@@ -179,7 +179,7 @@ class Camera3D(_StructLike[Camera3D], _wrapped__Camera3D):
     @overload
     def __init__(self, position: vec3, target: vec3, up: vec3, fovy: float, projection: int): ...
 
-class Camera3D_p(Pointer[Camera3D], _wrapped__Camera3D):
+class Camera3D_p(Pointer[Camera3D]):
     """Wraps `Camera3D *`"""
 
 class _wrapped__Camera2D:
@@ -195,7 +195,7 @@ class Camera2D(_StructLike[Camera2D], _wrapped__Camera2D):
     @overload
     def __init__(self, offset: vec2, target: vec2, rotation: float, zoom: float): ...
 
-class Camera2D_p(Pointer[Camera2D], _wrapped__Camera2D):
+class Camera2D_p(Pointer[Camera2D]):
     """Wraps `Camera2D *`"""
 
 class _wrapped__Mesh:
@@ -222,7 +222,7 @@ class Mesh(_StructLike[Mesh], _wrapped__Mesh):
     @overload
     def __init__(self, vertexCount: int, triangleCount: int, vertices: float_p, texcoords: float_p, texcoords2: float_p, normals: float_p, tangents: float_p, colors: uchar_p, indices: ushort_p, animVertices: float_p, animNormals: float_p, boneIds: uchar_p, boneWeights: float_p, vaoId: int, vboId: uint_p): ...
 
-class Mesh_p(Pointer[Mesh], _wrapped__Mesh):
+class Mesh_p(Pointer[Mesh]):
     """Wraps `Mesh *`"""
 
 class _wrapped__Shader:
@@ -236,7 +236,7 @@ class Shader(_StructLike[Shader], _wrapped__Shader):
     @overload
     def __init__(self, id: int, locs: int_p): ...
 
-class Shader_p(Pointer[Shader], _wrapped__Shader):
+class Shader_p(Pointer[Shader]):
     """Wraps `Shader *`"""
 
 class _wrapped__MaterialMap:
@@ -251,7 +251,7 @@ class MaterialMap(_StructLike[MaterialMap], _wrapped__MaterialMap):
     @overload
     def __init__(self, texture: Texture2D, color: Color, value: float): ...
 
-class MaterialMap_p(Pointer[MaterialMap], _wrapped__MaterialMap):
+class MaterialMap_p(Pointer[MaterialMap]):
     """Wraps `MaterialMap *`"""
 
 class _wrapped__Material:
@@ -266,7 +266,7 @@ class Material(_StructLike[Material], _wrapped__Material):
     @overload
     def __init__(self, shader: Shader, maps: 'MaterialMap_p', params: float_p): ...
 
-class Material_p(Pointer[Material], _wrapped__Material):
+class Material_p(Pointer[Material]):
     """Wraps `Material *`"""
 
 class _wrapped__Transform:
@@ -281,7 +281,7 @@ class Transform(_StructLike[Transform], _wrapped__Transform):
     @overload
     def __init__(self, translation: vec3, rotation: Quaternion, scale: vec3): ...
 
-class Transform_p(Pointer[Transform], _wrapped__Transform):
+class Transform_p(Pointer[Transform]):
     """Wraps `Transform *`"""
 
 class _wrapped__BoneInfo:
@@ -295,7 +295,7 @@ class BoneInfo(_StructLike[BoneInfo], _wrapped__BoneInfo):
     @overload
     def __init__(self, name: char_p, parent: int): ...
 
-class BoneInfo_p(Pointer[BoneInfo], _wrapped__BoneInfo):
+class BoneInfo_p(Pointer[BoneInfo]):
     """Wraps `BoneInfo *`"""
 
 class _wrapped__Model:
@@ -316,7 +316,7 @@ class Model(_StructLike[Model], _wrapped__Model):
     @overload
     def __init__(self, transform: Matrix, meshCount: int, materialCount: int, meshes: 'Mesh_p', materials: 'Material_p', meshMaterial: int_p, boneCount: int, bones: 'BoneInfo_p', bindPose: 'Transform_p'): ...
 
-class Model_p(Pointer[Model], _wrapped__Model):
+class Model_p(Pointer[Model]):
     """Wraps `Model *`"""
 
 class _wrapped__ModelAnimation:
@@ -333,7 +333,7 @@ class ModelAnimation(_StructLike[ModelAnimation], _wrapped__ModelAnimation):
     @overload
     def __init__(self, boneCount: int, frameCount: int, bones: 'BoneInfo_p', framePoses: void_p, name: char_p): ...
 
-class ModelAnimation_p(Pointer[ModelAnimation], _wrapped__ModelAnimation):
+class ModelAnimation_p(Pointer[ModelAnimation]):
     """Wraps `ModelAnimation *`"""
 
 class _wrapped__Ray:
@@ -347,7 +347,7 @@ class Ray(_StructLike[Ray], _wrapped__Ray):
     @overload
     def __init__(self, position: vec3, direction: vec3): ...
 
-class Ray_p(Pointer[Ray], _wrapped__Ray):
+class Ray_p(Pointer[Ray]):
     """Wraps `Ray *`"""
 
 class _wrapped__RayCollision:
@@ -363,7 +363,7 @@ class RayCollision(_StructLike[RayCollision], _wrapped__RayCollision):
     @overload
     def __init__(self, hit: bool, distance: float, point: vec3, normal: vec3): ...
 
-class RayCollision_p(Pointer[RayCollision], _wrapped__RayCollision):
+class RayCollision_p(Pointer[RayCollision]):
     """Wraps `RayCollision *`"""
 
 class _wrapped__BoundingBox:
@@ -377,7 +377,7 @@ class BoundingBox(_StructLike[BoundingBox], _wrapped__BoundingBox):
     @overload
     def __init__(self, min: vec3, max: vec3): ...
 
-class BoundingBox_p(Pointer[BoundingBox], _wrapped__BoundingBox):
+class BoundingBox_p(Pointer[BoundingBox]):
     """Wraps `BoundingBox *`"""
 
 class _wrapped__Wave:
@@ -394,7 +394,7 @@ class Wave(_StructLike[Wave], _wrapped__Wave):
     @overload
     def __init__(self, frameCount: int, sampleRate: int, sampleSize: int, channels: int, data: void_p): ...
 
-class Wave_p(Pointer[Wave], _wrapped__Wave):
+class Wave_p(Pointer[Wave]):
     """Wraps `Wave *`"""
 
 class _wrapped__AudioStream:
@@ -411,7 +411,7 @@ class AudioStream(_StructLike[AudioStream], _wrapped__AudioStream):
     @overload
     def __init__(self, buffer: void_p, processor: void_p, sampleRate: int, sampleSize: int, channels: int): ...
 
-class AudioStream_p(Pointer[AudioStream], _wrapped__AudioStream):
+class AudioStream_p(Pointer[AudioStream]):
     """Wraps `AudioStream *`"""
 
 class _wrapped__Sound:
@@ -425,7 +425,7 @@ class Sound(_StructLike[Sound], _wrapped__Sound):
     @overload
     def __init__(self, stream: AudioStream, frameCount: int): ...
 
-class Sound_p(Pointer[Sound], _wrapped__Sound):
+class Sound_p(Pointer[Sound]):
     """Wraps `Sound *`"""
 
 class _wrapped__Music:
@@ -442,7 +442,7 @@ class Music(_StructLike[Music], _wrapped__Music):
     @overload
     def __init__(self, stream: AudioStream, frameCount: int, looping: bool, ctxType: int, ctxData: void_p): ...
 
-class Music_p(Pointer[Music], _wrapped__Music):
+class Music_p(Pointer[Music]):
     """Wraps `Music *`"""
 
 class _wrapped__VrDeviceInfo:
@@ -464,7 +464,7 @@ class VrDeviceInfo(_StructLike[VrDeviceInfo], _wrapped__VrDeviceInfo):
     @overload
     def __init__(self, hResolution: int, vResolution: int, hScreenSize: float, vScreenSize: float, vScreenCenter: float, eyeToScreenDistance: float, lensSeparationDistance: float, interpupillaryDistance: float, lensDistortionValues: float_p, chromaAbCorrection: float_p): ...
 
-class VrDeviceInfo_p(Pointer[VrDeviceInfo], _wrapped__VrDeviceInfo):
+class VrDeviceInfo_p(Pointer[VrDeviceInfo]):
     """Wraps `VrDeviceInfo *`"""
 
 class _wrapped__VrStereoConfig:
@@ -484,7 +484,7 @@ class VrStereoConfig(_StructLike[VrStereoConfig], _wrapped__VrStereoConfig):
     @overload
     def __init__(self, projection: 'Matrix_p', viewOffset: 'Matrix_p', leftLensCenter: float_p, rightLensCenter: float_p, leftScreenCenter: float_p, rightScreenCenter: float_p, scale: float_p, scaleIn: float_p): ...
 
-class VrStereoConfig_p(Pointer[VrStereoConfig], _wrapped__VrStereoConfig):
+class VrStereoConfig_p(Pointer[VrStereoConfig]):
     """Wraps `VrStereoConfig *`"""
 
 class _wrapped__FilePathList:
@@ -499,7 +499,7 @@ class FilePathList(_StructLike[FilePathList], _wrapped__FilePathList):
     @overload
     def __init__(self, capacity: int, count: int, paths: void_p): ...
 
-class FilePathList_p(Pointer[FilePathList], _wrapped__FilePathList):
+class FilePathList_p(Pointer[FilePathList]):
     """Wraps `FilePathList *`"""
 
 class _wrapped__AutomationEvent:
@@ -514,7 +514,7 @@ class AutomationEvent(_StructLike[AutomationEvent], _wrapped__AutomationEvent):
     @overload
     def __init__(self, frame: int, type: int, params: int_p): ...
 
-class AutomationEvent_p(Pointer[AutomationEvent], _wrapped__AutomationEvent):
+class AutomationEvent_p(Pointer[AutomationEvent]):
     """Wraps `AutomationEvent *`"""
 
 class _wrapped__AutomationEventList:
@@ -529,7 +529,7 @@ class AutomationEventList(_StructLike[AutomationEventList], _wrapped__Automation
     @overload
     def __init__(self, capacity: int, count: int, events: 'AutomationEvent_p'): ...
 
-class AutomationEventList_p(Pointer[AutomationEventList], _wrapped__AutomationEventList):
+class AutomationEventList_p(Pointer[AutomationEventList]):
     """Wraps `AutomationEventList *`"""
 
 RAYLIB_VERSION_MAJOR: int = 5

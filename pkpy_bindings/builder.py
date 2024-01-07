@@ -27,7 +27,8 @@ def generate(json_file: Union[str, dict, Header], /,
              headers: List[str],
              ignored_functions: Optional[Iterable[str]]=None,
              vector_pattern: Optional[str]=None,
-             opaque_structs: Optional[Iterable[str]]=None
+             opaque_structs: Optional[Iterable[str]]=None,
+             use_fat_pointer: bool=False,   # attach fields info to pointer type
              ) -> Output:
     ignored_functions = set(ignored_functions or [])
     opaque_structs = set(opaque_structs or [])
@@ -96,10 +97,20 @@ template<>
             '    @overload',
             f'    def __init__({", ".join(init_args)}): ...',
             '',
-            f'class {struct.name}_p(Pointer[{struct.name}], {wrapped_base_name}):',
-            f'    """Wraps `{struct.name} *`"""',
-            '',
         ])
+
+        if use_fat_pointer:
+            pyi.extend([
+                f'class {struct.name}_p(Pointer[{struct.name}], {wrapped_base_name}):',
+                f'    """Wraps `{struct.name} *`"""',
+                '',
+            ])
+        else:
+            pyi.extend([
+                f'class {struct.name}_p(Pointer[{struct.name}]):',
+                f'    """Wraps `{struct.name} *`"""',
+                '',
+            ])
 
         cpp.append('/*************** ' + struct.name + ' ***************/')
         cpp.append(f'struct {wrapped_name}' + '{')
@@ -207,11 +218,14 @@ template<>
         cpp.append(f'        PyObject* type = vm->new_type_object(mod, "{struct.name}_p", VoidP::_type(vm));')
         cpp.append(f'        mod->attr().set("{struct.name}_p", type);')
         cpp.append(f'        PY_POINTER_SETGETITEM({struct.name})')
-        for field in struct.fields:
-            if '[' in field.type and ']' in field.type:
-                cpp.append(f'        PY_READONLY_FIELD_P({struct.name}, "{field.name}", {field.name})')
-            else:
-                cpp.append(f'        PY_FIELD_P({struct.name}, "{field.name}", {field.name})')
+
+        if use_fat_pointer:
+            for field in struct.fields:
+                if '[' in field.type and ']' in field.type:
+                    cpp.append(f'        PY_READONLY_FIELD_P({struct.name}, "{field.name}", {field.name})')
+                else:
+                    cpp.append(f'        PY_FIELD_P({struct.name}, "{field.name}", {field.name})')
+
         cpp.append( '    }')
 
     cpp.append('')

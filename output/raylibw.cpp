@@ -1701,343 +1701,186 @@ void add_module_raylib(VM* vm){
         PyObject* type = vm->new_type_object(mod, "Matrix_p", VoidP::_type(vm));
         mod->attr().set("Matrix_p", type);
         PY_POINTER_SETGETITEM(Matrix)
-        PY_FIELD_P(Matrix, "m0", m0)
-        PY_FIELD_P(Matrix, "m4", m4)
-        PY_FIELD_P(Matrix, "m8", m8)
-        PY_FIELD_P(Matrix, "m12", m12)
-        PY_FIELD_P(Matrix, "m1", m1)
-        PY_FIELD_P(Matrix, "m5", m5)
-        PY_FIELD_P(Matrix, "m9", m9)
-        PY_FIELD_P(Matrix, "m13", m13)
-        PY_FIELD_P(Matrix, "m2", m2)
-        PY_FIELD_P(Matrix, "m6", m6)
-        PY_FIELD_P(Matrix, "m10", m10)
-        PY_FIELD_P(Matrix, "m14", m14)
-        PY_FIELD_P(Matrix, "m3", m3)
-        PY_FIELD_P(Matrix, "m7", m7)
-        PY_FIELD_P(Matrix, "m11", m11)
-        PY_FIELD_P(Matrix, "m15", m15)
     }
     wrapped__Color::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Color_p", VoidP::_type(vm));
         mod->attr().set("Color_p", type);
         PY_POINTER_SETGETITEM(Color)
-        PY_FIELD_P(Color, "r", r)
-        PY_FIELD_P(Color, "g", g)
-        PY_FIELD_P(Color, "b", b)
-        PY_FIELD_P(Color, "a", a)
     }
     wrapped__Rectangle::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Rectangle_p", VoidP::_type(vm));
         mod->attr().set("Rectangle_p", type);
         PY_POINTER_SETGETITEM(Rectangle)
-        PY_FIELD_P(Rectangle, "x", x)
-        PY_FIELD_P(Rectangle, "y", y)
-        PY_FIELD_P(Rectangle, "width", width)
-        PY_FIELD_P(Rectangle, "height", height)
     }
     wrapped__Image::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Image_p", VoidP::_type(vm));
         mod->attr().set("Image_p", type);
         PY_POINTER_SETGETITEM(Image)
-        PY_FIELD_P(Image, "data", data)
-        PY_FIELD_P(Image, "width", width)
-        PY_FIELD_P(Image, "height", height)
-        PY_FIELD_P(Image, "mipmaps", mipmaps)
-        PY_FIELD_P(Image, "format", format)
     }
     wrapped__Texture::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Texture_p", VoidP::_type(vm));
         mod->attr().set("Texture_p", type);
         PY_POINTER_SETGETITEM(Texture)
-        PY_FIELD_P(Texture, "id", id)
-        PY_FIELD_P(Texture, "width", width)
-        PY_FIELD_P(Texture, "height", height)
-        PY_FIELD_P(Texture, "mipmaps", mipmaps)
-        PY_FIELD_P(Texture, "format", format)
     }
     wrapped__RenderTexture::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "RenderTexture_p", VoidP::_type(vm));
         mod->attr().set("RenderTexture_p", type);
         PY_POINTER_SETGETITEM(RenderTexture)
-        PY_FIELD_P(RenderTexture, "id", id)
-        PY_FIELD_P(RenderTexture, "texture", texture)
-        PY_FIELD_P(RenderTexture, "depth", depth)
     }
     wrapped__NPatchInfo::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "NPatchInfo_p", VoidP::_type(vm));
         mod->attr().set("NPatchInfo_p", type);
         PY_POINTER_SETGETITEM(NPatchInfo)
-        PY_FIELD_P(NPatchInfo, "source", source)
-        PY_FIELD_P(NPatchInfo, "left", left)
-        PY_FIELD_P(NPatchInfo, "top", top)
-        PY_FIELD_P(NPatchInfo, "right", right)
-        PY_FIELD_P(NPatchInfo, "bottom", bottom)
-        PY_FIELD_P(NPatchInfo, "layout", layout)
     }
     wrapped__GlyphInfo::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "GlyphInfo_p", VoidP::_type(vm));
         mod->attr().set("GlyphInfo_p", type);
         PY_POINTER_SETGETITEM(GlyphInfo)
-        PY_FIELD_P(GlyphInfo, "value", value)
-        PY_FIELD_P(GlyphInfo, "offsetX", offsetX)
-        PY_FIELD_P(GlyphInfo, "offsetY", offsetY)
-        PY_FIELD_P(GlyphInfo, "advanceX", advanceX)
-        PY_FIELD_P(GlyphInfo, "image", image)
     }
     wrapped__Font::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Font_p", VoidP::_type(vm));
         mod->attr().set("Font_p", type);
         PY_POINTER_SETGETITEM(Font)
-        PY_FIELD_P(Font, "baseSize", baseSize)
-        PY_FIELD_P(Font, "glyphCount", glyphCount)
-        PY_FIELD_P(Font, "glyphPadding", glyphPadding)
-        PY_FIELD_P(Font, "texture", texture)
-        PY_FIELD_P(Font, "recs", recs)
-        PY_FIELD_P(Font, "glyphs", glyphs)
     }
     wrapped__Camera3D::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Camera3D_p", VoidP::_type(vm));
         mod->attr().set("Camera3D_p", type);
         PY_POINTER_SETGETITEM(Camera3D)
-        PY_FIELD_P(Camera3D, "position", position)
-        PY_FIELD_P(Camera3D, "target", target)
-        PY_FIELD_P(Camera3D, "up", up)
-        PY_FIELD_P(Camera3D, "fovy", fovy)
-        PY_FIELD_P(Camera3D, "projection", projection)
     }
     wrapped__Camera2D::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Camera2D_p", VoidP::_type(vm));
         mod->attr().set("Camera2D_p", type);
         PY_POINTER_SETGETITEM(Camera2D)
-        PY_FIELD_P(Camera2D, "offset", offset)
-        PY_FIELD_P(Camera2D, "target", target)
-        PY_FIELD_P(Camera2D, "rotation", rotation)
-        PY_FIELD_P(Camera2D, "zoom", zoom)
     }
     wrapped__Mesh::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Mesh_p", VoidP::_type(vm));
         mod->attr().set("Mesh_p", type);
         PY_POINTER_SETGETITEM(Mesh)
-        PY_FIELD_P(Mesh, "vertexCount", vertexCount)
-        PY_FIELD_P(Mesh, "triangleCount", triangleCount)
-        PY_FIELD_P(Mesh, "vertices", vertices)
-        PY_FIELD_P(Mesh, "texcoords", texcoords)
-        PY_FIELD_P(Mesh, "texcoords2", texcoords2)
-        PY_FIELD_P(Mesh, "normals", normals)
-        PY_FIELD_P(Mesh, "tangents", tangents)
-        PY_FIELD_P(Mesh, "colors", colors)
-        PY_FIELD_P(Mesh, "indices", indices)
-        PY_FIELD_P(Mesh, "animVertices", animVertices)
-        PY_FIELD_P(Mesh, "animNormals", animNormals)
-        PY_FIELD_P(Mesh, "boneIds", boneIds)
-        PY_FIELD_P(Mesh, "boneWeights", boneWeights)
-        PY_FIELD_P(Mesh, "vaoId", vaoId)
-        PY_FIELD_P(Mesh, "vboId", vboId)
     }
     wrapped__Shader::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Shader_p", VoidP::_type(vm));
         mod->attr().set("Shader_p", type);
         PY_POINTER_SETGETITEM(Shader)
-        PY_FIELD_P(Shader, "id", id)
-        PY_FIELD_P(Shader, "locs", locs)
     }
     wrapped__MaterialMap::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "MaterialMap_p", VoidP::_type(vm));
         mod->attr().set("MaterialMap_p", type);
         PY_POINTER_SETGETITEM(MaterialMap)
-        PY_FIELD_P(MaterialMap, "texture", texture)
-        PY_FIELD_P(MaterialMap, "color", color)
-        PY_FIELD_P(MaterialMap, "value", value)
     }
     wrapped__Material::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Material_p", VoidP::_type(vm));
         mod->attr().set("Material_p", type);
         PY_POINTER_SETGETITEM(Material)
-        PY_FIELD_P(Material, "shader", shader)
-        PY_FIELD_P(Material, "maps", maps)
-        PY_READONLY_FIELD_P(Material, "params", params)
     }
     wrapped__Transform::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Transform_p", VoidP::_type(vm));
         mod->attr().set("Transform_p", type);
         PY_POINTER_SETGETITEM(Transform)
-        PY_FIELD_P(Transform, "translation", translation)
-        PY_FIELD_P(Transform, "rotation", rotation)
-        PY_FIELD_P(Transform, "scale", scale)
     }
     wrapped__BoneInfo::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "BoneInfo_p", VoidP::_type(vm));
         mod->attr().set("BoneInfo_p", type);
         PY_POINTER_SETGETITEM(BoneInfo)
-        PY_READONLY_FIELD_P(BoneInfo, "name", name)
-        PY_FIELD_P(BoneInfo, "parent", parent)
     }
     wrapped__Model::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Model_p", VoidP::_type(vm));
         mod->attr().set("Model_p", type);
         PY_POINTER_SETGETITEM(Model)
-        PY_FIELD_P(Model, "transform", transform)
-        PY_FIELD_P(Model, "meshCount", meshCount)
-        PY_FIELD_P(Model, "materialCount", materialCount)
-        PY_FIELD_P(Model, "meshes", meshes)
-        PY_FIELD_P(Model, "materials", materials)
-        PY_FIELD_P(Model, "meshMaterial", meshMaterial)
-        PY_FIELD_P(Model, "boneCount", boneCount)
-        PY_FIELD_P(Model, "bones", bones)
-        PY_FIELD_P(Model, "bindPose", bindPose)
     }
     wrapped__ModelAnimation::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "ModelAnimation_p", VoidP::_type(vm));
         mod->attr().set("ModelAnimation_p", type);
         PY_POINTER_SETGETITEM(ModelAnimation)
-        PY_FIELD_P(ModelAnimation, "boneCount", boneCount)
-        PY_FIELD_P(ModelAnimation, "frameCount", frameCount)
-        PY_FIELD_P(ModelAnimation, "bones", bones)
-        PY_FIELD_P(ModelAnimation, "framePoses", framePoses)
-        PY_READONLY_FIELD_P(ModelAnimation, "name", name)
     }
     wrapped__Ray::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Ray_p", VoidP::_type(vm));
         mod->attr().set("Ray_p", type);
         PY_POINTER_SETGETITEM(Ray)
-        PY_FIELD_P(Ray, "position", position)
-        PY_FIELD_P(Ray, "direction", direction)
     }
     wrapped__RayCollision::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "RayCollision_p", VoidP::_type(vm));
         mod->attr().set("RayCollision_p", type);
         PY_POINTER_SETGETITEM(RayCollision)
-        PY_FIELD_P(RayCollision, "hit", hit)
-        PY_FIELD_P(RayCollision, "distance", distance)
-        PY_FIELD_P(RayCollision, "point", point)
-        PY_FIELD_P(RayCollision, "normal", normal)
     }
     wrapped__BoundingBox::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "BoundingBox_p", VoidP::_type(vm));
         mod->attr().set("BoundingBox_p", type);
         PY_POINTER_SETGETITEM(BoundingBox)
-        PY_FIELD_P(BoundingBox, "min", min)
-        PY_FIELD_P(BoundingBox, "max", max)
     }
     wrapped__Wave::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Wave_p", VoidP::_type(vm));
         mod->attr().set("Wave_p", type);
         PY_POINTER_SETGETITEM(Wave)
-        PY_FIELD_P(Wave, "frameCount", frameCount)
-        PY_FIELD_P(Wave, "sampleRate", sampleRate)
-        PY_FIELD_P(Wave, "sampleSize", sampleSize)
-        PY_FIELD_P(Wave, "channels", channels)
-        PY_FIELD_P(Wave, "data", data)
     }
     wrapped__AudioStream::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "AudioStream_p", VoidP::_type(vm));
         mod->attr().set("AudioStream_p", type);
         PY_POINTER_SETGETITEM(AudioStream)
-        PY_FIELD_P(AudioStream, "buffer", buffer)
-        PY_FIELD_P(AudioStream, "processor", processor)
-        PY_FIELD_P(AudioStream, "sampleRate", sampleRate)
-        PY_FIELD_P(AudioStream, "sampleSize", sampleSize)
-        PY_FIELD_P(AudioStream, "channels", channels)
     }
     wrapped__Sound::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Sound_p", VoidP::_type(vm));
         mod->attr().set("Sound_p", type);
         PY_POINTER_SETGETITEM(Sound)
-        PY_FIELD_P(Sound, "stream", stream)
-        PY_FIELD_P(Sound, "frameCount", frameCount)
     }
     wrapped__Music::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "Music_p", VoidP::_type(vm));
         mod->attr().set("Music_p", type);
         PY_POINTER_SETGETITEM(Music)
-        PY_FIELD_P(Music, "stream", stream)
-        PY_FIELD_P(Music, "frameCount", frameCount)
-        PY_FIELD_P(Music, "looping", looping)
-        PY_FIELD_P(Music, "ctxType", ctxType)
-        PY_FIELD_P(Music, "ctxData", ctxData)
     }
     wrapped__VrDeviceInfo::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "VrDeviceInfo_p", VoidP::_type(vm));
         mod->attr().set("VrDeviceInfo_p", type);
         PY_POINTER_SETGETITEM(VrDeviceInfo)
-        PY_FIELD_P(VrDeviceInfo, "hResolution", hResolution)
-        PY_FIELD_P(VrDeviceInfo, "vResolution", vResolution)
-        PY_FIELD_P(VrDeviceInfo, "hScreenSize", hScreenSize)
-        PY_FIELD_P(VrDeviceInfo, "vScreenSize", vScreenSize)
-        PY_FIELD_P(VrDeviceInfo, "vScreenCenter", vScreenCenter)
-        PY_FIELD_P(VrDeviceInfo, "eyeToScreenDistance", eyeToScreenDistance)
-        PY_FIELD_P(VrDeviceInfo, "lensSeparationDistance", lensSeparationDistance)
-        PY_FIELD_P(VrDeviceInfo, "interpupillaryDistance", interpupillaryDistance)
-        PY_READONLY_FIELD_P(VrDeviceInfo, "lensDistortionValues", lensDistortionValues)
-        PY_READONLY_FIELD_P(VrDeviceInfo, "chromaAbCorrection", chromaAbCorrection)
     }
     wrapped__VrStereoConfig::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "VrStereoConfig_p", VoidP::_type(vm));
         mod->attr().set("VrStereoConfig_p", type);
         PY_POINTER_SETGETITEM(VrStereoConfig)
-        PY_READONLY_FIELD_P(VrStereoConfig, "projection", projection)
-        PY_READONLY_FIELD_P(VrStereoConfig, "viewOffset", viewOffset)
-        PY_READONLY_FIELD_P(VrStereoConfig, "leftLensCenter", leftLensCenter)
-        PY_READONLY_FIELD_P(VrStereoConfig, "rightLensCenter", rightLensCenter)
-        PY_READONLY_FIELD_P(VrStereoConfig, "leftScreenCenter", leftScreenCenter)
-        PY_READONLY_FIELD_P(VrStereoConfig, "rightScreenCenter", rightScreenCenter)
-        PY_READONLY_FIELD_P(VrStereoConfig, "scale", scale)
-        PY_READONLY_FIELD_P(VrStereoConfig, "scaleIn", scaleIn)
     }
     wrapped__FilePathList::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "FilePathList_p", VoidP::_type(vm));
         mod->attr().set("FilePathList_p", type);
         PY_POINTER_SETGETITEM(FilePathList)
-        PY_FIELD_P(FilePathList, "capacity", capacity)
-        PY_FIELD_P(FilePathList, "count", count)
-        PY_FIELD_P(FilePathList, "paths", paths)
     }
     wrapped__AutomationEvent::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "AutomationEvent_p", VoidP::_type(vm));
         mod->attr().set("AutomationEvent_p", type);
         PY_POINTER_SETGETITEM(AutomationEvent)
-        PY_FIELD_P(AutomationEvent, "frame", frame)
-        PY_FIELD_P(AutomationEvent, "type", type)
-        PY_READONLY_FIELD_P(AutomationEvent, "params", params)
     }
     wrapped__AutomationEventList::register_class(vm, mod);
     {
         PyObject* type = vm->new_type_object(mod, "AutomationEventList_p", VoidP::_type(vm));
         mod->attr().set("AutomationEventList_p", type);
         PY_POINTER_SETGETITEM(AutomationEventList)
-        PY_FIELD_P(AutomationEventList, "capacity", capacity)
-        PY_FIELD_P(AutomationEventList, "count", count)
-        PY_FIELD_P(AutomationEventList, "events", events)
     }
 
     _bind(vm, mod, "InitWindow(width: int, height: int, title: str) -> None", &InitWindow);
