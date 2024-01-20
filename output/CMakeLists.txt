@@ -6,7 +6,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
 add_subdirectory(../raylib ${CMAKE_CURRENT_BINARY_DIR}/raylib)
+
 add_subdirectory(../pocketpy ${CMAKE_CURRENT_BINARY_DIR}/pocketpy)
+target_compile_definitions(pocketpy PUBLIC PK_ENABLE_OS=1)
 
 # build static library
 add_library(raylibw STATIC
