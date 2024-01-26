@@ -136,7 +136,7 @@ template<>
             '        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){',
            f'            static const StrName _fields_[] = {_fields_};',
             '            if(args.size()==1) return vm->None;',
-           f'            if(args.size()-1 != {len(struct.fields)}) vm->TypeError(fmt("expected {len(struct.fields)} arguments, got ", args.size()-1));',
+           f'            if(args.size()-1 != {len(struct.fields)}) vm->TypeError(_S("expected {len(struct.fields)} arguments, got ", args.size()-1));',
             '            for(int i=1; i<args.size(); i++){',
             '                vm->setattr(args[0], _fields_[i-1], args[i]);',
             '            }',
