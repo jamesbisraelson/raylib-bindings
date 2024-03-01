@@ -15,9 +15,9 @@ class Output:
     def save(self, pyi_path: str, cpp_path: str):
         pyi = '\n'.join(self.pyi)
         cpp = '\n'.join(self.cpp)
-        with open(pyi_path, 'w') as f:
+        with open(pyi_path, 'w', newline='\n') as f:
             f.write(pyi)
-        with open(cpp_path, 'w') as f:
+        with open(cpp_path, 'w', newline='\n') as f:
             f.write(cpp)
         for msg in self.messages:
             print(msg)
