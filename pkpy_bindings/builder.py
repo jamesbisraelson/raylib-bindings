@@ -95,6 +95,7 @@ template<>
             '    def __init__(self): ...',
             '    @overload',
            f'    def __init__({", ".join(init_args)}): ...',
+           f'    def addr(self) -> void_p: ...',
            f'{struct.name}_p = void_p',
             '',
         ])
