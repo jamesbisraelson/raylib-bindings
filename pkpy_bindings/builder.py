@@ -27,8 +27,7 @@ def generate(json_file: Union[str, dict, Header], /,
              headers: List[str],
              ignored_functions: Optional[Iterable[str]]=None,
              vector_pattern: Optional[str]=None,
-             opaque_structs: Optional[Iterable[str]]=None,
-             use_fat_pointer: bool=False,   # attach fields info to pointer type
+             opaque_structs: Optional[Iterable[str]]=None
              ) -> Output:
     ignored_functions = set(ignored_functions or [])
     opaque_structs = set(opaque_structs or [])
@@ -95,22 +94,10 @@ template<>
             '    @overload',
             '    def __init__(self): ...',
             '    @overload',
-            f'    def __init__({", ".join(init_args)}): ...',
+           f'    def __init__({", ".join(init_args)}): ...',
+           f'{struct.name}_p = void_p',
             '',
         ])
-
-        if use_fat_pointer:
-            pyi.extend([
-                f'class {struct.name}_p(Pointer[{struct.name}], {wrapped_base_name}):',
-                f'    """Wraps `{struct.name} *`"""',
-                '',
-            ])
-        else:
-            pyi.extend([
-                f'class {struct.name}_p(Pointer[{struct.name}]):',
-                f'    """Wraps `{struct.name} *`"""',
-                '',
-            ])
 
         cpp.append('/*************** ' + struct.name + ' ***************/')
         cpp.append(f'struct {wrapped_name}' + '{')
@@ -134,8 +121,8 @@ template<>
         _fields_ = '{' + _fields_ + '}'
         cpp.extend([
             '        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){',
-           f'            static const StrName _fields_[] = {_fields_};',
-            '            if(args.size()==1) return vm->None;',
+           f'            const StrName _fields_[] = {_fields_};',
+            '            if(args.size() == 1) return vm->None;',
            f'            if(args.size()-1 != {len(struct.fields)}) vm->TypeError(_S("expected {len(struct.fields)} arguments, got ", args.size()-1));',
             '            for(int i=1; i<args.size(); i++){',
             '                vm->setattr(args[0], _fields_[i-1], args[i]);',
@@ -162,11 +149,6 @@ template<>
         cpp.append( 'template<>')
         cpp.append(f'{struct.name} _py_cast<{struct.name}>(VM* vm, PyObject* obj)' + '{')
         cpp.append(f'    return *_py_cast<{wrapped_name}&>(vm, obj)._();')
-        cpp.append( '}')
-        cpp.append(f'PyObject* py_var(VM* vm, const {struct.name}* v)' + '{')
-        cpp.append(f'    const static std::pair<StrName, StrName> P("{module_name}", "{struct.name}_p");')
-        cpp.append(f'    PyObject* type = vm->_modules[P.first]->attr(P.second);')
-        cpp.append(f'    return vm->heap.gcnew<VoidP>(PK_OBJ_GET(Type, type), v);')
         cpp.append( '}')
     # %%
     # gen functions
@@ -201,8 +183,7 @@ template<>
         cpp.append(f'    _bind_enums(vm, mod, "{enum.name}", {_enum_values});')
 
         pyi.append(f'########## {enum.name} ##########')
-        pyi.append(f'# {enum.description}')
-        pyi.append(f'{enum.name}_NAMES: dict[int, str]')
+        pyi.append(f'{enum.name}_NAMES: dict[int, str]    # {enum.description}')
         for v in enum.values:
             kv = f'{v.name} = {v.value}'
             pyi.append(f'{kv:48}# {v.description}')
@@ -214,21 +195,6 @@ template<>
         if vector_pattern and re.match(vector_pattern, struct.name):
             continue
         cpp.append(f'    wrapped__{struct.name}::register_class(vm, mod);')
-        # generate its corresponding pointer type
-        cpp.append( '    {')
-        cpp.append(f'        PyObject* type = vm->new_type_object(mod, "{struct.name}_p", VoidP::_type(vm));')
-        cpp.append(f'        mod->attr().set("{struct.name}_p", type);')
-        cpp.append(f'        PY_POINTER_SETGETITEM({struct.name})')
-
-        if use_fat_pointer:
-            for field in struct.fields:
-                if '[' in field.type and ']' in field.type:
-                    cpp.append(f'        PY_READONLY_FIELD_P({struct.name}, "{field.name}", {field.name})')
-                else:
-                    cpp.append(f'        PY_FIELD_P({struct.name}, "{field.name}", {field.name})')
-
-        cpp.append( '    }')
-
     cpp.append('')
 
     for func in api.functions:
@@ -259,7 +225,6 @@ template<>
         pyi.append(f'{k}_p = {v}_p')
         pyi.append('')
         cpp.append(f'    mod->attr().set("{k}", mod->attr("{v}"));')
-        cpp.append(f'    mod->attr().set("{k}_p", mod->attr("{v}_p"));')
 
     cpp.append('}')
 
