@@ -198,10 +198,11 @@ template<>
         cpp.append(f'    // {enum.name}')
         _enum_values = ', '.join([f'{{"{v.name}", {v.value}}}' for v in enum.values])
         _enum_values = '{' + _enum_values + '}'
-        cpp.append(f'    _bind_enums(vm, mod, {_enum_values});')
+        cpp.append(f'    _bind_enums(vm, mod, "{enum.name}", {_enum_values});')
 
         pyi.append(f'########## {enum.name} ##########')
         pyi.append(f'# {enum.description}')
+        pyi.append(f'{enum.name}_names: dict[int, str]')
         for v in enum.values:
             kv = f'{v.name} = {v.value}'
             pyi.append(f'{kv:48}# {v.description}')
