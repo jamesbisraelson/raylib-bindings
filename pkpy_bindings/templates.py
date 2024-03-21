@@ -24,7 +24,7 @@ T1 _struct_cast(T0& v){
 }
 
 template<size_t N>
-void _bind_enums(VM* vm, PyObject* mod, std::string name, const std::pair<const char*, i64> (&enums)[N]){
+void _bind_enums(VM* vm, PyObject* mod, Str name, const std::pair<const char*, i64> (&enums)[N]){
     Dict d(vm);
     for(auto [k, v]: enums){
         PyObject* int_obj = py_var(vm, v);
