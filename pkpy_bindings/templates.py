@@ -31,7 +31,7 @@ void _bind_enums(VM* vm, PyObject* mod, Str name, const std::pair<const char*, i
         mod->attr().set(k, int_obj);
         d.set(int_obj, py_var(vm, k));
     }
-    mod->attr().set(name + "_names", py_var(vm, std::move(d)));
+    mod->attr().set(name + "_NAMES", py_var(vm, std::move(d)));
 }
 ''',
     ]

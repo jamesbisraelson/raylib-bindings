@@ -202,7 +202,7 @@ template<>
 
         pyi.append(f'########## {enum.name} ##########')
         pyi.append(f'# {enum.description}')
-        pyi.append(f'{enum.name}_names: dict[int, str]')
+        pyi.append(f'{enum.name}_NAMES: dict[int, str]')
         for v in enum.values:
             kv = f'{v.name} = {v.value}'
             pyi.append(f'{kv:48}# {v.description}')
