@@ -1,3 +1,6 @@
 [submodule "pocketpy"]
 	path = pocketpy
 	url = https://github.com/blueloveth/pocketpy
+[submodule "raylib"]
+	path = raylib
+	url = https://github.com/blueloveTH/raylib
