@@ -104,7 +104,6 @@ template<>
         cpp.append(f'struct {wrapped_name}' + '{')
         cpp.append( '')
         cpp.append(f'    {struct.name} _value;')
-        cpp.append(f'    {struct.name}* _()' + ' { return &_value; }')
         cpp.append(f'    {wrapped_name}() = default;')
         cpp.append(f'    {wrapped_name}(const wrapped__{struct.name}& other) = default;')
         cpp.append( '')
@@ -133,9 +132,9 @@ template<>
         cpp.append(f'        PY_STRUCT_LIKE({wrapped_name})')
         for field in struct.fields:
             if '[' in field.type and ']' in field.type:
-                cpp.append(f'        PY_READONLY_FIELD({wrapped_name}, "{field.name}", _, {field.name})')
+                cpp.append(f'        PY_READONLY_FIELD({wrapped_name}, "{field.name}", _value.{field.name})')
             else:
-                cpp.append(f'        PY_FIELD({wrapped_name}, "{field.name}", _, {field.name})')
+                cpp.append(f'        PY_FIELD({wrapped_name}, "{field.name}", _value.{field.name})')
         cpp.append( '    }')
         cpp.append( '};\n')
 
@@ -144,11 +143,11 @@ template<>
         cpp.append( '}')
         cpp.append( 'template<>')
         cpp.append(f'{struct.name} py_cast<{struct.name}>(VM* vm, PyObject* obj)' + '{')
-        cpp.append(f'    return *py_cast<{wrapped_name}&>(vm, obj)._();')
+        cpp.append(f'    return py_cast<{wrapped_name}&>(vm, obj)._value;')
         cpp.append( '}')
         cpp.append( 'template<>')
         cpp.append(f'{struct.name} _py_cast<{struct.name}>(VM* vm, PyObject* obj)' + '{')
-        cpp.append(f'    return *_py_cast<{wrapped_name}&>(vm, obj)._();')
+        cpp.append(f'    return _py_cast<{wrapped_name}&>(vm, obj)._value;')
         cpp.append( '}')
     # %%
     # gen functions
