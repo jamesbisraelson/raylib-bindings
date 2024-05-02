@@ -102,7 +102,6 @@ template<>
 
         cpp.append('/*************** ' + struct.name + ' ***************/')
         cpp.append(f'struct {wrapped_name}' + '{')
-        cpp.append(f'    PY_CLASS({wrapped_name}, {module_name}, {struct.name})')
         cpp.append( '')
         cpp.append(f'    {struct.name} _value;')
         cpp.append(f'    {struct.name}* _()' + ' { return &_value; }')
@@ -195,7 +194,7 @@ template<>
     for struct in api.structs:
         if vector_pattern and re.match(vector_pattern, struct.name):
             continue
-        cpp.append(f'    wrapped__{struct.name}::register_class(vm, mod);')
+        cpp.append(f'    vm->register_user_class<wrapped__{struct.name}>(mod, "{struct.name}");')
     cpp.append('')
 
     for func in api.functions:
