@@ -140,7 +140,7 @@ template<>
         cpp.append( '};\n')
 
         cpp.append(f'PyObject* py_var(VM* vm, {struct.name} v)' + '{')
-        cpp.append(f'    return VAR_T({wrapped_name}, v);')
+        cpp.append(f'    return vm->new_user_object<{wrapped_name}>(v);')
         cpp.append( '}')
         cpp.append( 'template<>')
         cpp.append(f'{struct.name} py_cast<{struct.name}>(VM* vm, PyObject* obj)' + '{')
