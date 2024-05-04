@@ -211,7 +211,7 @@ template<>
             messages.append(f'WARNING: {sigc} is a variadic function, skipped')
             continue
         pyi.append(tmp)
-        cpp.append(f'    _bind(vm, mod, "{sigpy}", &{func.name});')
+        cpp.append(f'    vm->bind(mod, "{sigpy}", &{func.name});')
 
     cpp.append('')
     cpp.append('    CodeObject_ co = vm->compile("from linalg import *", "raylib.py", EXEC_MODE);')
