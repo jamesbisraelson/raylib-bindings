@@ -79,7 +79,7 @@ struct wrapped__Matrix{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"m0", "m4", "m8", "m12", "m1", "m5", "m9", "m13", "m2", "m6", "m10", "m14", "m3", "m7", "m11", "m15"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 16) vm->TypeError(_S("expected 16 arguments, got ", args.size()-1));
@@ -134,7 +134,7 @@ struct wrapped__Color{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"r", "g", "b", "a"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 4) vm->TypeError(_S("expected 4 arguments, got ", args.size()-1));
@@ -177,7 +177,7 @@ struct wrapped__Rectangle{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"x", "y", "width", "height"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 4) vm->TypeError(_S("expected 4 arguments, got ", args.size()-1));
@@ -220,7 +220,7 @@ struct wrapped__Image{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"data", "width", "height", "mipmaps", "format"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 5) vm->TypeError(_S("expected 5 arguments, got ", args.size()-1));
@@ -264,7 +264,7 @@ struct wrapped__Texture{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"id", "width", "height", "mipmaps", "format"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 5) vm->TypeError(_S("expected 5 arguments, got ", args.size()-1));
@@ -308,7 +308,7 @@ struct wrapped__RenderTexture{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"id", "texture", "depth"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 3) vm->TypeError(_S("expected 3 arguments, got ", args.size()-1));
@@ -350,7 +350,7 @@ struct wrapped__NPatchInfo{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"source", "left", "top", "right", "bottom", "layout"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 6) vm->TypeError(_S("expected 6 arguments, got ", args.size()-1));
@@ -395,7 +395,7 @@ struct wrapped__GlyphInfo{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"value", "offsetX", "offsetY", "advanceX", "image"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 5) vm->TypeError(_S("expected 5 arguments, got ", args.size()-1));
@@ -439,7 +439,7 @@ struct wrapped__Font{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"baseSize", "glyphCount", "glyphPadding", "texture", "recs", "glyphs"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 6) vm->TypeError(_S("expected 6 arguments, got ", args.size()-1));
@@ -484,7 +484,7 @@ struct wrapped__Camera3D{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"position", "target", "up", "fovy", "projection"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 5) vm->TypeError(_S("expected 5 arguments, got ", args.size()-1));
@@ -528,7 +528,7 @@ struct wrapped__Camera2D{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"offset", "target", "rotation", "zoom"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 4) vm->TypeError(_S("expected 4 arguments, got ", args.size()-1));
@@ -571,7 +571,7 @@ struct wrapped__Mesh{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"vertexCount", "triangleCount", "vertices", "texcoords", "texcoords2", "normals", "tangents", "colors", "indices", "animVertices", "animNormals", "boneIds", "boneWeights", "vaoId", "vboId"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 15) vm->TypeError(_S("expected 15 arguments, got ", args.size()-1));
@@ -625,7 +625,7 @@ struct wrapped__Shader{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"id", "locs"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 2) vm->TypeError(_S("expected 2 arguments, got ", args.size()-1));
@@ -666,7 +666,7 @@ struct wrapped__MaterialMap{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"texture", "color", "value"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 3) vm->TypeError(_S("expected 3 arguments, got ", args.size()-1));
@@ -708,7 +708,7 @@ struct wrapped__Material{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"shader", "maps", "params"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 3) vm->TypeError(_S("expected 3 arguments, got ", args.size()-1));
@@ -750,7 +750,7 @@ struct wrapped__Transform{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"translation", "rotation", "scale"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 3) vm->TypeError(_S("expected 3 arguments, got ", args.size()-1));
@@ -792,7 +792,7 @@ struct wrapped__BoneInfo{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"name", "parent"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 2) vm->TypeError(_S("expected 2 arguments, got ", args.size()-1));
@@ -833,7 +833,7 @@ struct wrapped__Model{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"transform", "meshCount", "materialCount", "meshes", "materials", "meshMaterial", "boneCount", "bones", "bindPose"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 9) vm->TypeError(_S("expected 9 arguments, got ", args.size()-1));
@@ -881,7 +881,7 @@ struct wrapped__ModelAnimation{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"boneCount", "frameCount", "bones", "framePoses", "name"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 5) vm->TypeError(_S("expected 5 arguments, got ", args.size()-1));
@@ -925,7 +925,7 @@ struct wrapped__Ray{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"position", "direction"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 2) vm->TypeError(_S("expected 2 arguments, got ", args.size()-1));
@@ -966,7 +966,7 @@ struct wrapped__RayCollision{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"hit", "distance", "point", "normal"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 4) vm->TypeError(_S("expected 4 arguments, got ", args.size()-1));
@@ -1009,7 +1009,7 @@ struct wrapped__BoundingBox{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"min", "max"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 2) vm->TypeError(_S("expected 2 arguments, got ", args.size()-1));
@@ -1050,7 +1050,7 @@ struct wrapped__Wave{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"frameCount", "sampleRate", "sampleSize", "channels", "data"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 5) vm->TypeError(_S("expected 5 arguments, got ", args.size()-1));
@@ -1094,7 +1094,7 @@ struct wrapped__AudioStream{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"buffer", "processor", "sampleRate", "sampleSize", "channels"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 5) vm->TypeError(_S("expected 5 arguments, got ", args.size()-1));
@@ -1138,7 +1138,7 @@ struct wrapped__Sound{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"stream", "frameCount"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 2) vm->TypeError(_S("expected 2 arguments, got ", args.size()-1));
@@ -1179,7 +1179,7 @@ struct wrapped__Music{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"stream", "frameCount", "looping", "ctxType", "ctxData"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 5) vm->TypeError(_S("expected 5 arguments, got ", args.size()-1));
@@ -1223,7 +1223,7 @@ struct wrapped__VrDeviceInfo{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"hResolution", "vResolution", "hScreenSize", "vScreenSize", "eyeToScreenDistance", "lensSeparationDistance", "interpupillaryDistance", "lensDistortionValues", "chromaAbCorrection"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 9) vm->TypeError(_S("expected 9 arguments, got ", args.size()-1));
@@ -1271,7 +1271,7 @@ struct wrapped__VrStereoConfig{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"projection", "viewOffset", "leftLensCenter", "rightLensCenter", "leftScreenCenter", "rightScreenCenter", "scale", "scaleIn"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 8) vm->TypeError(_S("expected 8 arguments, got ", args.size()-1));
@@ -1318,7 +1318,7 @@ struct wrapped__FilePathList{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"capacity", "count", "paths"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 3) vm->TypeError(_S("expected 3 arguments, got ", args.size()-1));
@@ -1360,7 +1360,7 @@ struct wrapped__AutomationEvent{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"frame", "type", "params"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 3) vm->TypeError(_S("expected 3 arguments, got ", args.size()-1));
@@ -1402,7 +1402,7 @@ struct wrapped__AutomationEventList{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){
+        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){
             const StrName _fields_[] = {"capacity", "count", "events"};
             if(args.size() == 1) return vm->None;
             if(args.size()-1 != 3) vm->TypeError(_S("expected 3 arguments, got ", args.size()-1));

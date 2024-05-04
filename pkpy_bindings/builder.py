@@ -119,7 +119,7 @@ template<>
         _fields_ = ', '.join([f'"{field.name}"' for field in struct.fields])
         _fields_ = '{' + _fields_ + '}'
         cpp.extend([
-            '        vm->bind_method<-1>(type, "__init__", [](VM* vm, ArgsView args){',
+            '        vm->bind_func(type, __init__, -1, [](VM* vm, ArgsView args){',
            f'            const StrName _fields_[] = {_fields_};',
             '            if(args.size() == 1) return vm->None;',
            f'            if(args.size()-1 != {len(struct.fields)}) vm->TypeError(_S("expected {len(struct.fields)} arguments, got ", args.size()-1));',
