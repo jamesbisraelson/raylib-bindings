@@ -57,16 +57,16 @@ def generate(json_file: Union[str, dict, Header], /,
     for struct in api.structs:
         if vector_pattern and re.match(vector_pattern, struct.name):
             template = r'''
-PyObject* py_var(VM* vm, %T0 v){
+PyVar py_var(VM* vm, %T0 v){
     return py_var(vm, _struct_cast<%T0, %T1>(v));
 }
 template<>
-%T0 py_cast<%T0>(VM* vm, PyObject* obj){
+%T0 py_cast<%T0>(VM* vm, PyVar obj){
     %T1 v = py_cast<%T1>(vm, obj);
     return _struct_cast<%T1, %T0>(v);
 }
 template<>
-%T0 _py_cast<%T0>(VM* vm, PyObject* obj){
+%T0 _py_cast<%T0>(VM* vm, PyVar obj){
     %T1 v = _py_cast<%T1>(vm, obj);
     return _struct_cast<%T1, %T0>(v);
 }
@@ -114,7 +114,7 @@ template<>
         cpp.append( '        return memcmp(&_value, &other._value, sizeof(' + struct.name + ')) == 0;')
         cpp.append( '    }')
         cpp.append( '')
-        cpp.append( '    static void _register(VM* vm, PyObject* mod, PyObject* type)' + '{')
+        cpp.append( '    static void _register(VM* vm, PyVar mod, PyVar type)' + '{')
         # set _fields_
         _fields_ = ', '.join([f'"{field.name}"' for field in struct.fields])
         _fields_ = '{' + _fields_ + '}'
@@ -138,15 +138,15 @@ template<>
         cpp.append( '    }')
         cpp.append( '};\n')
 
-        cpp.append(f'PyObject* py_var(VM* vm, {struct.name} v)' + '{')
+        cpp.append(f'PyVar py_var(VM* vm, {struct.name} v)' + '{')
         cpp.append(f'    return vm->new_user_object<{wrapped_name}>(v);')
         cpp.append( '}')
         cpp.append( 'template<>')
-        cpp.append(f'{struct.name} py_cast<{struct.name}>(VM* vm, PyObject* obj)' + '{')
+        cpp.append(f'{struct.name} py_cast<{struct.name}>(VM* vm, PyVar obj)' + '{')
         cpp.append(f'    return py_cast<{wrapped_name}&>(vm, obj)._value;')
         cpp.append( '}')
         cpp.append( 'template<>')
-        cpp.append(f'{struct.name} _py_cast<{struct.name}>(VM* vm, PyObject* obj)' + '{')
+        cpp.append(f'{struct.name} _py_cast<{struct.name}>(VM* vm, PyVar obj)' + '{')
         cpp.append(f'    return _py_cast<{wrapped_name}&>(vm, obj)._value;')
         cpp.append( '}')
     # %%
@@ -155,7 +155,7 @@ template<>
         '/' * 40,
         ''
         'void add_module_raylib(VM* vm){',
-       f'    PyObject* mod = vm->new_module("{module_name}");',
+       f'    PyVar mod = vm->new_module("{module_name}");',
         ''
     ])
 
