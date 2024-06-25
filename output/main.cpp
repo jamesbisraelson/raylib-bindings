@@ -9,9 +9,9 @@ int main(){
     VM* vm = new VM();
     add_module_raylib(vm);
 
-    std::string filepath = "../main.py";
+    std::string filepath = "main.py";
     int out_size;
-    unsigned char* b = vm->_import_handler(filepath.c_str(), filepath.size(), &out_size);
+    unsigned char* b = vm->_import_handler(filepath.c_str(), &out_size);
     if(!b){
         std::cerr << "Error: " << filepath << " not found" << std::endl;
         return 1;

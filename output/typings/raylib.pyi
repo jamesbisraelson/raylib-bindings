@@ -681,12 +681,12 @@ GAMEPAD_BUTTON_LEFT_FACE_RIGHT = 2              # Gamepad left DPAD right button
 GAMEPAD_BUTTON_LEFT_FACE_DOWN = 3               # Gamepad left DPAD down button
 GAMEPAD_BUTTON_LEFT_FACE_LEFT = 4               # Gamepad left DPAD left button
 GAMEPAD_BUTTON_RIGHT_FACE_UP = 5                # Gamepad right button up (i.e. PS3: Triangle, Xbox: Y)
-GAMEPAD_BUTTON_RIGHT_FACE_RIGHT = 6             # Gamepad right button right (i.e. PS3: Square, Xbox: X)
+GAMEPAD_BUTTON_RIGHT_FACE_RIGHT = 6             # Gamepad right button right (i.e. PS3: Circle, Xbox: B)
 GAMEPAD_BUTTON_RIGHT_FACE_DOWN = 7              # Gamepad right button down (i.e. PS3: Cross, Xbox: A)
-GAMEPAD_BUTTON_RIGHT_FACE_LEFT = 8              # Gamepad right button left (i.e. PS3: Circle, Xbox: B)
+GAMEPAD_BUTTON_RIGHT_FACE_LEFT = 8              # Gamepad right button left (i.e. PS3: Square, Xbox: X)
 GAMEPAD_BUTTON_LEFT_TRIGGER_1 = 9               # Gamepad top/back trigger left (first), it could be a trailing button
 GAMEPAD_BUTTON_LEFT_TRIGGER_2 = 10              # Gamepad top/back trigger left (second), it could be a trailing button
-GAMEPAD_BUTTON_RIGHT_TRIGGER_1 = 11             # Gamepad top/back trigger right (one), it could be a trailing button
+GAMEPAD_BUTTON_RIGHT_TRIGGER_1 = 11             # Gamepad top/back trigger right (first), it could be a trailing button
 GAMEPAD_BUTTON_RIGHT_TRIGGER_2 = 12             # Gamepad top/back trigger right (second), it could be a trailing button
 GAMEPAD_BUTTON_MIDDLE_LEFT = 13                 # Gamepad center buttons, left one (i.e. PS3: Select)
 GAMEPAD_BUTTON_MIDDLE = 14                      # Gamepad center buttons, middle one (i.e. PS3: PS, Xbox: XBOX)
@@ -850,11 +850,11 @@ GESTURE_PINCH_OUT = 512                         # Pinch out gesture
 
 ########## CameraMode ##########
 CameraMode_NAMES: dict[int, str]    # Camera system modes
-CAMERA_CUSTOM = 0                               # Custom camera
-CAMERA_FREE = 1                                 # Free camera
-CAMERA_ORBITAL = 2                              # Orbital camera
-CAMERA_FIRST_PERSON = 3                         # First person camera
-CAMERA_THIRD_PERSON = 4                         # Third person camera
+CAMERA_CUSTOM = 0                               # Camera custom, controlled by user (UpdateCamera() does nothing)
+CAMERA_FREE = 1                                 # Camera free mode
+CAMERA_ORBITAL = 2                              # Camera orbital, around target, zoom supported
+CAMERA_FIRST_PERSON = 3                         # Camera first person
+CAMERA_THIRD_PERSON = 4                         # Camera third person
 
 ########## CameraProjection ##########
 CameraProjection_NAMES: dict[int, str]    # Camera projection
@@ -1371,10 +1371,10 @@ def GetScreenToWorldRay(position: vec2, camera: Camera) -> Ray:
     Wraps: `Ray GetScreenToWorldRay(Vector2 position, Camera camera)`
     """
 
-def GetScreenToWorldRayEx(position: vec2, camera: Camera, width: float, height: float) -> Ray:
+def GetScreenToWorldRayEx(position: vec2, camera: Camera, width: int, height: int) -> Ray:
     """Get a ray trace from screen position (i.e mouse) in a viewport
 
-    Wraps: `Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, float width, float height)`
+    Wraps: `Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, int width, int height)`
     """
 
 def GetWorldToScreen(position: vec3, camera: Camera) -> vec2:
@@ -1639,6 +1639,12 @@ def IsPathFile(path: str) -> bool:
     """Check if a given path is a file or a directory
 
     Wraps: `bool IsPathFile(const char * path)`
+    """
+
+def IsFileNameValid(fileName: str) -> bool:
+    """Check if fileName is valid for the platform/OS
+
+    Wraps: `bool IsFileNameValid(const char * fileName)`
     """
 
 def LoadDirectoryFiles(dirPath: str) -> FilePathList:
@@ -1974,7 +1980,7 @@ def GetTouchPosition(index: int) -> vec2:
 def GetTouchPointId(index: int) -> int:
     """Get touch point identifier for given index
 
-    Wraps: `long long GetTouchPointId(int index)`
+    Wraps: `int GetTouchPointId(int index)`
     """
 
 def GetTouchPointCount() -> int:
@@ -2094,7 +2100,7 @@ def DrawLineEx(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None
 def DrawLineStrip(points: 'vec2_p', pointCount: int, color: Color) -> None:
     """Draw lines sequence (using gl lines)
 
-    Wraps: `void DrawLineStrip(Vector2 * points, int pointCount, Color color)`
+    Wraps: `void DrawLineStrip(const Vector2 * points, int pointCount, Color color)`
     """
 
 def DrawLineBezier(startPos: vec2, endPos: vec2, thick: float, color: Color) -> None:
@@ -2229,10 +2235,16 @@ def DrawRectangleRounded(rec: Rectangle, roundness: float, segments: int, color:
     Wraps: `void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color)`
     """
 
-def DrawRectangleRoundedLines(rec: Rectangle, roundness: float, segments: int, lineThick: float, color: Color) -> None:
+def DrawRectangleRoundedLines(rec: Rectangle, roundness: float, segments: int, color: Color) -> None:
+    """Draw rectangle lines with rounded edges
+
+    Wraps: `void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, Color color)`
+    """
+
+def DrawRectangleRoundedLinesEx(rec: Rectangle, roundness: float, segments: int, lineThick: float, color: Color) -> None:
     """Draw rectangle with rounded edges outline
 
-    Wraps: `void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, float lineThick, Color color)`
+    Wraps: `void DrawRectangleRoundedLinesEx(Rectangle rec, float roundness, int segments, float lineThick, Color color)`
     """
 
 def DrawTriangle(v1: vec2, v2: vec2, v3: vec2, color: Color) -> None:
@@ -2250,13 +2262,13 @@ def DrawTriangleLines(v1: vec2, v2: vec2, v3: vec2, color: Color) -> None:
 def DrawTriangleFan(points: 'vec2_p', pointCount: int, color: Color) -> None:
     """Draw a triangle fan defined by points (first vertex is the center)
 
-    Wraps: `void DrawTriangleFan(Vector2 * points, int pointCount, Color color)`
+    Wraps: `void DrawTriangleFan(const Vector2 * points, int pointCount, Color color)`
     """
 
 def DrawTriangleStrip(points: 'vec2_p', pointCount: int, color: Color) -> None:
     """Draw a triangle strip defined by points
 
-    Wraps: `void DrawTriangleStrip(Vector2 * points, int pointCount, Color color)`
+    Wraps: `void DrawTriangleStrip(const Vector2 * points, int pointCount, Color color)`
     """
 
 def DrawPoly(center: vec2, sides: int, radius: float, rotation: float, color: Color) -> None:
@@ -2280,31 +2292,31 @@ def DrawPolyLinesEx(center: vec2, sides: int, radius: float, rotation: float, li
 def DrawSplineLinear(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
     """Draw spline: Linear, minimum 2 points
 
-    Wraps: `void DrawSplineLinear(Vector2 * points, int pointCount, float thick, Color color)`
+    Wraps: `void DrawSplineLinear(const Vector2 * points, int pointCount, float thick, Color color)`
     """
 
 def DrawSplineBasis(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
     """Draw spline: B-Spline, minimum 4 points
 
-    Wraps: `void DrawSplineBasis(Vector2 * points, int pointCount, float thick, Color color)`
+    Wraps: `void DrawSplineBasis(const Vector2 * points, int pointCount, float thick, Color color)`
     """
 
 def DrawSplineCatmullRom(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
     """Draw spline: Catmull-Rom, minimum 4 points
 
-    Wraps: `void DrawSplineCatmullRom(Vector2 * points, int pointCount, float thick, Color color)`
+    Wraps: `void DrawSplineCatmullRom(const Vector2 * points, int pointCount, float thick, Color color)`
     """
 
 def DrawSplineBezierQuadratic(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
     """Draw spline: Quadratic Bezier, minimum 3 points (1 control point): [p1, c2, p3, c4...]
 
-    Wraps: `void DrawSplineBezierQuadratic(Vector2 * points, int pointCount, float thick, Color color)`
+    Wraps: `void DrawSplineBezierQuadratic(const Vector2 * points, int pointCount, float thick, Color color)`
     """
 
 def DrawSplineBezierCubic(points: 'vec2_p', pointCount: int, thick: float, color: Color) -> None:
     """Draw spline: Cubic Bezier, minimum 4 points (2 control points): [p1, c2, c3, p4, c5, c6...]
 
-    Wraps: `void DrawSplineBezierCubic(Vector2 * points, int pointCount, float thick, Color color)`
+    Wraps: `void DrawSplineBezierCubic(const Vector2 * points, int pointCount, float thick, Color color)`
     """
 
 def DrawSplineSegmentLinear(p1: vec2, p2: vec2, thick: float, color: Color) -> None:
@@ -2406,7 +2418,7 @@ def CheckCollisionPointTriangle(point: vec2, p1: vec2, p2: vec2, p3: vec2) -> bo
 def CheckCollisionPointPoly(point: vec2, points: 'vec2_p', pointCount: int) -> bool:
     """Check if point is within a polygon described by array of vertices
 
-    Wraps: `bool CheckCollisionPointPoly(Vector2 point, Vector2 * points, int pointCount)`
+    Wraps: `bool CheckCollisionPointPoly(Vector2 point, const Vector2 * points, int pointCount)`
     """
 
 def CheckCollisionLines(startPos1: vec2, endPos1: vec2, startPos2: vec2, endPos2: vec2, collisionPoint: 'vec2_p') -> bool:
@@ -2419,6 +2431,12 @@ def CheckCollisionPointLine(point: vec2, p1: vec2, p2: vec2, threshold: int) -> 
     """Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold]
 
     Wraps: `bool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, int threshold)`
+    """
+
+def CheckCollisionCircleLine(center: vec2, radius: float, p1: vec2, p2: vec2) -> bool:
+    """Check if circle collides with a line created betweeen two points [p1] and [p2]
+
+    Wraps: `bool CheckCollisionCircleLine(Vector2 center, float radius, Vector2 p1, Vector2 p2)`
     """
 
 def GetCollisionRec(rec1: Rectangle, rec2: Rectangle) -> Rectangle:
@@ -2632,9 +2650,9 @@ def ImageBlurGaussian(image: 'Image_p', blurSize: int) -> None:
     """
 
 def ImageKernelConvolution(image: 'Image_p', kernel: float_p, kernelSize: int) -> None:
-    """Apply Custom Square image convolution kernel
+    """Apply custom square convolution kernel to image
 
-    Wraps: `void ImageKernelConvolution(Image * image, float* kernel, int kernelSize)`
+    Wraps: `void ImageKernelConvolution(Image * image, const float * kernel, int kernelSize)`
     """
 
 def ImageResize(image: 'Image_p', newWidth: int, newHeight: int) -> None:
@@ -2799,6 +2817,12 @@ def ImageDrawLineV(dst: 'Image_p', start: vec2, end: vec2, color: Color) -> None
     Wraps: `void ImageDrawLineV(Image * dst, Vector2 start, Vector2 end, Color color)`
     """
 
+def ImageDrawLineEx(dst: 'Image_p', start: vec2, end: vec2, thick: int, color: Color) -> None:
+    """Draw a line defining thickness within an image
+
+    Wraps: `void ImageDrawLineEx(Image * dst, Vector2 start, Vector2 end, int thick, Color color)`
+    """
+
 def ImageDrawCircle(dst: 'Image_p', centerX: int, centerY: int, radius: int, color: Color) -> None:
     """Draw a filled circle within an image
 
@@ -2845,6 +2869,36 @@ def ImageDrawRectangleLines(dst: 'Image_p', rec: Rectangle, thick: int, color: C
     """Draw rectangle lines within an image
 
     Wraps: `void ImageDrawRectangleLines(Image * dst, Rectangle rec, int thick, Color color)`
+    """
+
+def ImageDrawTriangle(dst: 'Image_p', v1: vec2, v2: vec2, v3: vec2, color: Color) -> None:
+    """Draw triangle within an image
+
+    Wraps: `void ImageDrawTriangle(Image * dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color)`
+    """
+
+def ImageDrawTriangleEx(dst: 'Image_p', v1: vec2, v2: vec2, v3: vec2, c1: Color, c2: Color, c3: Color) -> None:
+    """Draw triangle with interpolated colors within an image
+
+    Wraps: `void ImageDrawTriangleEx(Image * dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3)`
+    """
+
+def ImageDrawTriangleLines(dst: 'Image_p', v1: vec2, v2: vec2, v3: vec2, color: Color) -> None:
+    """Draw triangle outline within an image
+
+    Wraps: `void ImageDrawTriangleLines(Image * dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color)`
+    """
+
+def ImageDrawTriangleFan(dst: 'Image_p', points: 'vec2_p', pointCount: int, color: Color) -> None:
+    """Draw a triangle fan defined by points within an image (first vertex is the center)
+
+    Wraps: `void ImageDrawTriangleFan(Image * dst, Vector2 * points, int pointCount, Color color)`
+    """
+
+def ImageDrawTriangleStrip(dst: 'Image_p', points: 'vec2_p', pointCount: int, color: Color) -> None:
+    """Draw a triangle strip defined by points within an image
+
+    Wraps: `void ImageDrawTriangleStrip(Image * dst, Vector2 * points, int pointCount, Color color)`
     """
 
 def ImageDraw(dst: 'Image_p', src: Image, srcRec: Rectangle, dstRec: Rectangle, tint: Color) -> None:
@@ -3345,6 +3399,18 @@ def TextToPascal(text: str) -> str:
     Wraps: `const char * TextToPascal(const char * text)`
     """
 
+def TextToSnake(text: str) -> str:
+    """Get Snake case notation version of provided string
+
+    Wraps: `const char * TextToSnake(const char * text)`
+    """
+
+def TextToCamel(text: str) -> str:
+    """Get Camel case notation version of provided string
+
+    Wraps: `const char * TextToCamel(const char * text)`
+    """
+
 def TextToInteger(text: str) -> int:
     """Get integer value from text (negative values not supported)
 
@@ -3519,10 +3585,10 @@ def WaveCopy(wave: Wave) -> Wave:
     Wraps: `Wave WaveCopy(Wave wave)`
     """
 
-def WaveCrop(wave: 'Wave_p', initSample: int, finalSample: int) -> None:
-    """Crop a wave to defined samples range
+def WaveCrop(wave: 'Wave_p', initFrame: int, finalFrame: int) -> None:
+    """Crop a wave to defined frames range
 
-    Wraps: `void WaveCrop(Wave * wave, int initSample, int finalSample)`
+    Wraps: `void WaveCrop(Wave * wave, int initFrame, int finalFrame)`
     """
 
 def WaveFormat(wave: 'Wave_p', sampleRate: int, sampleSize: int, channels: int) -> None:

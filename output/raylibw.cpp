@@ -1598,7 +1598,7 @@ void add_module_raylib(VM* vm){
     vm->bind(mod, "SetShaderValueTexture(shader: Shader, locIndex: int, texture: Texture2D) -> None", &SetShaderValueTexture);
     vm->bind(mod, "UnloadShader(shader: Shader) -> None", &UnloadShader);
     vm->bind(mod, "GetScreenToWorldRay(position: vec2, camera: Camera) -> Ray", &GetScreenToWorldRay);
-    vm->bind(mod, "GetScreenToWorldRayEx(position: vec2, camera: Camera, width: float, height: float) -> Ray", &GetScreenToWorldRayEx);
+    vm->bind(mod, "GetScreenToWorldRayEx(position: vec2, camera: Camera, width: int, height: int) -> Ray", &GetScreenToWorldRayEx);
     vm->bind(mod, "GetWorldToScreen(position: vec3, camera: Camera) -> vec2", &GetWorldToScreen);
     vm->bind(mod, "GetWorldToScreenEx(position: vec3, camera: Camera, width: int, height: int) -> vec2", &GetWorldToScreenEx);
     vm->bind(mod, "GetWorldToScreen2D(position: vec2, camera: Camera2D) -> vec2", &GetWorldToScreen2D);
@@ -1643,6 +1643,7 @@ void add_module_raylib(VM* vm){
     vm->bind(mod, "GetApplicationDirectory() -> str", &GetApplicationDirectory);
     vm->bind(mod, "ChangeDirectory(dir: str) -> bool", &ChangeDirectory);
     vm->bind(mod, "IsPathFile(path: str) -> bool", &IsPathFile);
+    vm->bind(mod, "IsFileNameValid(fileName: str) -> bool", &IsFileNameValid);
     vm->bind(mod, "LoadDirectoryFiles(dirPath: str) -> FilePathList", &LoadDirectoryFiles);
     vm->bind(mod, "LoadDirectoryFilesEx(basePath: str, filter: str, scanSubdirs: bool) -> FilePathList", &LoadDirectoryFilesEx);
     vm->bind(mod, "UnloadDirectoryFiles(files: FilePathList) -> None", &UnloadDirectoryFiles);
@@ -1741,7 +1742,8 @@ void add_module_raylib(VM* vm){
     vm->bind(mod, "DrawRectangleLines(posX: int, posY: int, width: int, height: int, color: Color) -> None", &DrawRectangleLines);
     vm->bind(mod, "DrawRectangleLinesEx(rec: Rectangle, lineThick: float, color: Color) -> None", &DrawRectangleLinesEx);
     vm->bind(mod, "DrawRectangleRounded(rec: Rectangle, roundness: float, segments: int, color: Color) -> None", &DrawRectangleRounded);
-    vm->bind(mod, "DrawRectangleRoundedLines(rec: Rectangle, roundness: float, segments: int, lineThick: float, color: Color) -> None", &DrawRectangleRoundedLines);
+    vm->bind(mod, "DrawRectangleRoundedLines(rec: Rectangle, roundness: float, segments: int, color: Color) -> None", &DrawRectangleRoundedLines);
+    vm->bind(mod, "DrawRectangleRoundedLinesEx(rec: Rectangle, roundness: float, segments: int, lineThick: float, color: Color) -> None", &DrawRectangleRoundedLinesEx);
     vm->bind(mod, "DrawTriangle(v1: vec2, v2: vec2, v3: vec2, color: Color) -> None", &DrawTriangle);
     vm->bind(mod, "DrawTriangleLines(v1: vec2, v2: vec2, v3: vec2, color: Color) -> None", &DrawTriangleLines);
     vm->bind(mod, "DrawTriangleFan(points: 'vec2_p', pointCount: int, color: Color) -> None", &DrawTriangleFan);
@@ -1773,6 +1775,7 @@ void add_module_raylib(VM* vm){
     vm->bind(mod, "CheckCollisionPointPoly(point: vec2, points: 'vec2_p', pointCount: int) -> bool", &CheckCollisionPointPoly);
     vm->bind(mod, "CheckCollisionLines(startPos1: vec2, endPos1: vec2, startPos2: vec2, endPos2: vec2, collisionPoint: 'vec2_p') -> bool", &CheckCollisionLines);
     vm->bind(mod, "CheckCollisionPointLine(point: vec2, p1: vec2, p2: vec2, threshold: int) -> bool", &CheckCollisionPointLine);
+    vm->bind(mod, "CheckCollisionCircleLine(center: vec2, radius: float, p1: vec2, p2: vec2) -> bool", &CheckCollisionCircleLine);
     vm->bind(mod, "GetCollisionRec(rec1: Rectangle, rec2: Rectangle) -> Rectangle", &GetCollisionRec);
     vm->bind(mod, "LoadImage(fileName: str) -> Image", &LoadImage);
     vm->bind(mod, "LoadImageRaw(fileName: str, width: int, height: int, format: int, headerSize: int) -> Image", &LoadImageRaw);
@@ -1836,6 +1839,7 @@ void add_module_raylib(VM* vm){
     vm->bind(mod, "ImageDrawPixelV(dst: 'Image_p', position: vec2, color: Color) -> None", &ImageDrawPixelV);
     vm->bind(mod, "ImageDrawLine(dst: 'Image_p', startPosX: int, startPosY: int, endPosX: int, endPosY: int, color: Color) -> None", &ImageDrawLine);
     vm->bind(mod, "ImageDrawLineV(dst: 'Image_p', start: vec2, end: vec2, color: Color) -> None", &ImageDrawLineV);
+    vm->bind(mod, "ImageDrawLineEx(dst: 'Image_p', start: vec2, end: vec2, thick: int, color: Color) -> None", &ImageDrawLineEx);
     vm->bind(mod, "ImageDrawCircle(dst: 'Image_p', centerX: int, centerY: int, radius: int, color: Color) -> None", &ImageDrawCircle);
     vm->bind(mod, "ImageDrawCircleV(dst: 'Image_p', center: vec2, radius: int, color: Color) -> None", &ImageDrawCircleV);
     vm->bind(mod, "ImageDrawCircleLines(dst: 'Image_p', centerX: int, centerY: int, radius: int, color: Color) -> None", &ImageDrawCircleLines);
@@ -1844,6 +1848,11 @@ void add_module_raylib(VM* vm){
     vm->bind(mod, "ImageDrawRectangleV(dst: 'Image_p', position: vec2, size: vec2, color: Color) -> None", &ImageDrawRectangleV);
     vm->bind(mod, "ImageDrawRectangleRec(dst: 'Image_p', rec: Rectangle, color: Color) -> None", &ImageDrawRectangleRec);
     vm->bind(mod, "ImageDrawRectangleLines(dst: 'Image_p', rec: Rectangle, thick: int, color: Color) -> None", &ImageDrawRectangleLines);
+    vm->bind(mod, "ImageDrawTriangle(dst: 'Image_p', v1: vec2, v2: vec2, v3: vec2, color: Color) -> None", &ImageDrawTriangle);
+    vm->bind(mod, "ImageDrawTriangleEx(dst: 'Image_p', v1: vec2, v2: vec2, v3: vec2, c1: Color, c2: Color, c3: Color) -> None", &ImageDrawTriangleEx);
+    vm->bind(mod, "ImageDrawTriangleLines(dst: 'Image_p', v1: vec2, v2: vec2, v3: vec2, color: Color) -> None", &ImageDrawTriangleLines);
+    vm->bind(mod, "ImageDrawTriangleFan(dst: 'Image_p', points: 'vec2_p', pointCount: int, color: Color) -> None", &ImageDrawTriangleFan);
+    vm->bind(mod, "ImageDrawTriangleStrip(dst: 'Image_p', points: 'vec2_p', pointCount: int, color: Color) -> None", &ImageDrawTriangleStrip);
     vm->bind(mod, "ImageDraw(dst: 'Image_p', src: Image, srcRec: Rectangle, dstRec: Rectangle, tint: Color) -> None", &ImageDraw);
     vm->bind(mod, "ImageDrawText(dst: 'Image_p', text: str, posX: int, posY: int, fontSize: int, color: Color) -> None", &ImageDrawText);
     vm->bind(mod, "ImageDrawTextEx(dst: 'Image_p', font: Font, text: str, position: vec2, fontSize: float, spacing: float, tint: Color) -> None", &ImageDrawTextEx);
@@ -1927,6 +1936,8 @@ void add_module_raylib(VM* vm){
     vm->bind(mod, "TextToUpper(text: str) -> str", &TextToUpper);
     vm->bind(mod, "TextToLower(text: str) -> str", &TextToLower);
     vm->bind(mod, "TextToPascal(text: str) -> str", &TextToPascal);
+    vm->bind(mod, "TextToSnake(text: str) -> str", &TextToSnake);
+    vm->bind(mod, "TextToCamel(text: str) -> str", &TextToCamel);
     vm->bind(mod, "TextToInteger(text: str) -> int", &TextToInteger);
     vm->bind(mod, "TextToFloat(text: str) -> float", &TextToFloat);
     vm->bind(mod, "InitAudioDevice() -> None", &InitAudioDevice);
@@ -1956,7 +1967,7 @@ void add_module_raylib(VM* vm){
     vm->bind(mod, "SetSoundPitch(sound: Sound, pitch: float) -> None", &SetSoundPitch);
     vm->bind(mod, "SetSoundPan(sound: Sound, pan: float) -> None", &SetSoundPan);
     vm->bind(mod, "WaveCopy(wave: Wave) -> Wave", &WaveCopy);
-    vm->bind(mod, "WaveCrop(wave: 'Wave_p', initSample: int, finalSample: int) -> None", &WaveCrop);
+    vm->bind(mod, "WaveCrop(wave: 'Wave_p', initFrame: int, finalFrame: int) -> None", &WaveCrop);
     vm->bind(mod, "WaveFormat(wave: 'Wave_p', sampleRate: int, sampleSize: int, channels: int) -> None", &WaveFormat);
     vm->bind(mod, "LoadWaveSamples(wave: Wave) -> float_p", &LoadWaveSamples);
     vm->bind(mod, "UnloadWaveSamples(samples: float_p) -> None", &UnloadWaveSamples);
